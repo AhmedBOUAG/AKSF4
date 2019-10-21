@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ArticleController!{% endblock %}
+{% block title %}Hello AccueilController!{% endblock %}
 
 {% block body %}
 
@@ -9,7 +9,7 @@
     #}
     <div class="row">
         <div class="card col-12 col-md-9">
-            {% include '/carousel.html.twig' %}
+            {% include '/carousel.html.twig' with images %}
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
             <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
         </div>
@@ -23,5 +23,4 @@
       <div class="col-8" style="border: 1px solid #008">col-8</div>
       <div class="col-4" style="border: 1px solid #0062cc">col-4</div>
     </div>#}
-    
 {% endblock %}
