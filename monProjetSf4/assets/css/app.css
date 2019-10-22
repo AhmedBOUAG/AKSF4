@@ -1,3 +1,19 @@
 body {
     padding-top: 70px !important;
 }
+
+@media (max-width:991px) and (min-width:768px) {
+  .card.col-12.col-md-9.bloc-body-content {
+    flex: 0 0 100% !important; 
+    max-width: 100%;
+  }
+}
+.title-bloc{
+    background: #566d1e;
+    padding:5px;
+    text-align: center;
+    width: 100%;
+    margin: 5px 0 5px 0;
+    color: #FFF;
+    font-size: 1.3em;
+}
