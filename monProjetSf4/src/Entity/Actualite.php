@@ -36,6 +36,12 @@ class Actualite
      */
     private $approbation;
 
+    public function __construct() {
+        
+        $this->date = new \DateTime();
+        $this->approbation = false;
+
+    }
     public function getId(): ?int
     {
         return $this->id;

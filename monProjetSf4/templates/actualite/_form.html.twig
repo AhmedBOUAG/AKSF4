@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+<div class="row bloc-body-content">
+    <div class="col-12 left-0">
+        {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'font-weight-bold'} }) }}
+    </div>
+    <div class="col-12 left-0">
+        {{ form_widget(form.titre, {'attr': {'class': 'field_title'}}) }}
+    </div>
+    <div class="col-12 left-0">
+        {{ form_label(form.message, 'Message', {'label_attr': {'class': 'font-weight-bold'} }) }}
+    </div>
+    <div class="col-12 left-0">
+        {{ form_widget(form.message)}}
+    </div>
+</div>
+<br/>
+{{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
+{{ form_end(form) }}
