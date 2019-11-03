@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Liste des réponses{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
+    <h1>Liste des réponses aux sondages</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Réponse</th>
+                <th>Nombre de vote</th>
+                <th>Question</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse_sondage in reponse_sondages %}
+            <tr>
+                <td>{{ reponse_sondage.id }}</td>
+                <td>{{ reponse_sondage.reponse }}</td>
+                <td>{{ reponse_sondage.nbVote }}</td>
+                <td>{{ reponse_sondage.question }}</td>
+                <td>
+                    <a href="{{ path('reponse_sondage_show', {'id': reponse_sondage.id}) }}"><i class="far fa-eye"></i> Afficher</a>
+                    |
+                    <a href="{{ path('reponse_sondage_edit', {'id': reponse_sondage.id}) }}"><i class="fas fa-edit"></i> Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <a href="{{ path('reponse_sondage_new') }}">Ajouter une nouvelle réponse</a> | <a href="{{ path('question_sondage_new') }}"> Ajouter nouvelle question </a>
+        <!-- before the closing <body> tag -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QuestionSondage index{% endblock %}
+
+{% block body %}
+    <h1>QuestionSondage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Approval</th>
+                <th>DateCreation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question_sondage in question_sondages %}
+            <tr>
+                <td>{{ question_sondage.id }}</td>
+                <td>{{ question_sondage.titre }}</td>
+                <td>{{ question_sondage.approval ? 'Yes' : 'No' }}</td>
+                <td>{{ question_sondage.dateCreation ? question_sondage.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('question_sondage_show', {'id': question_sondage.id}) }}"><i class="far fa-eye"></i>Afficher</a>
+                    | 
+                    <a href="{{ path('question_sondage_edit', {'id': question_sondage.id}) }}"><i class="fas fa-edit"></i>Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <a href="{{ path('question_sondage_new') }}">Ajouter une nouvelle question</a> | <a href="{{ path('reponse_sondage_index') }}">Liste des réponses</a>
+{% endblock %}

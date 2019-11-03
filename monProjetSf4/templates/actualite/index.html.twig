@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualite index{% endblock %}
+
+{% block body %}
+    <h1>Liste des actualités</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Titre</th>
+                <th>Approbation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actualite in actualites %}
+            <tr>
+                <td>{{ actualite.id }}</td>
+                <td>{{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}</td>
+                <td>{{ actualite.titre }}</td>
+                <td>{{ actualite.approbation ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><i class="far fa-eye"></i>Afficher</a>
+                    | 
+                    <a href="{{ path('actualite_edit', {'id': actualite.id}) }}"><i class="fas fa-edit"></i>Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('actualite_new') }}">Create new</a>
+{% endblock %}

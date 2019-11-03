@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau sondage{% endblock %}
+
+{% block body %}
+    <h1>Créer des réponses</h1>
+
+    {{ include('reponse_sondage/_form.html.twig', {'button_label': 'Enregistrer', 'type_button': 'success', 'icon_label': 'fa-save'}) }}
+    <hr>
+    <a href="{{ path('reponse_sondage_index') }}">Retour à la liste</a>
+{% endblock %}
