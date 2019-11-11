@@ -7,30 +7,34 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
 
     </head>
     <body>
-        {{ include('menu.html.twig') }}
-        <div class="container">
+        <header>
+            {{ include('menu.html.twig') }}
+        </header>
+        <main role="main" class="container">
 
         {% block body %}{% endblock %}
-
+        </main>
+        <div class="both"></div>
         {% block footer %}
-            <footer class="app-footer">
+            <footer class="footer">
                 <div class="container">
                     <!--Copyright-->
                     <div>
                         <div class="container-fluid text-center">
-                            Copyright Ahmed BOUAGOUNE 2019
+                            &copy; Ahmed BOUAGOUNE 2019
                         </div>
                     </div>
                 </div>
             </footer>
         {% endblock %}
-        </div>
+        
 {#        <script src="{{asset('build/app.js')}}"></script>#}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+
     </body>
 </html>

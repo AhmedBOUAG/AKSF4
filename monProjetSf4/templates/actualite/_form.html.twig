@@ -1,3 +1,7 @@
+<div class="dropzone my-dropzone" id="form_snippet_image" action="{{path('ajax_snippet_image_send')}}">
+</div>
+{% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
+{% set operation = explodeRoute|last %}
 {{ form_start(form) }}
     <div class="my-custom-class-for-errors">
         {{ form_errors(form) }}
@@ -17,5 +21,49 @@
     </div>
 </div>
 <br/>
+<span style='float:left'>
 {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
+</span>
 {{ form_end(form) }}
+<div class="btn-group" role="group" style="float:right" aria-label="Third group">
+    {% if operation == 'edit' %}
+        {{ include('actualite/_delete_form.html.twig') }}
+    {% endif %}
+    <a href="{{ path('actualite_index') }}">
+        {{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour à l'accueil", 'icon_label': 'fa-undo-alt' }) }}
+    </a>
+</div>
+
+<script> 
+Dropzone.autoDiscover = false;
+$(function() {
+            //je récupère l'action où sera traité l'upload en PHP
+        var _actionToDropZone = $("#form_snippet_image").attr('action');
+        //console.log(window.Dropzone);
+        //je définis ma zone de drop grâce à l'ID de ma div citée plus haut.
+        //Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("#form_snippet_image", { url: _actionToDropZone,
+             addRemoveLinks: true,
+            removedfile: function(file) {
+              var name = file.name; 
+              alert(name);
+              $.ajax({
+                type: 'POST',
+                url: 'upload.php',
+                data: {name: name,request: 2},
+                sucess: function(data){
+                   console.log('success: ' + data);
+                }
+              });
+              var _ref;
+              // return (_ref = file.previewElement) != null _ref.parentNode.removeChild(file.previewElement) : void 0;
+            }
+            
+        });
+        myDropzone.on("addedfile", function(file) {
+//            alert('nouveau fichier reçu');
+        });
+});
+
+    
+</script>

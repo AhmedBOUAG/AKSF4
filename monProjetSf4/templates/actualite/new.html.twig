@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Actualite{% endblock %}
+{% block title %}Nouvelle Actualité{% endblock %}
 
 {% block body %}
-    <h1>Create new Actualite</h1>
-
+    <h1>Rédiger une nouvelle Actualité</h1>
     {{ include('actualite/_form.html.twig', {'button_label': 'Enregistrer', 'type_button': 'success', 'icon_label': 'fa-save'}) }}
-
-    <a href="{{ path('actualite_index') }}">back to list</a>
 {% endblock %}

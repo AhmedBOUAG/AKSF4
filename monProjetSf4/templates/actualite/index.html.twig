@@ -23,9 +23,10 @@
                 <td>{{ actualite.titre }}</td>
                 <td>{{ actualite.approbation ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><i class="far fa-eye"></i>Afficher</a>
-                    | 
-                    <a href="{{ path('actualite_edit', {'id': actualite.id}) }}"><i class="fas fa-edit"></i>Editer</a>
+                    <div class="btn-group" role="group" aria-label="Third group">
+                    <a href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><button class="btn btn-warning btn-sm"><i class="far fa-eye"></i></button></a> 
+                    <a href="{{ path('actualite_edit', {'id': actualite.id}) }}"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
+                    </div>
                 </td>
             </tr>
         {% else %}
