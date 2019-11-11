@@ -1,0 +1,1 @@
+window.Dropzone = require('dropzone/dist/min/dropzone.min');
