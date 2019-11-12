@@ -35,6 +35,7 @@
 </div>
 
 <script> 
+    
 Dropzone.autoDiscover = false;
 $(function() {
             //je récupère l'action où sera traité l'upload en PHP
@@ -42,12 +43,14 @@ $(function() {
         //console.log(window.Dropzone);
         //je définis ma zone de drop grâce à l'ID de ma div citée plus haut.
         //Dropzone.autoDiscover = false;
+
         var myDropzone = new Dropzone("#form_snippet_image", { url: _actionToDropZone,
+            
              addRemoveLinks: true,
-             dictDefaultMessage: 'Cliquer ou Déposer vos fichiers à télécharger ici.',
+             dictDefaultMessage: '<i class="msg-default-dropzone">Cliquer ou Déposer vos fichiers à télécharger ici.</i>',
             removedfile: function(file) {
-              var name = file.name; 
-              alert(name);
+              var name = file.upload.filename; 
+              console.log(name);
               $.ajax({
                 type: 'POST',
                 url: 'upload.php',
@@ -58,7 +61,15 @@ $(function() {
               });
               var _ref;
               // return (_ref = file.previewElement) != null _ref.parentNode.removeChild(file.previewElement) : void 0;
+            },
+            renameFile: function (file) {
+                let newName = new Date().getTime() + '_' + file.name;
+                return newName;
             }
+            
+        });
+        myDropzone.on("sending", function(file) {
+            //file.name = $.now()+''+file.upload.filename;
             
         });
         myDropzone.on("addedfile", function(file) {

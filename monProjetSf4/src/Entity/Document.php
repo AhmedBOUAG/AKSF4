@@ -72,7 +72,7 @@ class Document
 
     public function getWebPath()
     {
-        return $this->getUploadRootDir() .'/'. $this->getName();
+        return 'public/'.$this->getUploadRootDir() .'/'. $this->getName();
     }
 
     protected function getUploadRootDir()
@@ -80,7 +80,7 @@ class Document
         // the absolute directory path where uploaded
         // documents should be saved
         //dump(__DIR__.'/../../public/'.$this->getUploadDir());die;
-        return 'public/'.$this->getUploadDir();
+        return $this->getUploadDir();
     }
 
     protected function getUploadDir()
@@ -149,8 +149,7 @@ class Document
      */
     public function setName($name)
     {
-        $date = new \DateTime();
-        $this->name =  $date->format('YmdHisu') . $name;
+        $this->name =  $name;
 
         return $this;
     }
