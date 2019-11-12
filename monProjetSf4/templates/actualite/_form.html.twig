@@ -44,6 +44,7 @@ $(function() {
         //Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#form_snippet_image", { url: _actionToDropZone,
              addRemoveLinks: true,
+             dictDefaultMessage: 'Cliquer ou Déposer vos fichiers à télécharger ici.',
             removedfile: function(file) {
               var name = file.name; 
               alert(name);
