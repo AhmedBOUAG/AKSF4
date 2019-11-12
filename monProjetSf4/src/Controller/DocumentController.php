@@ -22,6 +22,7 @@ class DocumentController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         //dump($request->files->get('file'));die;
         $document = new Document();
+        //dump($request);die;
         $media = $request->files->get('file');
         //dump($document->getUploadRootDir());
         $document->setFile($media);
