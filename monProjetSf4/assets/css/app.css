@@ -52,3 +52,15 @@ footer.footer {
 main.container{
     padding-bottom: 80px;
 }
+.icon-delete-dz{
+    cursor: pointer !important;
+    position: absolute;
+    border: 1px solid #e9f3f6;
+    z-index: 99;
+    top: -8px;
+    left: 0;
+    background: #dc3545;
+    color: #fff;
+    padding: 5px;
+    border-radius: 11px;
+}

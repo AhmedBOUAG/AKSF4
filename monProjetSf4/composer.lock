@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "970263b9439f27f94016317b54314db8",
+    "content-hash": "ab0d792cac4c40c0aba28f6fbbf46468",
     "packages": [
         {
             "name": "components/elfinder",
@@ -3321,7 +3321,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.3.5",
+            "version": "v4.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
