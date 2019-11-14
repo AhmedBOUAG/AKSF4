@@ -45,12 +45,13 @@
         //Dropzone.autoDiscover = false;
 
         var myDropzone = new Dropzone("#form_snippet_image", {url: _actionToDropZone,
-
+            
             addRemoveLinks: true,
-            dictDefaultMessage: '<i class="msg-default-dropzone">Cliquer ou Déposer vos fichiers à télécharger ici.</i>',
             dictRemoveFile: '<a class="dz-remove" data-dz-remove><i class="fas fa-trash-alt icon-delete-dz" aria-hidden="true" data-dz-remove></i></a>',
+            dictDefaultMessage: '<i class="msg-default-dropzone">Cliquer ou Déposer vos fichiers à télécharger ici.</i>',
             removedfile: function (file) {
                 var name = file.upload.filename;
+                //this.removeFile(file);
                 $.ajax({
                     type: 'POST',
                     url: '{{ path('ajax_snippet_image_delete') }}',
@@ -60,7 +61,7 @@
                     }
                 });
                 var _ref;
-                // return (_ref = file.previewElement) != null _ref.parentNode.removeChild(file.previewElement) : void 0;
+                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
             },
             renameFile: function (file) {
                 let newName = new Date().getTime() + '_' + file.name;
@@ -68,7 +69,7 @@
             }
 
         });
-        myDropzone.on("sending", function (file) {
+   myDropzone.on("sending", function (file) {
             //file.name = $.now()+''+file.upload.filename;
 
         });
