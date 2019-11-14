@@ -22,9 +22,6 @@ body {
     border-radius: 3px;
     text-shadow: -1px -1px 3px #745f1dc7;
 }
-.field_title{
-    min-width: 650px;
-}
 
 .bloc-body-content{
     
@@ -63,4 +60,7 @@ main.container{
     color: #fff;
     padding: 5px;
     border-radius: 11px;
+}
+.field_title{
+    width : 100% !important;
 }

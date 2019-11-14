@@ -16,25 +16,27 @@
             </tr>
         </thead>
         <tbody>
-        {% for question_sondage in question_sondages %}
-            <tr>
-                <td>{{ question_sondage.id }}</td>
-                <td>{{ question_sondage.titre }}</td>
-                <td>{{ question_sondage.approval ? 'Yes' : 'No' }}</td>
-                <td>{{ question_sondage.dateCreation ? question_sondage.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('question_sondage_show', {'id': question_sondage.id}) }}"><i class="far fa-eye"></i>Afficher</a>
-                    | 
-                    <a href="{{ path('question_sondage_edit', {'id': question_sondage.id}) }}"><i class="fas fa-edit"></i>Editer</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for question_sondage in question_sondages %}
+                <tr>
+                    <td>{{ question_sondage.id }}</td>
+                    <td>{{ question_sondage.titre }}</td>
+                    <td>{{ question_sondage.approval ? 'Yes' : 'No' }}</td>
+                    <td>{{ question_sondage.dateCreation ? question_sondage.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Third group">
+                            <a role="button" class="btn btn-warning btn-sm" href="{{ path('question_sondage_show', {'id': question_sondage.id}) }}"><i class="far fa-eye"></i></a> 
+                            <a role="button" class="btn btn-primary btn-sm" href="{{ path('question_sondage_edit', {'id': question_sondage.id}) }}"><i class="fas fa-edit"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Pas d'entré</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-        <a href="{{ path('question_sondage_new') }}">Ajouter une nouvelle question</a> | <a href="{{ path('reponse_sondage_index') }}">Liste des réponses</a>
+    <a href="{{ path('question_sondage_new') }}">{{ include('button.html.twig', {'button_label': 'Ajouter une nouvelle question', 'type_button': 'success', 'icon_label': 'fa-plus'}) }}</a> 
+    <a class="float-right" href="{{ path('reponse_sondage_index') }}">{{ include('button.html.twig', {'button_label': 'Liste des réponses', 'type_button': 'outline-dark', 'icon_label': 'fa-list-ul'}) }}</a>
 {% endblock %}

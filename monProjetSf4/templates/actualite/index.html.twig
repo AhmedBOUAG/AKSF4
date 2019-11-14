@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Liste des actualités</h1>
 
-    <table class="table">
+    <table class="table overflow-auto">
         <thead>
             <tr>
                 <th>Id</th>
@@ -24,8 +24,8 @@
                 <td>{{ actualite.approbation ? 'Yes' : 'No' }}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Third group">
-                    <a href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><button class="btn btn-warning btn-sm"><i class="far fa-eye"></i></button></a> 
-                    <a href="{{ path('actualite_edit', {'id': actualite.id}) }}"><button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button></a>
+                    <a role="button" class="btn btn-warning btn-sm" href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><i class="far fa-eye"></i></a> 
+                    <a role="button" class="btn btn-primary btn-sm" href="{{ path('actualite_edit', {'id': actualite.id}) }}"><i class="fas fa-edit"></i></a>
                     </div>
                 </td>
             </tr>
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('actualite_new') }}">Create new</a>
+    <a href="{{ path('actualite_new') }}">{{ include('button.html.twig', {'button_label': 'Créer une nouvelle', 'type_button': 'outline-success', 'icon_label': 'fa-plus'}) }}</a>
 {% endblock %}
