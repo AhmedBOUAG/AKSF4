@@ -1,3 +1,7 @@
+{% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
+{% set operation = explodeRoute|last %}
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}ReponseSondage{% endblock %}
@@ -22,9 +26,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('reponse_sondage_index') }}">back to list</a>
-
-    <a href="{{ path('reponse_sondage_edit', {'id': reponse_sondage.id}) }}">edit</a>
-
-    {{ include('reponse_sondage/_delete_form.html.twig') }}
+    <a href="{{ path('reponse_sondage_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour à la liste des réponses", 'icon_label': 'fa-undo-alt' }) }}</a>
 {% endblock %}

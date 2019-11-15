@@ -18,6 +18,7 @@ class ReponseSondageType extends AbstractType
             ->add('question', EntityType::class,[
                 'class' => QuestionSondage::class,
                 'choice_label' => 'titre',
+                'label_attr' => ['class' => 'control-label'] 
                 
             ])
         ;

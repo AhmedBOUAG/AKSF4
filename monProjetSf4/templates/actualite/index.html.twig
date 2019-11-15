@@ -3,8 +3,8 @@
 {% block title %}Actualite index{% endblock %}
 
 {% block body %}
-    <h1>Liste des actualités</h1>
-
+    <h1 class="float-left" style="line-height: 1 !important;">Liste des actualités</h1>
+    <a class="float-sm-right" href="{{ path('actualite_new') }}">{{ include('button.html.twig', {'button_label': 'Ajouter Actualité', 'type_button': 'success', 'icon_label': 'fa-plus'}) }}</a>
     <table class="table overflow-auto">
         <thead>
             <tr>
@@ -37,5 +37,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('actualite_new') }}">{{ include('button.html.twig', {'button_label': 'Ajouter Actualité', 'type_button': 'outline-success', 'icon_label': 'fa-plus'}) }}</a>
 {% endblock %}

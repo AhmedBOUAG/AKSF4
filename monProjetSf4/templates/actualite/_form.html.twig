@@ -21,11 +21,11 @@
     </div>
 </div>
 <br/>
-<span style='float:left'>
+<span style='float:right'>
     {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
 </span>
 {{ form_end(form) }}
-<div class="btn-group" role="group" style="float:right" aria-label="Third group">
+<div class="btn-group" role="group" style="float:left" aria-label="Third group">
     {% if operation == 'edit' %}
         {{ include('actualite/_delete_form.html.twig') }}
     {% endif %}
