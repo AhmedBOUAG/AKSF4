@@ -6,10 +6,10 @@
         <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question_sondage.id) }}">
         <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer</button>
     </form>
-    <a style="margin-left:5px;" href="{{ path('reponse_sondage_index') }}"> {{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour à la liste', 'icon_label': 'fa-undo-alt'}) }} </a>
+    <a style="margin-left:5px;" href="{{ path('question_sondage_index') }}"> {{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour aux sondages', 'icon_label': 'fa-undo-alt'}) }} </a>
 </div>
-{% if operation == 'show' %}
+{#{% if operation == 'show' %}
     <div class="btn-group" role="group" style="float:right" aria-label="Third group">
         <a href="{{ path('question_sondage_edit', {'id': question_sondage.id}) }}">{{ include('question_sondage/_form.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }}</a>
     </div>
-{% endif %}
+{% endif %}#}

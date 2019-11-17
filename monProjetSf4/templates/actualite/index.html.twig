@@ -8,33 +8,36 @@
     <table class="table overflow-auto">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Date</th>
                 <th>Titre</th>
                 <th>Approbation</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for actualite in actualites %}
-            <tr>
-                <td>{{ actualite.id }}</td>
-                <td>{{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}</td>
-                <td>{{ actualite.titre }}</td>
-                <td>{{ actualite.approbation ? 'Yes' : 'No' }}</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Third group">
-                    <a role="button" class="btn btn-warning btn-sm" href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><i class="far fa-eye"></i></a> 
-                    <a role="button" class="btn btn-primary btn-sm" href="{{ path('actualite_edit', {'id': actualite.id}) }}"><i class="fas fa-edit"></i></a>
-                    </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for actualite in actualites %}
+                <tr>
+                    <td>{{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}</td>
+                    <td>{{ actualite.titre }}</td>
+                    <td>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" value="{{ actualite.id }}" id="customSwitches_{{ actualite.id }}" {{ actualite.approbation ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="customSwitches_{{ actualite.id }}"></label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Third group">
+                            <a role="button" class="btn btn-warning btn-sm" href="{{ path('actualite_show', {'titre': actualite.titre}) }}"><i class="far fa-eye"></i></a> 
+                            <a role="button" class="btn btn-primary btn-sm" href="{{ path('actualite_edit', {'id': actualite.id}) }}"><i class="fas fa-edit"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-
+    {% include 'actualite/js_actualite.html.twig' %}
 {% endblock %}

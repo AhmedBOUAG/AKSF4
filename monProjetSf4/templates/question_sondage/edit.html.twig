@@ -3,8 +3,9 @@
 {% block title %}Edit QuestionSondage{% endblock %}
 
 {% block body %}
-    <h1>Edit QuestionSondage</h1>
+    <h1>Modifier la question</h1>
 
     {{ include('question_sondage/_form.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }}
+    <a href="{{ path('reponse_sondage_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour aux sondages", 'icon_label': 'fa-undo-alt' }) }}</a>
 
 {% endblock %}

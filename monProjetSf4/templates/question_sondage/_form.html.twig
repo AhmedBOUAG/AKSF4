@@ -3,13 +3,46 @@
 
 {{ form_start(form) }}
 <div class="form-group">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
     {{ form_widget(form) }}
 </div>
-<div class="btn-group" role="group" style="float:right" aria-label="Third group">
+<span class="float-right">
     {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
-    {% if operation == 'edit' %}
+</span>
+<div class="btn-group" role="group" style="float:left" aria-label="Third group">
+    
+    {% if operation == 'show' %}
         {{ include('question_sondage/_delete_form.html.twig') }}
     {% endif %}
 </div>
 {{ form_end(form) }}
-<a href="{{ path('reponse_sondage_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour aux sondages", 'icon_label': 'fa-undo-alt' }) }}</a>
+{# <a href="{{ path('reponse_sondage_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour aux sondages", 'icon_label': 'fa-undo-alt' }) }}</a> #}
+
+{#
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
+{{ form_end(form) }}
+
+{#{{ form_start(form) }}
+<div class="form-group">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="row bloc-body-content">
+        <div class="col-8">
+            {{ form_row(form.question, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.reponse, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+</div>
+<div class="btn-group" role="group" style="float:right" aria-label="Third group">
+    {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
+</div>
+{{ form_end(form) }}
+#}

@@ -91,4 +91,21 @@ class ActualiteController extends AbstractController
 
         return $this->redirectToRoute('actualite_index');
     }
+    /**
+     * @param request
+     * @Route("ajax/change/statut/actualite", name="ajax_change_statut_actualite")
+     * @return response 
+     */
+    public function ajaxChangeStatutActualite(Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $actualite_id = $request->get('id');
+        $actualite = $em->getRepository(Actualite::class)->find($actualite_id);
+        $old_statut = $actualite->getApprobation();
+        $new_statut = !$old_statut;
+        $actualiteModified = $actualite->setApprobation($new_statut);
+        $em->persist($actualiteModified);
+        $em->flush();
+        return new Response('OK');
+    }
 }

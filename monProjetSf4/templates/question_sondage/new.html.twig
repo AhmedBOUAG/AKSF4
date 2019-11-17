@@ -4,7 +4,6 @@
 
 {% block body %}
     <h1>Nouveau sondage</h1>
-
     {{ include('question_sondage/_form.html.twig', {'button_label': 'Enregistrer', 'type_button': 'success', 'icon_label': 'fa-save'}) }}
- 
+     <a href="{{ path('reponse_sondage_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour aux sondages", 'icon_label': 'fa-undo-alt' }) }}</a>
 {% endblock %}
