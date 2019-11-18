@@ -53,6 +53,10 @@ main.container{
     padding-bottom: 120px;
     margin-top: -15px;
     padding-top: 15px;
+    border-radius: 0 0px 5px 5px;
+    -webkit-box-shadow: inset 0px 14px 11px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 14px 11px -11px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 14px 11px -11px rgba(0,0,0,0.75);
 }
 .icon-delete-dz{
     cursor: pointer !important;
