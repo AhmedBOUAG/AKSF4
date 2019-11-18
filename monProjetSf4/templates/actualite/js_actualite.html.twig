@@ -1,0 +1,16 @@
+<script>
+    $(function(){
+        $('.custom-control-input').change(function() {
+            var actualite_id = $(this).val();
+            $.ajax({
+                    type: 'POST',
+                    url: '{{ path('ajax_change_statut_actualite') }}',
+                    data: {id: actualite_id, request: 2},
+                    sucess: function (data) {
+                        console.log('success: ' + data);
+                    }
+                });
+        });
+    });
+    
+</script>

@@ -8,7 +8,7 @@
         {% for image in images %}
                 <div class="col-lg-3 col-md-4 col-6">
                 <i class="d-block mb-4 h-100">
-                        <img src="{{asset('/uploads/documents/')~image }}" class="img-fluid img-thumbnail" />
+                        <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" class="img-fluid img-thumbnail" />
                         </i>
                 
                 </div>

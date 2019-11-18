@@ -1,5 +1,7 @@
 <div class="dropzone my-dropzone" id="form_snippet_image" action="{{path('ajax_snippet_image_send')}}">
 </div>
+<input type="text" name="Element To Be Copied" id="copy-me" value="BONJOUUUUR"/>
+<button id="copy-btn">Copy</button><br/><br/>
 {% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
 {% set operation = explodeRoute|last %}
 {{ form_start(form) }}
@@ -35,6 +37,52 @@
 </div>
 
 <script>
+    var copyBtn = $("#copy-btn"),
+            input = $("#copy-me");
+
+    function copyToClipboardFF(text) {
+        window.prompt("Copy to clipboard: Ctrl C, Enter", text);
+    }
+
+    function copyToClipboard() {
+        var success = true,
+                range = document.createRange(),
+                selection;
+
+        // For IE.
+        if (window.clipboardData) {
+            window.clipboardData.setData("Text", input.val());
+        } else {
+            // Create a temporary element off screen.
+            var tmpElem = $('<div>');
+            tmpElem.css({
+                position: "absolute",
+                left: "-1000px",
+                top: "-1000px",
+            });
+            // Add the input value to the temp element.
+            tmpElem.text(input.val());
+            $("body").append(tmpElem);
+            // Select temp element.
+            range.selectNodeContents(tmpElem.get(0));
+            selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            // Lets copy.
+            try {
+                success = document.execCommand("copy", false, null);
+            } catch (e) {
+                copyToClipboardFF(input.val());
+            }
+            if (success) {
+                //alert ("The text is on the clipboard, try to paste it!");
+                // remove temp element.
+                tmpElem.remove();
+            }
+        }
+    }
+
+    copyBtn.on('click', copyToClipboard);
 
     Dropzone.autoDiscover = false;
     $(function () {
@@ -45,8 +93,9 @@
         //Dropzone.autoDiscover = false;
 
         var myDropzone = new Dropzone("#form_snippet_image", {url: _actionToDropZone,
-            
+
             addRemoveLinks: true,
+            acceptedFiles: ".png,.jpg,.gif,.jpeg",
             dictRemoveFile: '<a class="dz-remove" data-dz-remove><i class="fas fa-trash-alt icon-delete-dz" aria-hidden="true" data-dz-remove></i></a>',
             dictDefaultMessage: '<i class="msg-default-dropzone">Cliquer ou Déposer vos fichiers à télécharger ici.</i>',
             removedfile: function (file) {
@@ -69,7 +118,7 @@
             }
 
         });
-   myDropzone.on("sending", function (file) {
+        myDropzone.on("complete", function (file) {
             //file.name = $.now()+''+file.upload.filename;
 
         });

@@ -15,6 +15,7 @@ use App\Entity\Document;
 class DocumentController extends AbstractController {
 
     private $absolutePathFolderDocuments = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'documents';
+    const PATHDOCUMENTS = 'uploads/documents/';
 
     /**
      *
@@ -78,7 +79,7 @@ class DocumentController extends AbstractController {
             if (in_array($extension, $aExtensionImages)) {
                 $absoluteFilePath = $file->getRealPath();
                 $fileNameWithExtension = $file->getRelativePathname();
-                array_push($aImages, $fileNameWithExtension);
+                array_push($aImages, DocumentController::PATHDOCUMENTS.$fileNameWithExtension);
             }
         }
         return $this->render('document/index.html.twig', [
