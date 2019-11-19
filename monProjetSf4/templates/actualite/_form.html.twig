@@ -35,8 +35,11 @@
         {{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour à l'accueil", 'icon_label': 'fa-undo-alt' }) }}
     </a>
 </div>
-
+<div id="thumbnail">
+{#<div class="dz-preview dz-file-preview"><div class="dz-details"><div class="dz-filename"><span data-dz-name></span></div><div class="dz-size" data-dz-size></div><img data-dz-thumbnail /></div><div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div><div class="dz-success-mark"><span>✔</span></div><div class="dz-error-mark"><span>✘</span></div><div class="dz-error-message"><span data-dz-errormessage></span></div></div>#}
+<div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">  <div class="dz-image"><img data-dz-thumbnail></div>  <div class="dz-details">    <div class="dz-size"><span data-dz-size=""><strong></strong> </span></div>    <div class="dz-filename"><span data-dz-name=""></span></div>  </div>  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress="" style="width: 100%;"></span></div>  <div class="dz-error-message"><span data-dz-errormessage=""></span></div>  <div class="dz-success-mark">  </div>  <div class="dz-error-mark"></div><a class="dz-remove" href="javascript:undefined;" data-dz-remove=""><a class="dz-remove" data-dz-remove=""><i class="fas fa-trash-alt icon-delete-dz" aria-hidden="true" data-dz-remove=""></i></a><button value="" id="copied_link" class="btn btn-download" href="#">Copier</button></div></div>
 <script>
+
     var copyBtn = $("#copy-btn"),
             input = $("#copy-me");
 
@@ -92,11 +95,13 @@
         //je définis ma zone de drop grâce à l'ID de ma div citée plus haut.
         //Dropzone.autoDiscover = false;
 
-        var myDropzone = new Dropzone("#form_snippet_image", {url: _actionToDropZone,
 
-            addRemoveLinks: true,
+        var myDropzone = new Dropzone("#form_snippet_image", {url: _actionToDropZone,
+            dictInvalidFileType: 'Ce fichier n\'est pas conforme. Il n\'est donc pas téléchargeable.',
+            //addRemoveLinks: true,
+            previewTemplate: document.querySelector('#thumbnail').innerHTML,
             acceptedFiles: ".png,.jpg,.gif,.jpeg",
-            dictRemoveFile: '<a class="dz-remove" data-dz-remove><i class="fas fa-trash-alt icon-delete-dz" aria-hidden="true" data-dz-remove></i></a>',
+            //dictRemoveFile: '<a class="dz-remove" data-dz-remove><i class="fas fa-trash-alt icon-delete-dz" aria-hidden="true" data-dz-remove></i></a><span role="button" class="copy_link">Copier lien</span>',
             dictDefaultMessage: '<i class="msg-default-dropzone">Cliquer ou Déposer vos fichiers à télécharger ici.</i>',
             removedfile: function (file) {
                 var name = file.upload.filename;
@@ -114,6 +119,7 @@
             },
             renameFile: function (file) {
                 let newName = new Date().getTime() + '_' + file.name;
+                $('#copied_link').val(newName);
                 return newName;
             }
 
