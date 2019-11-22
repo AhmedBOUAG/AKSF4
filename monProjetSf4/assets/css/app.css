@@ -81,3 +81,23 @@ main{
 #copy-me {
     display:none;
 }
+
+.option-thumbnail{
+    display: none;
+    z-index: 100;
+    position: absolute;
+    top: 50px;
+    left: 75px;
+}
+.griser {
+  position : absolute;
+  top : 0;
+  left : 0;
+  width : 100%;
+  height : 100%;
+  background-color : #000;
+  filter:alpha(opacity=50);   /* IE */
+  -moz-opacity:0.5;           /* Firefox */
+  opacity: 0.5;               /* standard CSS3 */
+  -khtml-opacity: 0.5;        /* Konqueror */
+  }

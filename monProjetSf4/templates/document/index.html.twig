@@ -6,12 +6,27 @@
     <h1>Les images uploadées</h1>
     <div class="row text-center text-lg-left">
         {% for image in images %}
-                <div class="col-lg-3 col-md-4 col-6">
-                <i class="d-block mb-4 h-100">
-                        <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" class="img-fluid img-thumbnail" />
-                        </i>
-                
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="d-block mb-4 h-100 thumbnail-block">
+                    <img value="{{image}}" src="{{ image | imagine_filter('filter_size_thumbnail') }}" class="img-fluid img-thumbnail" />
+                    <div class="option-thumbnail"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></div>
                 </div>
+
+            </div>
         {% endfor %}
     </div>
+
+    <script>
+
+        $('.thumbnail-block').mouseenter(function () {
+            $(this).find(".option-thumbnail").css("display", "block");
+            $(this).find(".img-thumbnail").addClass('griser');
+            //console.log(kids);
+            //$('option-thumbnail').css('display', 'block');
+        }).mouseleave(function () {
+            $(this).find(".option-thumbnail").css("display", "none");
+            $(this).find(".img-thumbnail").removeClass('griser');
+        });
+
+    </script>
 {% endblock %}
