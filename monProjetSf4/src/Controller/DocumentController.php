@@ -65,13 +65,14 @@ class DocumentController extends AbstractController {
     public function getImagesUploaded(Request $request): Response {
         $aImages = array();
         $finder = new Finder();
+        $status = 'OK';
 
         $aExtensionImages = array('jpg', 'jpeg', 'gif', 'png');
         $finder->files()->in(dirname(dirname(__DIR__)) . $this->absolutePathFolderDocuments);
 
         // si aucun resultats n'est retourné
         if (!$finder->hasResults()) {
-            return new Response('KO');
+            $status = 'KO';
         }
         foreach ($finder as $file) {
             $explodeFileName = explode('.', $file->getRelativePathname());
@@ -83,7 +84,8 @@ class DocumentController extends AbstractController {
             }
         }
         return $this->render('document/index.html.twig', [
-                    'images' => $aImages
+                    'images' => $aImages, 
+                    'status' => $status 
         ]);
     }
 

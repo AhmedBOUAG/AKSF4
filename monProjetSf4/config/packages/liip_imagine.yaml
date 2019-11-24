@@ -12,7 +12,9 @@ liip_imagine:
                 thumbnail:
 
                     # set the thumbnail size to "32x32" pixels
-                    size: [150, 130]
+                    size: [180, 130]
 
                     # crop the input image, if required
                     mode: outbound
+                    
+                    allow_upscale: true

@@ -4,12 +4,19 @@
 
 {% block body %}
     <h1>Les images uploadées</h1>
+    {% if status == 'KO' %}
+        <div class="alert alert-warning" role="alert">
+            <span class="btn-label"> <i class="fas fa-exclamation-triangle fa-1x"></i> </span>
+            Aucune image trouvée !
+        </div>
+    {% endif %}
     <div class="row text-center text-lg-left">
         {% for image in images %}
             <div class="col-lg-3 col-md-4 col-6">
                 <div class="d-block mb-4 h-100 thumbnail-block">
-                    <img value="{{image}}" src="{{ image | imagine_filter('filter_size_thumbnail') }}" class="img-fluid img-thumbnail" />
+                    <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
                     <div class="option-thumbnail"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></div>
+                    <div style="display:none;" class="grey-tint img-fluid img-thumbnail"></div>
                 </div>
 
             </div>
@@ -20,12 +27,12 @@
 
         $('.thumbnail-block').mouseenter(function () {
             $(this).find(".option-thumbnail").css("display", "block");
-            $(this).find(".img-thumbnail").addClass('griser');
+            $(this).find(".grey-tint").addClass('griser').removeAttr('style');
             //console.log(kids);
             //$('option-thumbnail').css('display', 'block');
         }).mouseleave(function () {
             $(this).find(".option-thumbnail").css("display", "none");
-            $(this).find(".img-thumbnail").removeClass('griser');
+            $(this).find(".grey-tint").removeClass('griser').css("display", "none");
         });
 
     </script>
