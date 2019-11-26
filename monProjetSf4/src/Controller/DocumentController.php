@@ -44,7 +44,7 @@ class DocumentController extends AbstractController {
      */
     public function ajaxSnippetImageDelete(Request $request): Response {
         $em = $this->getDoctrine()->getManager();
-        $doc_name = $request->get('name');
+        $doc_name = str_replace(DocumentController::PATHDOCUMENTS, '', $request->get('name'));
         $filesystem = new Filesystem();
         $document = $em->getRepository(Document::class)->findBy(['name' => $doc_name])[0];
         $file = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $document->getPath();
@@ -54,7 +54,7 @@ class DocumentController extends AbstractController {
         $em->remove($document);
         $em->flush();
 
-        return new Response('Supprimé avec succès');
+        return $request->get('ListThumbnailsUploadeds')? $this->getImagesUploaded(): new Response('Image Supprimées');
     }
 
     /**
@@ -62,7 +62,7 @@ class DocumentController extends AbstractController {
      * @Route("/images/album", name="get_images_uploaded")
      * @return response
      */
-    public function getImagesUploaded(Request $request): Response {
+    public function getImagesUploaded(): Response {
         $aImages = array();
         $finder = new Finder();
         $status = 'OK';

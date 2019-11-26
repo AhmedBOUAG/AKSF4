@@ -49,7 +49,7 @@ class ActualiteController extends AbstractController
     }
 
     /**
-     * @Route("/{titre}", name="actualite_show", methods={"GET"})
+     * @Route("/{id}", name="actualite_show", methods={"GET"})
      */
     public function show(Actualite $actualite): Response
     {

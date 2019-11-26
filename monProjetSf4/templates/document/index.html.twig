@@ -3,26 +3,27 @@
 {% block title %}Les images uploadées{% endblock %}
 
 {% block body %}
-    <h1>Les images uploadées</h1>
-    {% if status == 'KO' %}
-        <div class="alert alert-warning" role="alert">
-            <span class="btn-label"> <i class="fas fa-exclamation-triangle fa-1x"></i> </span>
-            Aucune image trouvée !
-        </div>
-    {% endif %}
-    <div class="row text-center text-lg-left">
-        {% for image in images %}
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="d-block mb-4 h-100 thumbnail-block">
-                    <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
-                    <div class="option-thumbnail"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></div>
-                    <div style="display:none;" class="grey-tint img-fluid img-thumbnail"></div>
-                </div>
-
+    <div id="container-thumbnails">
+        <h1>Les images uploadées</h1>
+        {% if status == 'KO' %}
+            <div class="alert alert-warning" role="alert">
+                <span class="btn-label"> <i class="fas fa-exclamation-triangle fa-1x"></i> </span>
+                Aucune image trouvée !
             </div>
-        {% endfor %}
-    </div>
+        {% endif %}
+        <div class="row text-center text-lg-left">
+            {% for image in images %}
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="d-block mb-4 h-100 thumbnail-block">
+                        <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
+                        <div class="option-thumbnail"><button id="btn-delete-image" class="btn btn-danger btn-delete-image"><input type="hidden" value="{{image}}"><i class="fas fa-trash-alt"></i></button></div>
+                        <div style="display:none;" class="grey-tint img-fluid img-thumbnail"></div>
+                    </div>
 
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     <script>
 
         $('.thumbnail-block').mouseenter(function () {
@@ -33,6 +34,19 @@
         }).mouseleave(function () {
             $(this).find(".option-thumbnail").css("display", "none");
             $(this).find(".grey-tint").removeClass('griser').css("display", "none");
+        });
+
+        $('.btn-delete-image').click(function () {
+            var urlImage = $(this).children('input').val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('ajax_snippet_image_delete') }}',
+                cache: false,
+                data: {name: urlImage, ListThumbnailsUploadeds: true}
+            })
+                    .done(function (data) {
+                        $('#container-thumbnails').html(data);
+                    });
         });
 
     </script>
