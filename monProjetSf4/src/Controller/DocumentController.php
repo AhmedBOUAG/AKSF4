@@ -3,23 +3,27 @@
 namespace App\Controller;
 
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Document;
 
 class DocumentController extends AbstractController {
 
     private $absolutePathFolderDocuments = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'documents';
+
     const PATHDOCUMENTS = 'uploads/documents/';
+    const DEFAULTIMAGENEWS = 'slide_news_without_image';
 
     /**
      *
      * @Route("/ajax/snippet/image/send", name="ajax_snippet_image_send")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function ajaxSnippetImageSend(Request $request): Response {
         $em = $this->getDoctrine()->getManager();
@@ -40,6 +44,7 @@ class DocumentController extends AbstractController {
     /**
      * @param request
      * @Route("/ajax/snippet/image/delete", name="ajax_snippet_image_delete")
+     * @IsGranted("ROLE_ADMIN")
      * @return response
      */
     public function ajaxSnippetImageDelete(Request $request): Response {
@@ -54,12 +59,13 @@ class DocumentController extends AbstractController {
         $em->remove($document);
         $em->flush();
 
-        return $request->get('ListThumbnailsUploadeds')? $this->getImagesUploaded(): new Response('Image Supprimées');
+        return $request->get('ListThumbnailsUploadeds') ? $this->getImagesUploaded() : new Response('Image Supprimées');
     }
 
     /**
      * @param request
-     * @Route("/images/album", name="get_images_uploaded")
+     * @Route("/album", name="get_images_uploaded")
+     * @IsGranted("ROLE_ADMIN")
      * @return response
      */
     public function getImagesUploaded(): Response {
@@ -77,15 +83,16 @@ class DocumentController extends AbstractController {
         foreach ($finder as $file) {
             $explodeFileName = explode('.', $file->getRelativePathname());
             $extension = strtolower(end($explodeFileName));
-            if (in_array($extension, $aExtensionImages)) {
+            if (in_array($extension, $aExtensionImages) &&
+                    reset($explodeFileName) !== self::DEFAULTIMAGENEWS) {
                 $absoluteFilePath = $file->getRealPath();
                 $fileNameWithExtension = $file->getRelativePathname();
-                array_push($aImages, DocumentController::PATHDOCUMENTS.$fileNameWithExtension);
+                array_push($aImages, DocumentController::PATHDOCUMENTS . $fileNameWithExtension);
             }
         }
         return $this->render('document/index.html.twig', [
-                    'images' => $aImages, 
-                    'status' => $status 
+                    'images' => $aImages,
+                    'status' => $status
         ]);
     }
 

@@ -9,60 +9,69 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Service\ActualiteHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/actualite")
  */
-class ActualiteController extends AbstractController
-{
+class ActualiteController extends AbstractController {
+
     /**
      * @Route("/", name="actualite_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function index(ActualiteRepository $actualiteRepository): Response
-    {
+    public function index(Request $request, PaginatorInterface $paginator, ActualiteRepository $actualiteRepository): Response {
+        $allNews = $actualiteRepository->findAll();
+        $blocsNews = $paginator->paginate(
+            $allNews,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('actualite/index.html.twig', [
-            'actualites' => $actualiteRepository->findAll(),
+            'actualites' => $blocsNews,
         ]);
     }
 
     /**
      * @Route("/new", name="actualite_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response
     {
-        $actualite = new Actualite();
-        $form = $this->createForm(ActualiteType::class, $actualite);
-        $form->handleRequest($request);
+    $actualite = new Actualite();
+    $form = $this->createForm(ActualiteType::class, $actualite);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($actualite);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+    $entityManager = $this->getDoctrine()->getManager();
+    $entityManager->persist($actualite);
+    $entityManager->flush();
 
-            return $this->redirectToRoute('actualite_index');
-        }
+    return $this->redirectToRoute('actualite_index');
+    }
 
-        return $this->render('actualite/new.html.twig', [
-            'actualite' => $actualite,
-            'form' => $form->createView(),
-        ]);
+    return $this->render('actualite/new.html.twig', [
+                'actualite' => $actualite,
+                'form' => $form->createView(),
+    ]);
     }
 
     /**
      * @Route("/{id}", name="actualite_show", methods={"GET"})
      */
-    public function show(Actualite $actualite): Response
-    {
+    public function show(Actualite $actualite): Response {
         return $this->render('actualite/show.html.twig', [
-            'actualite' => $actualite,
+                    'actualite' => $actualite,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="actualite_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="actualite_edit", requirements={"id":"\d+"}, methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Actualite $actualite): Response
-    {
+    public function edit(Request $request, Actualite $actualite): Response {
         $form = $this->createForm(ActualiteType::class, $actualite);
         $form->handleRequest($request);
 
@@ -73,17 +82,17 @@ class ActualiteController extends AbstractController
         }
 
         return $this->render('actualite/edit.html.twig', [
-            'actualite' => $actualite,
-            'form' => $form->createView(),
+                    'actualite' => $actualite,
+                    'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}", name="actualite_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Actualite $actualite): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$actualite->getId(), $request->request->get('_token'))) {
+    public function delete(Request $request, Actualite $actualite): Response {
+        if ($this->isCsrfTokenValid('delete' . $actualite->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($actualite);
             $entityManager->flush();
@@ -91,13 +100,14 @@ class ActualiteController extends AbstractController
 
         return $this->redirectToRoute('actualite_index');
     }
+
     /**
      * @param request
      * @Route("ajax/change/statut/actualite", name="ajax_change_statut_actualite")
+     * @IsGranted("ROLE_ADMIN")
      * @return response 
      */
-    public function ajaxChangeStatutActualite(Request $request): Response
-    {
+    public function ajaxChangeStatutActualite(Request $request): Response {
         $em = $this->getDoctrine()->getManager();
         $actualite_id = $request->get('id');
         $actualite = $em->getRepository(Actualite::class)->find($actualite_id);
@@ -108,4 +118,24 @@ class ActualiteController extends AbstractController
         $em->flush();
         return new Response('OK');
     }
+
+    /**
+     * @param request
+     * @Route("/bloc/news_paginate", name="bloc_news_paginate")
+     * @return Response
+     */
+    public function paginateBlocNews(Request $request, PaginatorInterface $paginator, ActualiteRepository $actualiteRepository, ActualiteHelper $actualiteHelper): Response
+    { 
+        $allNews = $actualiteRepository->getAllApprovedNews();
+        $allNewsApproved = $actualiteHelper->getPlainTextActualite($allNews);
+        $blocsNews = $paginator->paginate(
+                $allNewsApproved, 
+                $request->query->getInt('page', 1),
+                5
+        );
+        return $this->render('actualite/blocs_news_pagination.html.twig', [
+                    'blocs' => $blocsNews,
+        ]);
+    }
+
 }

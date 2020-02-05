@@ -30,10 +30,13 @@ class QuestionSondage
      * @ORM\Column(type="datetime")
      */
     private $dateCreation;
+    
+    
     public function __construct(){
         $this->dateCreation = new \DateTimeImmutable();
         $this->approval = false;
-}
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

@@ -18,7 +18,16 @@ class QuestionSondageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, QuestionSondage::class);
     }
-
+    public function getLastQuestion()
+    {
+        return $this->createQueryBuilder('q')
+                ->select('max(q.id)')
+                ->where('q.approval = true')
+                ->getQuery()
+                ->getOneOrNullResult()
+                ;
+    }
+ 
     // /**
     //  * @return QuestionSondage[] Returns an array of QuestionSondage objects
     //  */

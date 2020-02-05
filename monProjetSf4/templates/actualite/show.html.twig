@@ -3,8 +3,7 @@
 {% block title %}{{ actualite.titre }}{% endblock %}
 
 {% block body %}
-    <h1 class="display-4">{{ actualite.titre }}</h1>
-
+    <h1 class="display-5 direction-rtl">{{ actualite.titre }}</h1>
     <table class="table">
         <tbody>
             <tr>
@@ -16,9 +15,12 @@
         </tbody>
     </table>
     <hr>
-    <a href="{{ path('actualite_index') }}">Retour à la liste</a>
-
-    <a href="{{ path('actualite_edit', {'id': actualite.id}) }}">Mettre à jour</a>
-
-    {{ include('actualite/_delete_form.html.twig') }}
+    {% if app.user %}
+        <a style="margin-left:5px;" href="{{ path('actualite_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour à la liste', 'icon_label': 'fa-undo-alt'}) }} </a>
+        <a href="{{ path('actualite_edit', {'id': actualite.id}) }}">{{ include('button.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }} </a>
+        {{ include('actualite/_delete_form.html.twig') }}
+    {% endif %}
+    {#    {% include '@FOSComment/Thread/async.html.twig' with {'id': actualite.id} %}
+    #}
+    {{ include('actualite/js_actualite.html.twig') }}
 {% endblock %}

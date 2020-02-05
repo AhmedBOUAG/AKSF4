@@ -37,7 +37,7 @@
     <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete">  <div class="dz-image"><img data-dz-thumbnail></div>  <div class="dz-details">    <div class="dz-size"><span data-dz-size=""><strong></strong> </span></div>    <div class="dz-filename"><span data-dz-name=""></span></div>  </div>  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress="" style="width: 100%;"></span></div>  <div class="dz-error-message"><span data-dz-errormessage=""></span></div>  <div class="dz-success-mark">  </div>  <div class="dz-error-mark"></div><a class="dz-remove" href="javascript:undefined;" data-dz-remove=""><a class="dz-remove" data-dz-remove=""><i class="fas fa-trash-alt icon-delete-dz" aria-hidden="true" data-dz-remove=""></i></a></div>
 </div>
 <script>
-    $('<div class="msg_copie">Copié !</div>' ).insertAfter( "header" );
+
     Dropzone.autoDiscover = false;
     $(function () {
         //je récupère l'action où sera traité l'upload en PHP
@@ -80,8 +80,8 @@
                 input.value = file.upload.filename;
                 // cannot find informations about the file object
                 // in the dropzone.js doc ...
-                
-                
+
+
 
                 done();
             }
@@ -96,69 +96,15 @@
             $(".container > #form_snippet_image > .dz-image-preview > #copy-btn").each(function () {
                 $(this).on("click", function () {
                     var obj = $(this).parent().first();
-                    copyToClipboard(obj.find("#copy-url"));
+                    copyToClipboard('/uploads/documents/' + obj.find("#copy-url").val());
                 });
             });
-
-
-            //console.log("complete " + file.upload.filename);
-            //var imgElement = document.querySelector('img[alt="'+file.filename+'"]');
-            //console.log(imgElement);
-    {#            //$(this).find('#copy-url').val(file.upload.filename);
-
-                $(".dz-preview").find('#copy-url').attr('value', file.upload.filename);
-
-    #}
-            });
-            myDropzone.on("addedfile", function (file) {
-
-            });
+        });
+        myDropzone.on("addedfile", function (file) {
 
         });
 
-        function copyToClipboardFF(text) {
-            window.prompt("Copy to clipboard: Ctrl C, Enter", text);
-        }
+    });
 
-        function copyToClipboard(objectInput) {
-            let inputVal = '/uploads/documents/'+objectInput.val();
-            var success = true,
-                    range = document.createRange(),
-                    selection;
-
-            // For IE.
-            if (window.clipboardData) {
-                window.clipboardData.setData("Text", inputVal);
-            } else {
-                // Create a temporary element off screen.
-                var tmpElem = $('<div>');
-                tmpElem.css({
-                    position: "absolute",
-                    left: "-1000px",
-                    top: "-1000px",
-                });
-                // Add the input value to the temp element.
-                tmpElem.text(inputVal);
-                $("body").append(tmpElem);
-                // Select temp element.
-                range.selectNodeContents(tmpElem.get(0));
-                selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
-                // Lets copy.
-                try {
-                    success = document.execCommand("copy", false, null);
-                } catch (e) {
-                    copyToClipboardFF(inputVal);
-                }
-                if (success) {
-                    //alert ("The text is on the clipboard, try to paste it!");
-                    // remove temp element.
-                    tmpElem.remove();
-                    $('.msg_copie').show().fadeOut(500);
-                }
-            }
-        }
-
-        //copyBtn.on('click', copyToClipboard);
 </script>
+{{ include('/document/js_document.html.twig') }}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les images uploadées{% endblock %}
+{% block title %}Les images téléchargées{% endblock %}
 
 {% block body %}
     <div id="container-thumbnails">
@@ -16,7 +16,7 @@
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="d-block mb-4 h-100 thumbnail-block">
                         <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
-                        <div class="option-thumbnail"><button id="btn-delete-image" class="btn btn-danger btn-delete-image"><input type="hidden" value="{{image}}"><i class="fas fa-trash-alt"></i></button></div>
+                        <div class="option-thumbnail"><div class="btn-group-sm btn-group"><input id="url_image" type="hidden" value="{{image}}"><button id="btn-delete-image" class="btn btn-danger btn-delete-image"><i class="fas fa-trash-alt"></i></button><button class="btn btn-primary copy-btn"><i class="fas fa-link"></i></button><button class="btn btn-warning view-btn" data-toggle="modal" data-target="#viewImage"><i class="far fa-eye"></i></button></div></div>
                         <div style="display:none;" class="grey-tint img-fluid img-thumbnail"></div>
                     </div>
 
@@ -24,20 +24,38 @@
             {% endfor %}
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewImage" tabindex="-1" role="dialog" aria-labelledby="viewImageLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewImageLabel">Visualisation d'image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img id="contentModal" style="width:100%;" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
 
         $('.thumbnail-block').mouseenter(function () {
             $(this).find(".option-thumbnail").css("display", "block");
             $(this).find(".grey-tint").addClass('griser').removeAttr('style');
-            //console.log(kids);
-            //$('option-thumbnail').css('display', 'block');
         }).mouseleave(function () {
             $(this).find(".option-thumbnail").css("display", "none");
             $(this).find(".grey-tint").removeClass('griser').css("display", "none");
         });
 
         $('.btn-delete-image').click(function () {
-            var urlImage = $(this).children('input').val();
+            var urlImage = $('#url_image').val();
             $.ajax({
                 type: 'POST',
                 url: '{{ path('ajax_snippet_image_delete') }}',
@@ -48,6 +66,17 @@
                         $('#container-thumbnails').html(data);
                     });
         });
+        $(".copy-btn").each(function () {
+            $(this).on("click", function () {
+                copyToClipboard('/' + $(this).parent().find("#url_image").val());
+            });
+        });
+        $(".view-btn").each(function () {
+            $(this).on("click", function () {
+                $('img#contentModal').attr('src', '/' + $(this).parent().find("#url_image").val());
+            });
+        });
 
     </script>
+    {{ include('/document/js_document.html.twig') }}
 {% endblock %}

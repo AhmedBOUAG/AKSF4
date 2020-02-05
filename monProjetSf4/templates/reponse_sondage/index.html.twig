@@ -6,10 +6,10 @@
 
 {% block body %}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
-    <h1 class="float-left" style="line-height: 1 !important;">Liste des réponses aux sondages</h1>
-    <div class="btn-group float-right" role="group" aria-label="Third group">
-        <a class="float-sm-right btn btn-success" href="{{ path('reponse_sondage_new') }}" style="margin-right: 5px;"><i class="fas fa-reply"></i> Ajouter Réponse</a> 
-        <a class="float-sm-right btn btn-outline-success" href="{{ path('question_sondage_new') }}"><i class="fas fa-plus"></i>  Nouveau Sondage </a>
+    <h2 class="float-left" style="line-height: 1 !important;">Liste des réponses aux sondages</h2>
+    <div class="btn-group float-right btn-labeled" role="group" aria-label="Third group">
+        <a class="float-sm-right btn btn-success btn-labeled" href="{{ path('reponse_sondage_new') }}" style="margin-right: 5px;"><span class="btn-label"><i class="fas fa-reply"></i></span> Ajouter Réponse</a> 
+        <a class="float-sm-right btn btn-outline-success btn-labeled" href="{{ path('question_sondage_new') }}"><span class="btn-label"><i class="fas fa-plus"></i></span>  Nouveau Sondage </a>
     </div>
     <table class="table">
         <thead>

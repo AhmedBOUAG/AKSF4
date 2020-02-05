@@ -1,20 +1,40 @@
-# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
-liip_imagine:
-    # valid drivers options include "gd" or "gmagick" or "imagick"
-    driver: "gd"
-    filter_sets:
+liip_imagine :
+    resolvers :
+        default :
+            web_path : ~
 
-        # name our filter set "my_thumb_filter"
-        filter_size_thumbnail:
-            filters:
+    filter_sets :
+        cache : ~
 
-                # use and setup the "thumbnail" filter
-                thumbnail:
+        # the name of the "filter set"
+        filter_size_thumbnail :
 
-                    # set the thumbnail size to "32x32" pixels
-                    size: [180, 130]
+            # adjust the image quality to 75%
+            quality : 80
 
-                    # crop the input image, if required
-                    mode: outbound
-                    
-                    allow_upscale: true
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [180, 130], mode : outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                #background : { size : [184, 134], position : center, color : '#000000' }
+
+        filter_slide_news :
+
+            # adjust the image quality to 75%
+            quality : 90
+
+            # list of transformations to apply (the "filters")
+            filters :
+
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail  : { size : [680, 350], mode : outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                background : { size : [685, 355], position : center, color : '#000000' }
