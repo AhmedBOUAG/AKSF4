@@ -16,8 +16,8 @@ framework:
         # configures the number of bits in encoded session ID character
         # integer; default = 4; valid values: 4, 5, or 6.
         sid_bits_per_character: 4
-
     #esi: true
     #fragments: true
     php_errors:
         log: true 
+    
