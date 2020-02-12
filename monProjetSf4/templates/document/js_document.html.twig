@@ -1,0 +1,40 @@
+<script>
+    $('<div class="msg_copie">Copié !</div>').insertAfter("header");
+    function copyToClipboardFF(text) {
+        window.prompt("Copy to clipboard: Ctrl C, Enter", text);
+    }
+
+    function copyToClipboard(inputVal) {
+        
+        var success = true,
+                range = document.createRange(),
+                selection;
+
+        // Pour IE.
+        if (window.clipboardData) {
+            window.clipboardData.setData("Text", inputVal);
+        } else {
+            var tmpElem = $('<div>');
+            tmpElem.css({
+                position: "absolute",
+                left: "-1000px",
+                top: "-1000px",
+            });
+            tmpElem.text(inputVal);
+            $("body").append(tmpElem);
+            range.selectNodeContents(tmpElem.get(0));
+            selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                success = document.execCommand("copy", false, null);
+            } catch (e) {
+                copyToClipboardFF(inputVal);
+            }
+            if (success) {
+                tmpElem.remove();
+                $('.msg_copie').show().fadeOut(850);
+            }
+        }
+    }
+</script>

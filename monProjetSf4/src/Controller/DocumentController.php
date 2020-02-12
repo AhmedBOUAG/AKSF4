@@ -2,29 +2,34 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\Mapping as ORM;
-//use AppBundle\Entity\Document;
+//use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Document;
 
-class DocumentController extends AbstractController
-{
+class DocumentController extends AbstractController {
+
+    private $absolutePathFolderDocuments = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'documents';
+
+    const PATHDOCUMENTS = 'uploads/documents/';
+    const DEFAULTIMAGENEWS = 'slide_news_without_image';
+
     /**
      *
      * @Route("/ajax/snippet/image/send", name="ajax_snippet_image_send")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function ajaxSnippetImageSend(Request $request): Response
-    {
-        //$em = $this->container->get("doctrine.orm.default_entity_manager");
+    public function ajaxSnippetImageSend(Request $request): Response {
         $em = $this->getDoctrine()->getManager();
-        //dump($request->files->get('file'));die;
+
         $document = new Document();
-        //dump($request);die;
         $media = $request->files->get('file');
-        //dump($document->getUploadRootDir());
         $document->setFile($media);
         $document->setName($media->getClientOriginalName());
         $document->setPath($document->getWebPath());
@@ -32,8 +37,63 @@ class DocumentController extends AbstractController
         $em->persist($document);
         $em->flush();
 
-        //infos sur le document envoyé
-        //var_dump($request->files->get('file'));die;
+
         return new Response('succes');
     }
+
+    /**
+     * @param request
+     * @Route("/ajax/snippet/image/delete", name="ajax_snippet_image_delete")
+     * @IsGranted("ROLE_ADMIN")
+     * @return response
+     */
+    public function ajaxSnippetImageDelete(Request $request): Response {
+        $em = $this->getDoctrine()->getManager();
+        $doc_name = str_replace(DocumentController::PATHDOCUMENTS, '', $request->get('name'));
+        $filesystem = new Filesystem();
+        $document = $em->getRepository(Document::class)->findBy(['name' => $doc_name])[0];
+        $file = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $document->getPath();
+        if ($filesystem->exists($file)) {
+            $filesystem->remove($file);
+        }
+        $em->remove($document);
+        $em->flush();
+
+        return $request->get('ListThumbnailsUploadeds') ? $this->getImagesUploaded() : new Response('Image Supprimées');
+    }
+
+    /**
+     * @param request
+     * @Route("/album", name="get_images_uploaded")
+     * @IsGranted("ROLE_ADMIN")
+     * @return response
+     */
+    public function getImagesUploaded(): Response {
+        $aImages = array();
+        $finder = new Finder();
+        $status = 'OK';
+
+        $aExtensionImages = array('jpg', 'jpeg', 'gif', 'png');
+        $finder->files()->in(dirname(dirname(__DIR__)) . $this->absolutePathFolderDocuments);
+
+        // si aucun resultats n'est retourné
+        if (!$finder->hasResults()) {
+            $status = 'KO';
+        }
+        foreach ($finder as $file) {
+            $explodeFileName = explode('.', $file->getRelativePathname());
+            $extension = strtolower(end($explodeFileName));
+            if (in_array($extension, $aExtensionImages) &&
+                    reset($explodeFileName) !== self::DEFAULTIMAGENEWS) {
+                $absoluteFilePath = $file->getRealPath();
+                $fileNameWithExtension = $file->getRelativePathname();
+                array_push($aImages, DocumentController::PATHDOCUMENTS . $fileNameWithExtension);
+            }
+        }
+        return $this->render('document/index.html.twig', [
+                    'images' => $aImages,
+                    'status' => $status
+        ]);
+    }
+
 }

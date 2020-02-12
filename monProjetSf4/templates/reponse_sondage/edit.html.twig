@@ -1,13 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit ReponseSondage{% endblock %}
+{% block title %}Sondage | Modification de réponse{% endblock %}
 
 {% block body %}
-    <h1>Edit ReponseSondage</h1>
-
-    {{ include('reponse_sondage/_form.html.twig', {'button_label': 'Update', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }}
-
-    <a href="{{ path('reponse_sondage_index') }}">back to list</a>
-
+    <h1>Modification de réponse</h1>
+    {{ include('reponse_sondage/_form.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }}
     {{ include('reponse_sondage/_delete_form.html.twig') }}
 {% endblock %}

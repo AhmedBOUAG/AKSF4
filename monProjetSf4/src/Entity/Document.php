@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity
  * @ORM\Table(name="document")
  * @ORM\HasLifecycleCallbacks
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DocumentRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DocumentRepository")
  */
 class Document
 {

@@ -6,40 +6,42 @@
 
 {% block body %}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
-    <h1>Liste des réponses aux sondages</h1>
-
+    <h2 class="float-left" style="line-height: 1 !important;">Liste des réponses aux sondages</h2>
+    <div class="btn-group float-right btn-labeled" role="group" aria-label="Third group">
+        <a class="float-sm-right btn btn-success btn-labeled" href="{{ path('reponse_sondage_new') }}" style="margin-right: 5px;"><span class="btn-label"><i class="fas fa-reply"></i></span> Ajouter Réponse</a> 
+        <a class="float-sm-right btn btn-outline-success btn-labeled" href="{{ path('question_sondage_new') }}"><span class="btn-label"><i class="fas fa-plus"></i></span>  Nouveau Sondage </a>
+    </div>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Réponse</th>
                 <th>Nombre de vote</th>
-                <th>Question</th>
-                <th>actions</th>
+                <th>Sondage</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for reponse_sondage in reponse_sondages %}
-            <tr>
-                <td>{{ reponse_sondage.id }}</td>
-                <td>{{ reponse_sondage.reponse }}</td>
-                <td>{{ reponse_sondage.nbVote }}</td>
-                <td>{{ reponse_sondage.question }}</td>
-                <td>
-                    <a href="{{ path('reponse_sondage_show', {'id': reponse_sondage.id}) }}"><i class="far fa-eye"></i> Afficher</a>
-                    |
-                    <a href="{{ path('reponse_sondage_edit', {'id': reponse_sondage.id}) }}"><i class="fas fa-edit"></i> Editer</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for reponse_sondage in reponse_sondages %}
+                <tr>
+                    <td>{{ reponse_sondage.reponse }}</td>
+                    <td>{{ reponse_sondage.nbVote }}</td>
+                    <td>{{ reponse_sondage.question }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Third group">
+                            <a role="button" class="btn btn-warning btn-sm" href="{{ path('reponse_sondage_show', {'id': reponse_sondage.id}) }}"><i class="far fa-eye"></i></a> 
+                            <a role="button" class="btn btn-primary btn-sm" href="{{ path('reponse_sondage_edit', {'id': reponse_sondage.id}) }}"><i class="fas fa-edit"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-        <a href="{{ path('reponse_sondage_new') }}">Ajouter une nouvelle réponse</a> | <a href="{{ path('question_sondage_new') }}"> Ajouter nouvelle question </a>
-        <!-- before the closing <body> tag -->
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
+
+    <!-- before the closing <body> tag -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.js"></script>
 {% endblock %}

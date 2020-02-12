@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ReponseSondage;
+use App\Entity\QuestionSondage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -12,39 +13,32 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method ReponseSondage[]    findAll()
  * @method ReponseSondage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReponseSondageRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class ReponseSondageRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, ReponseSondage::class);
     }
 
-    // /**
-    //  * @return ReponseSondage[] Returns an array of ReponseSondage objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
+    /**
+     * @return ReponseSondage[] Returns an array of ReponseSondage objects
+     */
+    public function getLastPool() {
+        $lastQuestion = $this->getEntityManager()->getRepository(QuestionSondage::class)->getLastQuestion();
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+                        ->where('r.question = :question')
+                        ->setParameter('question', $lastQuestion)
+                        ->getQuery()
+                        ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ReponseSondage
-    {
+    public function getTotalVote($value) {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+                        ->andWhere('r.question = :val')
+                        ->setParameter('val', $value)
+                        ->select('SUM(r.nbVote) as totalVote')
+                        ->getQuery()
+                        ->getOneOrNullResult()
         ;
     }
-    */
 }

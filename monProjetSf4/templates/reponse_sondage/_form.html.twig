@@ -1,16 +1,19 @@
 {{ form_start(form) }}
+<div class="form-group">
     <div class="my-custom-class-for-errors">
         {{ form_errors(form) }}
     </div>
 
     <div class="row bloc-body-content">
-        <div class="col-4">
-            {{ form_row(form.reponse) }}
-        </div>
-
         <div class="col-8">
-            {{ form_row(form.question) }}
+            {{ form_row(form.question, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.reponse, {'attr': {'class': 'form-control'}}) }}
         </div>
     </div>
+</div>
+<div class="btn-group" role="group" style="float:right" aria-label="Third group">
     {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
+</div>
 {{ form_end(form) }}

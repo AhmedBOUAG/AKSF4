@@ -1,0 +1,56 @@
+
+label {
+  margin-right: 15px;
+  line-height: 15px;
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-right: 5px;
+
+  position: relative;
+  top: 4px;
+}
+
+input[type="radio"]:checked {
+    border: 6px solid #6d9e5a;
+    background: #6d9e5a;
+}
+input[type="radio"]:focus{
+    outline: none;
+}
+.poll {
+  color: white;
+  background: linear-gradient(270deg,#6ea359,#697d62 50%,#697e62 0);
+  padding: 5px 10px;
+  border-radius: 0;
+  border: 0;
+  font-size: 20px;
+}
+
+button:hover,
+button:focus {
+  color: #999;
+}
+
+button:active {
+  background-color: white;
+  color: black;
+  outline: 1px solid black;
+}
+fieldset {
+    min-width: 0;
+     padding: 10px;
+    margin: 0;
+    /* border: 0; */
+    border: 1px solid #6a885f; 
+}

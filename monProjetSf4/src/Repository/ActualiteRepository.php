@@ -19,6 +19,14 @@ class ActualiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Actualite::class);
     }
 
+    public function getAllApprovedNews() {
+        return $this->createQueryBuilder('a')
+                ->where('a.approbation = ?1')
+                ->setParameter('1', true)
+                ->orderBy('a.id', 'DESC')
+                ->getQuery()
+                ->getResult();
+    }
     // /**
     //  * @return Actualite[] Returns an array of Actualite objects
     //  */
@@ -35,6 +43,14 @@ class ActualiteRepository extends ServiceEntityRepository
         ;
     }
     */
+   public function getLastFiveArticles() {
+       return $this->createQueryBuilder('a')
+            ->orderBy('a.id', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+   }
 
     /*
     public function findOneBySomeField($value): ?Actualite

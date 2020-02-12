@@ -1,5 +1,15 @@
-<form method="post" action="{{ path('question_sondage_delete', {'id': question_sondage.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question_sondage.id) }}">
-    <button class="btn btn-danger">Delete</button>
-</form>
+{% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
+{% set operation = explodeRoute|last %}
+<div class="btn-group" role="group" style="float:left" aria-label="Third group">
+    <form method="post" action="{{ path('question_sondage_delete', {'id': question_sondage.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question_sondage.id) }}">
+        <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer</button>
+    </form>
+    <a style="margin-left:5px;" href="{{ path('question_sondage_index') }}"> {{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour aux sondages', 'icon_label': 'fa-undo-alt'}) }} </a>
+</div>
+{#{% if operation == 'show' %}
+    <div class="btn-group" role="group" style="float:right" aria-label="Third group">
+        <a href="{{ path('question_sondage_edit', {'id': question_sondage.id}) }}">{{ include('question_sondage/_form.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }}</a>
+    </div>
+{% endif %}#}

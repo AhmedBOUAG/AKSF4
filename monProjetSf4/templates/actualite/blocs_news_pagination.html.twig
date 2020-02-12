@@ -1,0 +1,42 @@
+{#{{ dump(blocs) }}
+#}
+{{ knp_pagination_render(blocs) }}
+{% for bloc in blocs %}
+    {% if blocs.getTotalItemCount > 0%}
+        <a href="{{ path('actualite_show', { 'id': bloc['id-article'] }) }}" class="not-underline" >
+        <div class="parent-bloc">
+            <div class="title-bloc-news">{{ bloc['title'] }}</div>
+
+                <div class="body-bloc">
+                    <img src="{{ bloc['src'] }}" class="thumbnail-news" /> <div class="text-news-bloc"> {{ bloc['sub-title']| striptags|slice(0, 198)|raw }}...</div>
+                </div>
+            
+        </div>
+        </a>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+    {% endif %}
+{% endfor %}
+{{ knp_pagination_render(blocs) }}
+<br>
+<script>
+
+    $(function () {
+
+        $(".page-item > a").on("click", function (e) {
+            var page = $(this).attr('href').split("=").pop();
+            $.ajax({
+                type: "GET",
+                url: '{{ path('bloc_news_paginate') }}',
+                data: {page: page},
+            })
+                    .done(function (msg) {
+                        //$(".home-news-bloc").toggle("slide:right"); ne fonctionne pas, barre pagination ne doit pas bouger
+                        $(".home-news-bloc").html(msg);
+                    });
+            e.preventDefault();
+        });
+    });
+</script>
