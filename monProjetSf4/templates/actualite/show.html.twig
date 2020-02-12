@@ -20,7 +20,10 @@
         <a href="{{ path('actualite_edit', {'id': actualite.id}) }}">{{ include('button.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }} </a>
         {{ include('actualite/_delete_form.html.twig') }}
     {% endif %}
-    {#    {% include '@FOSComment/Thread/async.html.twig' with {'id': actualite.id} %}
-    #}
+    <br />
+    Les commentaires:
+     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js">
+    {% include '@FOSComment/Thread/async.html.twig' with {'id': actualite.id} %}
+    
     {{ include('actualite/js_actualite.html.twig') }}
 {% endblock %}
