@@ -12,9 +12,9 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
-
     </head>
     <body>
+        <div class="logo" id="logo"><img src="http://a.bouagoune.free.fr/menu/logo-aitk.png"></div>
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0"></script>
         {% if app.user %}
@@ -25,21 +25,22 @@
         <main role="main" class="container">
             {% if not app.user %}
                 {% block header %}
-                    <div style="width: 100%; height:200px; background: linear-gradient(to right, #e6e6e6, #cdcdcd, #f4f4f4); margin-bottom: 5px;">
+                    <div class="header-top">
                         <div style="height:147px; width: 100%;">
                             <span class="title-site">{% trans %}Aitkermoune.net{% endtrans %}</span>
                         </div>
-                        <div class="topnav" id="myTopnav">
-                            <a href="{{ path('accueil_home') }}" class="active"> <span class="libelle-home">{% trans %}Accueil{% endtrans %}  </span><i class="fas fa-home"></i></a>
-                            <a href="#news"> {% trans %}Actualité locale{% endtrans %}</a>
-                            <a href="#contact">  {% trans %}Services{% endtrans %}</a>
-                            <a href="#about">{% trans %}Images et vidéos{% endtrans %}</a>
-                            <a href="#contact">{% trans %}Nous contacter{% endtrans %}</a>
-                            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                                <i class="fa fa-bars"></i>
-                            </a>
-                        </div>
                     </div>
+                    <div class="topnav" data-spy="affix" data-offset-top="200" id="topMenu">
+                        <a href="{{ path('accueil_home') }}" class="active"> <span class="libelle-home">{% trans %}Accueil{% endtrans %}  </span><i class="fas fa-home"></i></a>
+                        <a href="#news"> {% trans %}Actualité locale{% endtrans %}</a>
+                        <a href="#contact">  {% trans %}Services{% endtrans %}</a>
+                        <a href="#about">{% trans %}Images et vidéos{% endtrans %}</a>
+                        <a href="#contact">{% trans %}Nous contacter{% endtrans %}</a>
+                        <a href="javascript:void(0);" class="icon" onclick="toggleHamburgerMenu()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+
                 {% endblock %}
             {% endif %}
             <div class="row">
@@ -68,17 +69,8 @@
             </div>
         </footer>
     {% endblock %}
-
-    {#        <script src="{{asset('build/app.js')}}"></script>#}
-    <script>
-        function myFunction() {
-            var x = document.getElementById("myTopnav");
-            if (x.className === "topnav") {
-                x.className += " responsive";
-            } else {
-                x.className = "topnav";
-            }
-        }
-    </script>
+    {% if not app.user %}
+        {% include '/js_global.html.twig'%}
+    {% endif %}
 </body>
 </html>

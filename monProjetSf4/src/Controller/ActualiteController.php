@@ -111,7 +111,7 @@ class ActualiteController extends AbstractController {
         $em = $this->getDoctrine()->getManager();
         $actualite_id = $request->get('id');
         $actualite = $em->getRepository(Actualite::class)->find($actualite_id);
-        $old_statut = $actualite->getApprobation();
+        $old_statut = $actualite->getApproval();
         $new_statut = !$old_statut;
         $actualiteModified = $actualite->setApprobation($new_statut);
         $em->persist($actualiteModified);

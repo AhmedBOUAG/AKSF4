@@ -1,90 +1,98 @@
-<div class="poll-head">
+{% if sondageFounded %}
+    <div class="poll-head">
         <i class="fas fa-poll"></i> {% trans %}Sondage{% endtrans %}
-</div>
-<div class="poll-body">
-    <div class="message_alert"></div>
-    <h5>{{ sondages.0.question }}</h5>
-    {% for sondage in sondages %}
-        <div class="radio radio-danger">
-            <input type="radio" name="pollIndex" id="radio{{ sondage.id }}" value="{{ sondage.id }}">
-            <label for="radio{{ sondage.id }}">
-                {{ sondage.reponse }}
-            </label>
-        </div>
-    {% endfor %}
-    <div class="btn-group-toggle">
-        <button class="btn btn-success" id="submit-poll">{% trans %}Vote{% endtrans %}</button>
-        <button class="btn btn-outline-info" id="showResultPoll">{% trans %}Voir résultats{% endtrans %}</button>
     </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="viewResult" tabindex="-1" role="dialog" aria-labelledby="viewResultPoll" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="viewResultPoll">{% trans %}Résultats du sondage{% endtrans %}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                
+    <div class="poll-body">
+        <div class="message_alert"></div>
+        <h5>{{ sondages.0.question }}</h5>
+        {% for sondage in sondages %}
+            <div class="radio radio-danger">
+                <input type="radio" name="pollIndex" id="radio{{ sondage.id }}" value="{{ sondage.id }}">
+                <label for="radio{{ sondage.id }}">
+                    {{ sondage.reponse }}
+                </label>
             </div>
-            <h5 class="poll-title"></h5>
-            <div class="modal-view-result-poll">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Fermer{% endtrans %}</button>
-            </div>
+        {% endfor %}
+        <div class="btn-group-toggle">
+            <button class="btn btn-success" id="submit-poll">{% trans %}Vote{% endtrans %}</button>
+            <button class="btn btn-outline-info" id="showResultPoll">{% trans %}Voir résultats{% endtrans %}</button>
         </div>
     </div>
-</div>
-<script>
-    $(function () {
-        $("#submit-poll").on('click', function () {
-            $("input[type='radio'][name='pollIndex']:checked").each(function () {
-                var itemSelected = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ path('submit_vote') }}',
-                    data: {idPoll: '{{ sondages.0.question.id }}', idItemSelected: itemSelected},
-                    success: function (data) {
-                        switch (data) {
-                            case "KO-AV":
-                                var text = "<div class='alert alert-danger' role='alert'>لايسمح بالإشتراك إلا مرة واحدة. سبق وإن إشتركتم في هدا الإستطلاع</div>";
-                                $('.message_alert').html(text);
-                                break;
-                            case "KO-NC":
-                                var text = "<div class='alert alert-danger' role='alert'>حدثت مشكلة أثناء التصويت</div>";
-                                $('.message_alert').html(text);
-                                break;
-                            case "OK":
-                                var text = "<div class='alert alert-success' role='alert'>تم التصويت بنجاح، شكرا على تفاعلكم</div>";
-                                $('.message_alert').html(text);
-                                break;
+
+    <!-- Modal -->
+    <div class="modal fade" id="viewResult" tabindex="-1" role="dialog" aria-labelledby="viewResultPoll" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="viewResultPoll">{% trans %}Résultats du sondage{% endtrans %}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <h5 class="poll-title"></h5>
+                <div class="modal-view-result-poll">
+
+                </div>
+                <hr />
+                Nb totale de vote: <span class="nb-total-vote"></span>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %}Fermer{% endtrans %}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#submit-poll").on('click', function () {
+                $("input[type='radio'][name='pollIndex']:checked").each(function () {
+                    var itemSelected = $(this).val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('submit_vote') }}',
+                        data: {idPoll: '{{ sondages.0.question.id }}', idItemSelected: itemSelected},
+                        success: function (data) {
+                            switch (data) {
+                                case "KO-AV":
+                                    var text = "<div class='alert alert-danger' role='alert'>{% trans %}Vous avez déjà participé à ce sondage.{% endtrans %}</div>";
+                                    $('.message_alert').html(text);
+                                    break;
+                                case "KO-NC":
+                                    var text = "<div class='alert alert-danger' role='alert'>{% trans %}Un problème est survenu lors de la soumission du vote.{% endtrans %}</div>";
+                                    $('.message_alert').html(text);
+                                    break;
+                                case "OK":
+                                    var text = "<div class='alert alert-success' role='alert'>{% trans %}Votre vote a été pris en compte.{% endtrans %}</div>";
+                                    $('.message_alert').html(text);
+                                    break;
+                            }
                         }
+                    });
+                });
+            });
+            $("#showResultPoll").on('click', function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('show_result_poll') }}',
+                    data: {idPoll: '{{ sondages.0.question.id }}'},
+                    success: function (data) {
+                        var progressBar = '';
+                        var nbTotalVote = 0;
+                        //console.log(data);
+                        var i = 1;
+                        for (reponse in data) {
+                            nbTotalVote += data[reponse].nbVote;
+                            progressBar += '<span style="padding:5px;">' + data[reponse].intituleReponse + ' :</span><div class="container-result-poll"><div style="width: __WIDTH__%;" class="skills reponse' + i + '"><span class="itemResultAnswer"> <i>(' + data[reponse].ratePerCent + '%)</i></font></div></div>';
+                            progressBar = progressBar.replace('__WIDTH__', (data[reponse].ratePerCent));
+                            i++;
+                        }
+                        $('.modal-view-result-poll').html(progressBar);
+                        $('.nb-total-vote').text(nbTotalVote);
+                        $('.poll-title').text('{{ sondages.0.question }}');
+                        $('#viewResult').modal('show');
                     }
                 });
             });
         });
-        $("#showResultPoll").on('click', function () {
-            $.ajax({
-                type: 'GET',
-                url: '{{ path('show_result_poll') }}',
-                data: {idPoll: '{{ sondages.0.question.id }}'},
-                success: function (data) {
-                    var progressBar = '';
-                    var i = 1;
-                    for (reponse in data) {
-                        progressBar += '<span style="padding:5px;">' + data[reponse].intituleReponse + ' :</span><div class="container-result-poll"><div style="width: __WIDTH__%;" class="skills reponse' + i + '"><span class="itemResultAnswer"> <i>(' + data[reponse].ratePerCent + '%)</i></font></div></div>';
-                        progressBar = progressBar.replace('__WIDTH__', (data[reponse].ratePerCent));
-                        i++;
-                    }
-                    $('.modal-view-result-poll').html(progressBar);
-                    $('.poll-title').text('{{ sondages.0.question }}');
-                    $('#viewResult').modal('show');
-                }
-            });
-        });
-    });
-</script>
+    </script>
+{% endif %}

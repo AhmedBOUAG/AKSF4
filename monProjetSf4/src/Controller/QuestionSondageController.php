@@ -93,4 +93,21 @@ class QuestionSondageController extends AbstractController
 
         return $this->redirectToRoute('question_sondage_index');
     }
+    /**
+     * @param request
+     * @Route("ajax/change/statut/question", name="ajax_change_statut_question")
+     * @IsGranted("ROLE_ADMIN")
+     * @return response 
+     */
+    public function ajaxChangeStatutQuestion(Request $request): Response {
+        $em = $this->getDoctrine()->getManager();
+        $question_id = $request->get('id');
+        $question = $em->getRepository(QuestionSondage::class)->find($question_id);
+        $old_statut = $question->getApproval();
+        $new_statut = !$old_statut;
+        $questionModified = $question->setApproval($new_statut);
+        $em->persist($questionModified);
+        $em->flush();
+        return new Response('OK');
+    }
 }

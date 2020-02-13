@@ -7,7 +7,7 @@
                 url: '{{ path('ajax_change_statut_actualite') }}',
                 data: {id: actualite_id, request: 2},
                 sucess: function (data) {
-                    console.log('success: ' + data);
+                    //console.log('success: ' + data);
                 }
             });
         });
@@ -15,12 +15,13 @@
         $("p > img").each(function () {
             var widthWindow = $(window).width();
             if(this.width > widthWindow || this.width > 720) {
-                var percentWidth = Math.round((widthWindow * 100) / this.width );
-                var heightImage = Math.round((this.height * percentWidth) / 100);
+                //var percentWidth = Math.round((widthWindow * 100) / this.width );
+                //var heightImage = Math.round((this.height * percentWidth) / 100);
                 $(this).css("width", "100%");
-                //$(this).css("height", heightImage);
+                $(this).css("height", "auto");
+                $(this).css("border-radius", "3px");
             }
         });
     });
-
+    
 </script>
