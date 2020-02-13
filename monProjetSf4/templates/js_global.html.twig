@@ -1,0 +1,46 @@
+<script>
+    function toggleHamburgerMenu() {
+        var x = document.getElementById("topMenu");
+        if (x.className === "topnav" || x.className === "topnav sticky") {
+            x.className += " responsive";
+            console.log('1');
+        } else {
+            if (x.className != "topnav responsive") {
+                console.log('2');
+                x.className = "topnav sticky";
+            } else {
+                x.className = "topnav";
+                console.log('3');
+            }
+        }
+    }
+    window.onscroll = function () {
+        scrollingFix()
+    };
+
+// Get the header
+    var header = document.getElementById("topMenu");
+    var logo = document.getElementById("logo");
+
+// Get the offset position of the navbar
+    var sticky = header.offsetTop;
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    function scrollingFix() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+            var width = window.innerWidth;
+            if (!(width > 600 && width < 800))
+            {
+                logo.style.display = "block";
+            }
+            if(width > 800 && width > 600){
+                logo.style.left = "5px";
+            }
+        } else {
+            header.classList.remove("sticky");
+            logo.style.display = "none";
+
+        }
+    }
+</script>
