@@ -10,7 +10,7 @@ liip_imagine :
         filter_size_thumbnail :
 
             # adjust the image quality to 75%
-            quality : 80
+            quality : 99
 
             # list of transformations to apply (the "filters")
             filters :
@@ -26,7 +26,7 @@ liip_imagine :
         filter_slide_news :
 
             # adjust the image quality to 75%
-            quality : 90
+            quality : 99
 
             # list of transformations to apply (the "filters")
             filters :
