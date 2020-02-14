@@ -3,6 +3,7 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
+/config/packages/translation.yaml
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
