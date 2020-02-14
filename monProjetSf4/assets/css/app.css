@@ -496,3 +496,7 @@ i.fab.fa-linkedin.jssocials-share-logo {
 i.fab.fa-twitter.jssocials-share-logo {
     color: #00aced;
 }
+.table > tbody > tr > td > p {
+    direction: rtl;
+    line-height: 1.9;
+}
