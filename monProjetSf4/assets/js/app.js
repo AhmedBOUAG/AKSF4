@@ -10,6 +10,7 @@ require('../css/app.css');
 require('../css/affogato.css');
 require('../css/dropzone.css');
 require('../css/checkboxnradio.min.css');
+require('../css/comment.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // const $ = require('jquery');
