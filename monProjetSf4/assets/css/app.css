@@ -287,6 +287,7 @@ main{
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
 @media screen and (max-width: 600px) {
+    span.label-btn-md {display: none;}
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
         float: left;
@@ -499,4 +500,14 @@ i.fab.fa-twitter.jssocials-share-logo {
 .table > tbody > tr > td > p {
     direction: rtl;
     line-height: 1.9;
+}
+/**************** CSS FOSCommentBundle ************************/
+div.fos_comment_comment_body {
+    border: 1px solid #f0f8ff;
+    padding: 5px;
+}
+.fos_comment_comment_metas {
+    background: aliceblue;
+    padding: 5px;
+    margin-top: 10px;
 }
