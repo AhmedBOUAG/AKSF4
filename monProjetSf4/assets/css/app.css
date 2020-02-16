@@ -501,13 +501,3 @@ i.fab.fa-twitter.jssocials-share-logo {
     direction: rtl;
     line-height: 1.9;
 }
-/**************** CSS FOSCommentBundle ************************/
-div.fos_comment_comment_body {
-    border: 1px solid #f0f8ff;
-    padding: 5px;
-}
-.fos_comment_comment_metas {
-    background: aliceblue;
-    padding: 5px;
-    margin-top: 10px;
-}

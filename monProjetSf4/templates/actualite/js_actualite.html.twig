@@ -14,7 +14,7 @@
 
         $("p > img").each(function () {
             var widthWindow = $(window).width();
-            if(this.width > widthWindow || this.width > 720) {
+            if (this.width > widthWindow || this.width > 720) {
                 //var percentWidth = Math.round((widthWindow * 100) / this.width );
                 //var heightImage = Math.round((this.height * percentWidth) / 100);
                 $(this).css("width", "100%");
@@ -22,7 +22,17 @@
                 $(this).css("border-radius", "3px");
             }
         });
-        $('.fos_comment_comment_replies').css('margin-left', '30px');
+        setTimeout(function () {
+            $('.fos_comment_comment_replies').css('margin-left', '30px');
+            $(".fos_comment_comment_voting").each(function (index) {
+                var like = $(this).find('button')[0];
+                var dislike = $(this).find('button')[1];
+                $(like).html('<i class="fas fa-thumbs-up"></i>');
+                $(dislike).html('<i class="fas fa-thumbs-down"></i>');
+            });
+        }, 2000);
+
+
     });
-    
+
 </script>
