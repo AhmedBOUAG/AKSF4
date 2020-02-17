@@ -15,7 +15,7 @@
         </tbody>
     </table>
     <hr>
-    
+
     <div id="shareIcons" class="jssocials">
         <div class="jssocials-shares">
             <div class="jssocials-share jssocials-share-twitter"><a class="jssocials-share-link" href="https://twitter.com/share?url=http%3A%2F%2Faitkermoune.net/actualite/{{ actualite.id }}" target="_blank"><i class="fab fa-twitter jssocials-share-logo"></i></a></div>
@@ -26,15 +26,17 @@
             <span><u>{% trans %}Partager{% endtrans %}</u></span>
         </div>
     </div>
+    <hr>
     {% if app.user %}
         <a style="margin-left:5px;" href="{{ path('actualite_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour à la liste', 'icon_label': 'fa-undo-alt'}) }} </a>
         <a href="{{ path('actualite_edit', {'id': actualite.id}) }}">{{ include('button.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }} </a>
         {{ include('actualite/_delete_form.html.twig') }}
+        <hr>
     {% endif %}
     <br />
     Les commentaires:
     {% include '@FOSComment/Thread/async.html.twig' with {'id': actualite.id} %}
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-   
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+
     {{ include('actualite/js_actualite.html.twig') }}
 {% endblock %}

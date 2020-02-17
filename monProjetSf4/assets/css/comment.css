@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Tomorrow&display=swap');
+:root {
+    --head-bg-color: #c9e1f6;
+}
 
 #fos_comment_thread h3{
     font-family: 'Tomorrow', sans-serif;
@@ -16,7 +19,7 @@ textarea{
 
 .fos_comment_comment_reply {
     margin-left: 0px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .fos_comment_comment_authorname{
@@ -24,8 +27,8 @@ textarea{
 }
 
 .fos_comment_comment_body{             
-    background: whitesmoke;
-    border-radius: 5px;
+    background: #fff;
+    border-radius: 0 0 5px 5px;
     text-indent: 30px;
     margin-bottom: 0.2rem;
     padding: 5px;
@@ -35,6 +38,7 @@ textarea{
 .fos_comment_comment_show{
     border-radius: 5px;
     padding: 15px;
+    padding-right: 0px !important;
     border-left: outset;
 }
 
@@ -107,11 +111,13 @@ button.fos_comment_comment_reply_show_form:hover {
     transition: color 0.15s ease-in-out;
 }
 div.fos_comment_comment_body {
-    border: 1px solid #f0f8ff;
+    border: 1px solid;
+    border-color: var(--head-bg-color);
     padding: 5px;
 }
 .fos_comment_comment_metas {
-    background: aliceblue;
+    background: linear-gradient(to right, var(--head-bg-color) 75%, #fff 110%);
+    border-radius: 0 5px 0 0;
     padding: 5px;
     height: 70px;
 }
@@ -119,11 +125,16 @@ div.fos_comment_comment_body {
     float: right;
 }
 .fos_comment_comment_score {
-    border: 1px solid aliceblue;
+    border: 1px solid;
+    border-color: var(--head-bg-color);
     font-size: 0.8rem;
     border-radius: 4px;
     background: #418b94;
+    margin-top: 1px;
     text-align: center;
     color: whitesmoke;
     font-weight: bolder;
+}
+.fos_comment_comment_reply{
+    display: none;
 }

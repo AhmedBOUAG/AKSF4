@@ -16,7 +16,20 @@
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="d-block mb-4 h-100 thumbnail-block">
                         <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
-                        <div class="option-thumbnail"><div class="btn-group-sm btn-group"><input id="url_image" type="hidden" value="{{image}}"><button id="btn-delete-image" class="btn btn-danger btn-delete-image"><i class="fas fa-trash-alt"></i></button><button class="btn btn-primary copy-btn"><i class="fas fa-link"></i></button><button class="btn btn-warning view-btn" data-toggle="modal" data-target="#viewImage"><i class="far fa-eye"></i></button></div></div>
+                        <div class="option-thumbnail">
+                            <div class="btn-group-sm btn-group">
+                                <input id="url_image" type="hidden" value="{{image}}">
+                                <button id="btn-delete-image" class="btn btn-danger btn-delete-image">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="btn btn-primary copy-btn">
+                                    <i class="fas fa-link"></i>
+                                </button>
+                                <button class="btn btn-warning view-btn" data-toggle="modal" data-target="#viewImage">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
                         <div style="display:none;" class="grey-tint img-fluid img-thumbnail"></div>
                     </div>
 
@@ -55,7 +68,8 @@
         });
 
         $('.btn-delete-image').click(function () {
-            var urlImage = $('#url_image').val();
+            var divParent = $(this).closest('div');
+            var urlImage = $(divParent).find('#url_image').val();
             $.ajax({
                 type: 'POST',
                 url: '{{ path('ajax_snippet_image_delete') }}',

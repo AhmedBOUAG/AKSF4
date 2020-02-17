@@ -30,6 +30,13 @@
                 $(like).html('<i class="fas fa-thumbs-up"></i>');
                 $(dislike).html('<i class="fas fa-thumbs-down"></i>');
             });
+            $('.fos_comment_comment_show').hover(function (e) {
+                var btnReply = $(this).find('.fos_comment_comment_reply')[0];
+                $(btnReply).fadeIn(500);
+            }, function (e) {
+                var btnReply = $(this).find('.fos_comment_comment_reply')[0];
+                $(btnReply).fadeOut(500);
+            });
         }, 2000);
 
 
