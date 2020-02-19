@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css?family=Almarai&display=swap');
 body {
     padding-top: 70px;
     min-height: 100vh;
@@ -5,7 +7,7 @@ body {
     margin: 0px;
     background: #f6f6f6 !important;
     /*font-family: Affogato-Regular;*/
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Almarai', sans-serif;/*'Cairo', sans-serif;*/
     font-size: 16px;
 }
 label, .form-control{
@@ -252,6 +254,7 @@ main{
 .topnav {
     background-color: #333;
     overflow: hidden;
+    margin-bottom: 5px;
 }
 
 /* Style the links inside the navigation bar */
@@ -284,6 +287,7 @@ main{
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
 @media screen and (max-width: 600px) {
+    span.label-btn-md {display: none;}
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
         float: left;
@@ -429,4 +433,86 @@ a.not-underline>.parent-bloc>.title-bloc-news:hover{
     border-width: 0 0 0 1px;
     border-style: solid;
     border-image: linear-gradient( to top, #888888, rgba(0, 0, 0, 0) ) 1 100%;
+}
+.header-top{
+    width: 100%;
+    height:150px;
+    background: linear-gradient(to right, #e6e6e6, #cdcdcd, #f4f4f4);
+    /*margin-bottom: 5px;*/
+}
+.sticky {
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    left: 0;
+    box-shadow: 0px 3px 6px 0px #b2b2b2;
+}
+.sticky + .content {
+    padding-top: 160px;
+}
+.logo>img {
+    /*  width: 35px;*/
+}
+.logo {
+    position: fixed;
+    z-index: 100000000000;
+    left: 30%;
+    top: 8px;
+    display:none;
+}
+@media(min-width:600px) and (max-width:800px){
+    .logo {
+        position: fixed;
+        z-index: 100000000000;
+        left: 40%;
+        top: 8px;
+        display:none !important;
+    }
+}
+.modal-dialog{top:50px;}
+.jssocials-share {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0.3em;
+}
+div#shareIcons {
+    font-size: 1.5em;
+}
+.round-shares .jssocials-share-link {
+    border-radius: 50%;
+}
+i.fab.fa-google-plus.jssocials-share-logo {
+    color: #c64115;
+}
+i.fab.fa-facebook.jssocials-share-logo {
+    color: #4267b2;
+}
+i.fab.fa-pinterest.jssocials-share-logo {
+    color: #cb2027;
+}
+i.fab.fa-linkedin.jssocials-share-logo {
+    color: #007bb6;
+}
+i.fab.fa-twitter.jssocials-share-logo {
+    color: #00aced;
+}
+.table > tbody > tr > td > p {
+    direction: rtl;
+    line-height: 1.9;
+}
+.label-share {
+    font-size: 1rem;
+    padding: 6px;
+    color: #ffffff;
+    background: #6a6a6a;
+    border: 1px solid #656769;
+    border-radius: 15px;
+}
+span.bloc-social-shares {
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding-bottom: 5px;
+    background: linear-gradient(45deg, transparent, #b4b4b4);
+    position: relative;
 }

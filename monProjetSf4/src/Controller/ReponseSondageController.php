@@ -103,8 +103,10 @@ class ReponseSondageController extends AbstractController {
     public function actualPoll(Request $request): Response {
         $em = $this->getDoctrine()->getManager();
         $sondages = $em->getRepository(ReponseSondage::class)->getLastPool();
+        $sondageFounded = count($sondages) > 0 ? true : false;
         return $this->render('reponse_sondage/sondage.html.twig', [
                     'sondages' => $sondages,
+                    'sondageFounded' => $sondageFounded,
         ]);
     }
 
@@ -148,6 +150,7 @@ class ReponseSondageController extends AbstractController {
             $answers[$key]['nbVote'] = $pollAnswer->getNbVote();
             $answers[$key]['ratePerCent'] = $pollAnswer->getNbVote() > 0 ? round($pollAnswer->getNbVote() * 100 / $totalVote['totalVote'], 2) : 0;
         }
+        //$answers['totalVote'] = $totalVote['totalVote'];
         return new JsonResponse($answers);
         
     }

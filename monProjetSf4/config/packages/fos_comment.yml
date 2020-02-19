@@ -4,6 +4,4 @@ fos_comment:
         model:
             comment: App\Entity\Comment
             thread: App\Entity\Thread
-
-# assetic:
-#    bundles: [ "FOSCommentBundle" ]  
+            vote: App\Entity\Vote

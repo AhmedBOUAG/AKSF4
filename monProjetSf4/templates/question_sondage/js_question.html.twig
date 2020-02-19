@@ -1,0 +1,15 @@
+<script>
+    $(function () {
+        $('.custom-control-input').change(function () {
+            var question_id = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('ajax_change_statut_question') }}',
+                data: {id: question_id, request: 2},
+                sucess: function (data) {
+                    //console.log('success: ' + data);
+                }
+            });
+        });
+    });
+</script>

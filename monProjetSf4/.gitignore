@@ -3,6 +3,7 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
+/config/packages/translation.yaml
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -27,7 +28,7 @@ yarn-error.log
 ###> symfony/webpack-encore-pack ###
 /node_modules/
 /public/build/
-#/public/uploads/
+/public/uploads/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-pack ###
