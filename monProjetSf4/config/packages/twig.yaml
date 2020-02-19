@@ -4,3 +4,5 @@ twig:
     strict_variables: '%kernel.debug%'
     paths:
         '%kernel.project_dir%/vendor/knplabs/knp-paginator-bundle/templates': KnpPaginator
+#    globals:
+#        ActuHelper: '@App\Service\ActualiteHelper'

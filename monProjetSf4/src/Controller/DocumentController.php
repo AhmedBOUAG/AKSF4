@@ -9,10 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-//use Doctrine\ORM\Mapping as ORM;
+use App\Service\ActualiteHelper;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Document;
-
+use App\Entity\Actualite;
 class DocumentController extends AbstractController {
 
     private $absolutePathFolderDocuments = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'documents';
@@ -47,7 +47,7 @@ class DocumentController extends AbstractController {
      * @IsGranted("ROLE_ADMIN")
      * @return response
      */
-    public function ajaxSnippetImageDelete(Request $request): Response {
+    public function ajaxSnippetImageDelete(Request $request, ActualiteHelper $actualiteHelper): Response {
         $em = $this->getDoctrine()->getManager();
         $doc_name = str_replace(DocumentController::PATHDOCUMENTS, '', $request->get('name'));
         $filesystem = new Filesystem();
@@ -59,7 +59,7 @@ class DocumentController extends AbstractController {
         $em->remove($document);
         $em->flush();
 
-        return $request->get('ListThumbnailsUploadeds') ? $this->getImagesUploaded() : new Response('Image Supprimées');
+        return $request->get('ListThumbnailsUploadeds') ? $this->redirectToRoute('get_images_uploaded', $request->query->all()) : new Response('Image Supprimées');
     }
 
     /**
@@ -68,11 +68,17 @@ class DocumentController extends AbstractController {
      * @IsGranted("ROLE_ADMIN")
      * @return response
      */
-    public function getImagesUploaded(): Response {
-        $aImages = array();
+    public function getImagesUploaded(ActualiteHelper $actualiteHelper): Response {
+        $aImages = $aImgActualite = array();
         $finder = new Finder();
         $status = 'OK';
-
+        $em = $this->getDoctrine()->getManager();
+        $allActualites = $em->getRepository(Actualite::class)->findAll();
+        $actualiteImages = $actualiteHelper->getPlainTextActualite($allActualites);
+        
+        foreach ($actualiteImages as $img) {
+            array_push($aImgActualite, substr($img['src'], 1));
+        }
         $aExtensionImages = array('jpg', 'jpeg', 'gif', 'png');
         $finder->files()->in(dirname(dirname(__DIR__)) . $this->absolutePathFolderDocuments);
 
@@ -87,7 +93,9 @@ class DocumentController extends AbstractController {
                     reset($explodeFileName) !== self::DEFAULTIMAGENEWS) {
                 $absoluteFilePath = $file->getRealPath();
                 $fileNameWithExtension = $file->getRelativePathname();
-                array_push($aImages, DocumentController::PATHDOCUMENTS . $fileNameWithExtension);
+                $fileLink['src'] = DocumentController::PATHDOCUMENTS . $fileNameWithExtension;
+                $fileLink['isLocked'] = in_array($fileLink['src'], $aImgActualite) ? true : false;
+                array_push($aImages, $fileLink);
             }
         }
         return $this->render('document/index.html.twig', [

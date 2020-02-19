@@ -4,7 +4,7 @@
 
 {% block body %}
     <div id="container-thumbnails">
-        <h1>Les images uploadées</h1>
+        <h1>Les images uploadées ({{ images|length }})</h1>
         {% if status == 'KO' %}
             <div class="alert alert-warning" role="alert">
                 <span class="btn-label"> <i class="fas fa-exclamation-triangle fa-1x"></i> </span>
@@ -15,14 +15,20 @@
             {% for image in images %}
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="d-block mb-4 h-100 thumbnail-block">
-                        <img src="{{ image | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
+                        <img src="{{ image['src'] | imagine_filter('filter_size_thumbnail') }}" itemprop="thumbnail" class="img-fluid img-thumbnail" />
                         <div class="option-thumbnail">
                             <div class="btn-group-sm btn-group">
-                                <input id="url_image" type="hidden" value="{{image}}">
-                                <button id="btn-delete-image" class="btn btn-danger btn-delete-image">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <button class="btn btn-primary copy-btn">
+                                <input id="url_image" type="hidden" value="{{image['src']}}">
+                                {% if image['isLocked'] == false %}
+                                    <button id="btn-delete-image" class="btn btn-danger btn-delete-image" data-placement="top" data-toggle="tooltip" title="Supprimer cette image">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                {% else %}
+                                    <button id="btn-locked" class="btn btn-light" data-placement="top" data-toggle="tooltip" title="Image utilisée en tant que couverture d'un article">
+                                        <i class="fas fa-lock"></i>
+                                    </button>
+                                {% endif %}
+                                <button class="btn btn-primary copy-btn" data-placement="top" data-toggle="tooltip" title="Copier le lien de cette image">
                                     <i class="fas fa-link"></i>
                                 </button>
                                 <button class="btn btn-warning view-btn" data-toggle="modal" data-target="#viewImage">
@@ -77,7 +83,7 @@
                 data: {name: urlImage, ListThumbnailsUploadeds: true}
             })
                     .done(function (data) {
-                        $('#container-thumbnails').html(data);
+                        $('body').html(data);
                     });
         });
         $(".copy-btn").each(function () {

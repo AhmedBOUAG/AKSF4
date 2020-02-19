@@ -473,7 +473,7 @@ a.not-underline>.parent-bloc>.title-bloc-news:hover{
 .modal-dialog{top:50px;}
 .jssocials-share {
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
     margin: 0.3em;
 }
 div#shareIcons {
@@ -500,4 +500,19 @@ i.fab.fa-twitter.jssocials-share-logo {
 .table > tbody > tr > td > p {
     direction: rtl;
     line-height: 1.9;
+}
+.label-share {
+    font-size: 1rem;
+    padding: 6px;
+    color: #ffffff;
+    background: #6a6a6a;
+    border: 1px solid #656769;
+    border-radius: 15px;
+}
+span.bloc-social-shares {
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding-bottom: 5px;
+    background: linear-gradient(45deg, transparent, #b4b4b4);
+    position: relative;
 }
