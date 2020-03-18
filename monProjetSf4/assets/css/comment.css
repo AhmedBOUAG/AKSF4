@@ -24,6 +24,8 @@ textarea{
 
 .fos_comment_comment_authorname{
     font-weight: bold;
+    border-right: 1px dashed #697e62;
+    margin-right: 5px;
 }
 
 .fos_comment_comment_body{             

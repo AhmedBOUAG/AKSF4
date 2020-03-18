@@ -5,3 +5,6 @@ fos_comment:
             comment: App\Entity\Comment
             thread: App\Entity\Thread
             vote: App\Entity\Vote
+twig:
+    date:
+        format: d-m-Y H:i:s

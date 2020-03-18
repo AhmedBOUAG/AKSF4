@@ -19,4 +19,6 @@ fos_comment_comment_delete:                   حذف تعليق
 fos_comment_comment_undelete:                 إلغاء حذف التعليق
 fos_comment_comment_deleted:                  "[محذوف]"
 fos_comment_thread_comment_count:             "(%count%) عدد التعليقات"
-fos_comment_comment_reply_reply_to:           " %name%رد على "
+fos_comment_comment_reply_reply_to:           " %name% رد على "
+fos_label_pseudonyme:                         كاتب التعليق
+fos_label_body:                               التعليق 

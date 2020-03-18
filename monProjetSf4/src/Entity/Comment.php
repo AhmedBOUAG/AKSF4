@@ -24,6 +24,7 @@ class Comment extends BaseComment implements VotableCommentInterface
      * @var Thread
      * @ORM\ManyToOne(targetEntity="App\Entity\Thread")
      */
+
     protected $thread;
 
     /**
@@ -31,6 +32,31 @@ class Comment extends BaseComment implements VotableCommentInterface
      * @var int
      */
     protected $score = 0;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudonyme;
+
+    /**
+     * Sets the pseudonyme of the comment.
+     *
+     * @param integer $pseudonyme
+     */
+    public function setPseudonyme($pseudonyme)
+    {
+        $this->pseudonyme = $pseudonyme;
+    }
+
+    /**
+     * Returns the current Pseudonyme of the comment.
+     *
+     * @return integer
+     */
+    public function getPseudonyme()
+    {
+        return $this->pseudonyme;
+    }
 
     /**
      * Sets the score of the comment.
