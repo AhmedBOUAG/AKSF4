@@ -1,0 +1,15 @@
+{% for yt in youtubeVideos %}
+    <div class="card">
+        <a href="{{ path('watch_video', {'id': yt.id}) }}">
+            <div class="card-filigrane">
+                <i class="far fa-play-circle fa-7x"></i>
+            </div>
+        </a>
+        <img class="card-img-top" src="https://img.youtube.com/vi/{{ yt.linkYoutube }}/mqdefault.jpg" alt="">
+        <div class="card-body">
+            <h5 class="card-title">{{ yt.title }}</h5>
+            <p class="card-text">{{ yt.description|slice(0, 110) }}..</p>
+            <p class="card-text"><small class="text-muted">Ajoutée le {{ yt.dateAd|date('d-m-Y') }}</small></p>
+        </div>
+    </div>
+{% endfor %}

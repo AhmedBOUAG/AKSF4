@@ -22,3 +22,4 @@ fos_comment_thread_comment_count:             "(%count%) عدد التعليقا
 fos_comment_comment_reply_reply_to:           " %name% رد على "
 fos_label_pseudonyme:                         كاتب التعليق
 fos_label_body:                               التعليق 
+fos_label_mail:                               البريد الإلكتروني

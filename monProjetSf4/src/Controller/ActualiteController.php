@@ -59,7 +59,7 @@ class ActualiteController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="actualite_show", methods={"GET"})
+     * @Route("/{id}", name="actualite_show", requirements={"id":"\d+"}, methods={"GET"})
      */
     public function show(Actualite $actualite): Response {
         return $this->render('actualite/show.html.twig', [
@@ -88,7 +88,7 @@ class ActualiteController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="actualite_delete", methods={"DELETE"})
+     * @Route("delete/{id}", name="actualite_delete", requirements={"id":"\d+"}, methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Actualite $actualite): Response {
@@ -121,7 +121,7 @@ class ActualiteController extends AbstractController {
 
     /**
      * @param request
-     * @Route("/bloc/news_paginate", name="bloc_news_paginate")
+     * @Route("/locale", name="actualite_locale")
      * @return Response
      */
     public function paginateBlocNews(Request $request, PaginatorInterface $paginator, ActualiteRepository $actualiteRepository, ActualiteHelper $actualiteHelper): Response
@@ -131,9 +131,9 @@ class ActualiteController extends AbstractController {
         $blocsNews = $paginator->paginate(
                 $allNewsApproved, 
                 $request->query->getInt('page', 1),
-                5
+                10
         );
-        return $this->render('actualite/blocs_news_pagination.html.twig', [
+        return $this->render('actualite/actualite_locale.html.twig', [
                     'blocs' => $blocsNews,
         ]);
     }

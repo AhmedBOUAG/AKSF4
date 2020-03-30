@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}YoutubeVideos index{% endblock %}
+
+{% block body %}
+    <h1>YoutubeVideos index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>LinkYoutube</th>
+                <th>DateAd</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for youtube_video in youtube_videos %}
+            <tr>
+                <td>{{ youtube_video.id }}</td>
+                <td>{{ youtube_video.user }}</td>
+                <td>{{ youtube_video.title }}</td>
+                <td>{{ youtube_video.description }}</td>
+                <td>{{ youtube_video.linkYoutube }}</td>
+                <td>{{ youtube_video.dateAd ? youtube_video.dateAd|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('youtube_videos_show', {'id': youtube_video.id}) }}">show</a>
+                    <a href="{{ path('youtube_videos_edit', {'id': youtube_video.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('youtube_videos_new') }}">Create new</a>
+{% endblock %}

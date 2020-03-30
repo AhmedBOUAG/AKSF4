@@ -20,10 +20,10 @@
                     {% if comment is fos_comment_in_state(constant('FOS\\CommentBundle\\Model\\CommentInterface::STATE_DELETED')) %}
                 {% trans from 'FOSCommentBundle' %}fos_comment_comment_deleted{% endtrans %}
                     {% else %}
-                        {{ comment.pseudonyme }}
+                        <i class="fas fa-user"></i> {{ comment.pseudonyme }}
                     {% endif %}
                     </span>
-                    <small>{{ comment.createdAt|date }}</small>
+                    <small><br><i class="fas fa-clock"></i> {{ comment.createdAt|date }}</small>
             {% endblock fos_comment_comment_metas_authorline %}
 
             {% block fos_comment_comment_metas_edit %}

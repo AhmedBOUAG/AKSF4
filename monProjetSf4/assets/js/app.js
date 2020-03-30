@@ -24,14 +24,15 @@ require('bootstrap');
 require('bootstrap/dist/css/bootstrap.css');
 require('@fortawesome/fontawesome-free/css/all.min.css');
 
-
+var Typed = require('typed.js');
+global.Typed = Typed;
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
 require('./global');
-$(document).ready(function() {
+$(document).ready(function () {
     $('[data-toggle="popover"]').popover();
-    
+
     var width = $(window).width();
     console.log(width);
 });

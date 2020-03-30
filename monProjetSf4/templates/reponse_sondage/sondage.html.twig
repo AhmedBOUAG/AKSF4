@@ -4,7 +4,7 @@
     </div>
     <div class="poll-body">
         <div class="message_alert"></div>
-        <h5>{{ sondages.0.question }}</h5>
+        <h6>{{ sondages.0.question }}</h6>
         {% for sondage in sondages %}
             <div class="radio radio-danger">
                 <input type="radio" name="pollIndex" id="radio{{ sondage.id }}" value="{{ sondage.id }}">

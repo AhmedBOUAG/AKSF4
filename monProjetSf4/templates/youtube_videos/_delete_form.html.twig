@@ -1,0 +1,10 @@
+{% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
+{% set operation = explodeRoute|last %}
+<div class="btn-group" role="group" style="float:left" aria-label="Third group">
+    <form method="post" action="{{ path('youtube_videos_delete', {'id': youtube_video.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ youtube_video.id) }}">
+        <button class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer</button>
+    </form>
+    <a style="margin-left:5px;" href="{{ path('youtube_videos_index') }}"> {{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour à la liste', 'icon_label': 'fa-undo-alt'}) }} </a>
+</div>

@@ -39,9 +39,34 @@ class Comment extends BaseComment implements VotableCommentInterface
     private $pseudonyme;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mail;
+    
+    /**
+     * 
+     * Sets the mail of person
+     * @param string
+     */
+    public function setMail($mail) 
+    {
+        $this->mail = $mail;
+    }
+    
+    /**
+     * Get the mail of person
+     * 
+     * @return string
+     */
+    public function getMail()
+    {
+        return $this->mail;
+    }
+    
+    /**
      * Sets the pseudonyme of the comment.
      *
-     * @param integer $pseudonyme
+     * @param string $pseudonyme
      */
     public function setPseudonyme($pseudonyme)
     {
@@ -51,7 +76,7 @@ class Comment extends BaseComment implements VotableCommentInterface
     /**
      * Returns the current Pseudonyme of the comment.
      *
-     * @return integer
+     * @return string
      */
     public function getPseudonyme()
     {

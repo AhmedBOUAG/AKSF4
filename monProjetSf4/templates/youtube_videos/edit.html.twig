@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit YoutubeVideos{% endblock %}
+
+{% block body %}
+    <h1>Edit YoutubeVideos</h1>
+
+    {{ include('youtube_videos/_form.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }}
+    <a href="{{ path('youtube_videos_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': "Retour aux sondages", 'icon_label': 'fa-undo-alt' }) }}</a>
+
+{% endblock %}

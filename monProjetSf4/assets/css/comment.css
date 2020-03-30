@@ -4,11 +4,11 @@
 }
 
 #fos_comment_thread h3{
-    font-family: 'Tomorrow', sans-serif;
+    /*font-family: 'Tomorrow', sans-serif;*/
 }
 
 #fos_comment_thread h3:nth-child(2){
-    font-size: 25px;
+    font-size: 1.5em;
 }
 textarea{
     width: -webkit-fill-available;
@@ -24,7 +24,7 @@ textarea{
 
 .fos_comment_comment_authorname{
     font-weight: bold;
-    border-right: 1px dashed #697e62;
+    border-right: 1px dashed #abc8e2;
     margin-right: 5px;
 }
 
@@ -121,15 +121,16 @@ div.fos_comment_comment_body {
     background: linear-gradient(to right, var(--head-bg-color) 75%, #fff 110%);
     border-radius: 0 5px 0 0;
     padding: 5px;
-    height: 70px;
+    height: 5em;
 }
 .fos_comment_comment_voting {
     float: right;
+    margin-top: -1.79em;
 }
 .fos_comment_comment_score {
     border: 1px solid;
     border-color: var(--head-bg-color);
-    font-size: 0.8rem;
+    font-size: 0.9em;
     border-radius: 4px;
     background: #418b94;
     margin-top: 1px;
@@ -139,4 +140,22 @@ div.fos_comment_comment_body {
 }
 .fos_comment_comment_reply{
     display: none;
+}
+span.fos_comment_comment_authorname {
+    color: slategray;
+}
+input.label-input{
+    margin-bottom: 15px;
+    border: 1px solid #000;
+}
+span.label.label-default {
+    direction: rtl;
+    float: right;
+}
+.fos_comment_comment_form_holder h3 {
+    border-bottom: 4px solid #065ba0ee;
+    color: #065ba0ee;
+    margin-bottom: 1em;
+    font-size: 1.8em;
+    padding-bottom: .3em;
 }
