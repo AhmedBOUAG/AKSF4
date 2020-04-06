@@ -26,6 +26,8 @@ require('@fortawesome/fontawesome-free/css/all.min.css');
 
 var Typed = require('typed.js');
 global.Typed = Typed;
+require('leaflet');
+require('leaflet/dist/leaflet.css');
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');

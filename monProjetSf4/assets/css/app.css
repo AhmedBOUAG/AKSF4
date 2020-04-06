@@ -286,7 +286,7 @@ main{
 .reponse6 {background-color: #7f3500;}
 .reponse7 {background-color: #94b900;}
 .direction-rtl{ direction: rtl;}
-.poll-title{padding: 5px;}
+.poll-title{padding: 1.3em;}
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 /* Add a black background color to the top navigation */
@@ -327,6 +327,9 @@ main{
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
 @media screen and (max-width: 768px) {
+    .card-horizontal .col-12.col-md-6 {
+        min-height: 21em;
+    }
     body {
         font-size: 12px;
     }
@@ -549,7 +552,7 @@ i.fab.fa-twitter.jssocials-share-logo {
     line-height: 1.9;
 }
 .label-share {
-    font-size: 1rem;
+    font-size: .7em;
     padding: 6px;
     color: #ffffff;
     background: #6a6a6a;
@@ -666,4 +669,42 @@ small{
     text-align: right;
     color: #fff;
     font-size: 1.3em;
+}
+h5.card-title {
+    text-align: center;
+}
+iframe#player {
+    box-shadow: -1px 9px 9px -8px rgba(41, 41, 41, 0.82);
+}
+.card-horizontal .col-12.col-md-6 {
+    padding: 0;
+}
+.card-stacked {
+    float: right;
+}
+.card-horizontal {
+    border-radius: .2em;
+    text-align: right;
+    direction: rtl;
+    padding: 0.2em;
+    background: #f6f6f6;
+    margin: 1.5em 0 1.5em 0;
+    border: 1px solid #ecebeb;
+}
+.map-resume {
+    width: 100%;
+    height: 100%;
+}
+.card-content {
+    padding: 1em;
+}
+td.text-muted {
+    text-align: right;
+}
+.nb-vote {
+    padding: 1.5em;
+    font-size: 1.5em;
+}
+.modal-view-result-poll {
+    padding: 1.3em;
 }
