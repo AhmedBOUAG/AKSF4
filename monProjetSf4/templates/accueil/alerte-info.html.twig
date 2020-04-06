@@ -1,0 +1,10 @@
+<div class="title-info-bar type-write-anim">
+    <i class="fas fa-bell"></i> <span class="title-info-alert">{% trans %}dernieres infos{% endtrans %}</span>
+</div>
+<div class="describe-info-bar">  <div id="typed-strings">
+        {% for lastFiveInfo in lastFiveInfos  %}
+            <p><a href="">{{ lastFiveInfo['title']|slice(0, 180) }}</a></p>
+        {% endfor %}
+    </div>
+    <span id="typed"></span>
+</div>

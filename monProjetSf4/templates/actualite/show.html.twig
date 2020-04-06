@@ -36,8 +36,7 @@
         <hr>
     {% endif %}
     <br />
-    Les commentaires:
-    {% include '/bundles/FOSCommentBundle/Thread/async.html.twig' with {'id': actualite.id} %}
+    {% include '/bundles/FOSCommentBundle/Thread/async.html.twig' with {'id': 'actu_'~actualite.id} %}
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 
     {{ include('actualite/js_actualite.html.twig') }}

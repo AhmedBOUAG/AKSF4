@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CategorieYoutube{% endblock %}
+
+{% block body %}
+    <h1>Edit CategorieYoutube</h1>
+
+    {{ include('categorie_youtube/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('categorie_youtube_index') }}">back to list</a>
+
+    {{ include('categorie_youtube/_delete_form.html.twig') }}
+{% endblock %}

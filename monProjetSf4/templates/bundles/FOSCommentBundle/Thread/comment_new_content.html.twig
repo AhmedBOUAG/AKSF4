@@ -22,12 +22,21 @@
 
                 {% block fos_comment_form_fields %}
                     <div class="fos_comment_form_errors">
-                    {{ form_errors(form) }}
-                    {{ form_errors(form.pseudonyme) }}
-                    {{ form_errors(form.body) }}
+                        {{ form_errors(form) }}
+                        {{ form_errors(form.pseudonyme) }}
+                        {{ form_errors(form.mail) }}
+                        {{ form_errors(form.body) }}
                     </div>
-                    <span class="label label-default">{% trans from 'FOSCommentBundle' %}fos_label_pseudonyme{% endtrans %}</span>
-                    {{ form_widget(form.pseudonyme) }}
+                    <div class="row">
+                        <div class="col" id="some-custom-id">
+                            <span class="label label-default">{% trans from 'FOSCommentBundle' %}fos_label_mail{% endtrans %}</span>
+                            {{ form_widget(form.mail) }}
+                        </div>
+                        <div class="col">
+                            <span class="label label-default">{% trans from 'FOSCommentBundle' %}fos_label_pseudonyme{% endtrans %}</span>
+                            {{ form_widget(form.pseudonyme) }}
+                        </div>
+                    </div>
                     <span class="label label-default">{% trans from 'FOSCommentBundle' %}fos_label_body{% endtrans %}</span>
                     {{ form_widget(form.body) }}
 

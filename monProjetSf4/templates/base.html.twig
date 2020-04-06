@@ -6,6 +6,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {#        <link rel="stylesheet" href="{{asset('build/app.css')}}">#}
         <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet">
+        <script data-ad-client="ca-pub-1312795105950753" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -26,14 +27,17 @@
             {% if not app.user %}
                 {% block header %}
                     <div class="header-top">
-                        <div style='height:147px; width:100%; background:url("/uploads/documents/1581730446001_aitkermoune_com.png") no-repeat;'>
-                            {#<span class="title-site">{% trans %}Aitkermoune.net{% endtrans %}</span>#}
-                            {#<img src="/uploads/documents/1581727972921_banniere_site.png" alt="" />#}
+                        <div class="div-adsense-header">
+
+                        </div>
+                        <div class="logo-aitkermoune">
+                            <h1> {% trans %}Aitkermoune.net{% endtrans %} </h1>
+                            <div class="slogan-site">{% trans %}slogan_site{% endtrans %}</div>
                         </div>
                     </div>
                     <div class="topnav" data-spy="affix" data-offset-top="200" id="topMenu">
-                        <a href="{{ path('accueil_home') }}" class="active"> <span class="libelle-home">{% trans %}Accueil{% endtrans %}  </span><i class="fas fa-home"></i></a>
-                        <a href="#news"> {% trans %}Actualité locale{% endtrans %}</a>
+                        <a href="{{ path('accueil_home') }}"> <span class="libelle-home">{% trans %}Accueil{% endtrans %}  </span><i class="fas fa-home"></i></a>
+                        <a href="{{ path('actualite_locale') }}"> {% trans %}Actualité locale{% endtrans %}</a>
                         <a href="#contact">  {% trans %}Services{% endtrans %}</a>
                         <a href="#about">{% trans %}Images et vidéos{% endtrans %}</a>
                         <a href="#contact">{% trans %}Nous contacter{% endtrans %}</a>
@@ -44,34 +48,40 @@
 
                 {% endblock %}
             {% endif %}
+            <div class="ads-adsense">
+                <img src="/uploads/documents/1584720563470_pub_adsense.PNG" />    
+            </div>
             <div class="row">
                 <div class="cardleft col-12 {% if not app.user %} col-md-9 {% endif %}">
-                {% block body %}{% endblock %}
+                    <div class="info-bar">
+                        {{ render(controller('App\\Controller\\AccueilController::AlerteInfo')) }}
+                    </div>
+                    {% block body %}{% endblock %}
+                </div>
+                {% if not app.user %}
+                    {{ include ('sideBar.html.twig') }}
+                    <style>
+                        body{padding-top: 10px !important;}
+                    </style>
+                {% endif %}
             </div>
-            {% if not app.user %}
-                {{ include ('sideBar.html.twig') }}
-                <style>
-                    body{padding-top: 10px !important;}
-                </style>
-            {% endif %}
-        </div>
 
-    </main>
-    <div class="both"></div>
-    {% block footer %}
-        <footer class="footer">
-            <div class="container">
-                <!--Copyright-->
-                <div>
-                    <div class="container-fluid text-center">
-                        &copy; Ahmed BOUAGOUNE 2019
+        </main>
+        <div class="both"></div>
+        {% block footer %}
+            <footer class="footer">
+                <div class="container">
+                    <!--Copyright-->
+                    <div>
+                        <div class="container-fluid text-center">
+                            &copy; Ahmed BOUAGOUNE 2019
+                        </div>
                     </div>
                 </div>
-            </div>
-        </footer>
-    {% endblock %}
-    {% if not app.user %}
-        {% include '/js_global.html.twig'%}
-    {% endif %}
-</body>
+            </footer>
+        {% endblock %}
+        {% if not app.user %}
+            {% include '/js_global.html.twig'%}
+        {% endif %}
+    </body>
 </html>

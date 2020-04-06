@@ -1,0 +1,25 @@
+{#{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+#}
+{% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
+{% set operation = explodeRoute|last %}
+
+{{ form_start(form) }}
+<div class="form-group">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    {{ form_widget(form) }}
+</div>
+<span class="float-right">
+    {{ include('button.html.twig', {'type_button': type_button, 'button_label': button_label, 'icon_label': icon_label}) }}
+</span>
+<div class="btn-group" role="group" style="float:left" aria-label="Third group">
+    
+    {% if operation == 'show' %}
+        {{ include('youtube_videos/_delete_form.html.twig') }}
+    {% endif %}
+</div>
+{{ form_end(form) }}

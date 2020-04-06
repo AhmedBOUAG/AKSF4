@@ -37,6 +37,9 @@ class CommentType extends AbstractType
         $builder->add('pseudonyme', TextType::class, [
                 'attr' => ['class' => 'form-control label-input']
                 ])
+                ->add('mail', TextType::class, [
+                'attr' => ['class' => 'form-control label-input']
+                ])
                 ->add('body', TextareaType::class);
     }
 

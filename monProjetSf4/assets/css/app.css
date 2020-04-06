@@ -1,7 +1,13 @@
 
 @import url('https://fonts.googleapis.com/css?family=Almarai&display=swap');
 :root{
-    --color-main : #74af2a;
+    --color-main : #53a7b5;
+}
+a {
+    color: #333;
+}
+#typed > a:hover {
+    text-decoration: none;
 }
 body {
     padding-top: 70px;
@@ -11,7 +17,7 @@ body {
     background: #f6f6f6 !important;
     /*font-family: Affogato-Regular;*/
     font-family: 'Almarai', sans-serif;/*'Cairo', sans-serif;*/
-    font-size: 16px;
+    font-size: 14px;
 }
 label, .form-control{
     direction: rtl;
@@ -24,19 +30,30 @@ label, .form-control{
     font-weight: bold;
 
 }
-@media (max-width:991px) and (min-width:768px) {
+@media (max-width: 768px) {
+    span.title-info-alert {
+        display: none;
+    }
+    .header-top {
+        display: none;
+    }
+}
+@media (min-width:768px) and (max-width:991px) {
+    .card-filigrane {
+        padding: 50% 12% 50% 26%;
+    }
     .card.col-12.col-md-9.bloc-body-content {
         flex: 0 0 100% !important; 
         max-width: 100%;
     }
 }
 .title-bloc{
-    background: linear-gradient(270deg,#113e00,#82bf30 50%,#7ac11b 0);
+    background: linear-gradient(270deg,#53a7b5,#82bf30 50%,#7ac11b 0);
     padding:5px;
     text-align: right;
     direction: rtl;
     width: 100%;
-    margin: 0px 0 5px 0;
+    margin: 10px 0 5px 0;
     color: #FFF;
     font-size: 1em;
     font-weight: 500;
@@ -122,7 +139,16 @@ main{
     max-width: 190px;
     max-height: 140px;
 }
-
+@media(min-width: 992px) and (max-width:1199px){
+    .card-filigrane {
+        padding: 50% 26% 55% 26%;
+    }
+}
+@media(min-width: 1200px){
+    .card-filigrane {
+        padding: 50% 30% 55% 30%;
+    }
+}
 @media(min-width:992px) and (max-width:1280px){
     .griser{
         left: 6%;
@@ -139,6 +165,9 @@ main{
 }
 
 @media(min-width:552px) and (max-width:767px){
+    .card-filigrane {
+        padding: 75% 20% 80% 20%;
+    }
     .griser{
         left: 15%;
     }
@@ -154,7 +183,11 @@ main{
         left: calc(100% - 75%);
     }
 }
-
+@media(max-width: 575px){
+    .card-filigrane {    
+        padding: 30% 30% 30% 40%;
+    }
+}
 
 @media(max-width:530px){
     .griser{
@@ -197,20 +230,23 @@ main{
 .section-poll{
     direction: rtl;
     text-align: right;
-    border: 1px solid #e7e7e7;
-    border-radius: 6px;
+    padding-bottom: 4px;
+    border-radius: .2em;
     border-width: 1px 1px 5px;
+    background: linear-gradient(270deg,#53a7b5,#82bf30 50%,#7ac11b 0);
 }
 .poll-head{
-    background: #efefef;
     padding: 5px;
     font-size: 1.1em;
     font-weight: 500;
-    border-radius: 3px;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
     text-shadow: -1px 1px 2px #828282db;
 }
 .poll-body{
+    background: #fff;
     padding: 1em;
+    margin: 0px 1px;
 }
 .trPollResult{
     width:400px;
@@ -268,7 +304,7 @@ main{
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 1.1em;
 }
 
 /* Change the color of links on hover */
@@ -281,6 +317,7 @@ main{
 .topnav a.active {
     background-color: var(--color-main);
     color: white;
+    box-shadow: inset 10px 0px 6px -10px rgba(0,0,0,0.75);
 }
 
 /* Hide the link that should open and close the topnav on small screens */
@@ -289,7 +326,10 @@ main{
 }
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 12px;
+    }
     span.label-btn-md {display: none;}
     .topnav a:not(:first-child) {display: none;}
     .topnav a.icon {
@@ -319,11 +359,10 @@ main{
         bottom: 0px !important;
         width: 100% !important;
         height: 100% !important;
-        /*opacity: 0.67;*/
         color: #fff !important;
-        font-size: 1.5rem !important;
+        font-size: 1.6em !important;
         text-shadow: #c0c0c0 0px 0px 4px;
-        font-weight: 600;
+        font-weight: 400;
     }
     .body-bloc{
         padding: 0px !important;
@@ -426,11 +465,15 @@ span.first > a, .previous > a, .page > a, .next > a, .last > a {
 a > .parent-bloc {
     color: #343a40;
 }
+a.not-underline:hover {
+    text-decoration: none !important;
+}
 a.not-underline>.parent-bloc>.title-bloc-news:hover{
     text-decoration: none;
 }
 .carousel.pointer-event{
-    box-shadow: 0px 3px 5px 1px #b3b3b3;
+    /*box-shadow: 0px 3px 5px 1px #b3b3b3;*/
+    border: 2px solid #000;
 }
 #myTopnav a {
     border-width: 0 0 0 1px;
@@ -439,9 +482,10 @@ a.not-underline>.parent-bloc>.title-bloc-news:hover{
 }
 .header-top{
     width: 100%;
+    position: relative;
     height:150px;
-    background: linear-gradient(to right, #e6e6e6, #cdcdcd, #f4f4f4);
-    /*margin-bottom: 5px;*/
+    background: linear-gradient(to right, #00b8ff, #17a2b8, #3c7dab);
+    margin-bottom: 5px;
 }
 .sticky {
     position: fixed !important;
@@ -519,13 +563,107 @@ span.bloc-social-shares {
     background: linear-gradient(45deg, transparent, #b4b4b4);
     position: relative;
 }
-input.label-input{
-    max-width: 350px;
-    margin-bottom: 15px;
-    border: 1px solid #000;
-}
 small{
     font-size: 70% !important;
     color: #989898;
-    
+
+}
+.ads-adsense{
+    text-align: center;
+    margin-bottom: 5px;
+    display: none;
+}
+
+/************************ Bar Alerte Info************************************/
+.info-bar {
+    direction: rtl;
+    height: 3.2em;
+    background: #f6f6f6;
+    margin-bottom: .4em;
+    color: #464646;
+    font-size: .9em;
+    border: 1px solid #ea2e49;
+}
+.title-info-bar {
+    float: right;
+    height: 100%;
+    background: #ea2e49;
+    color: #fff;
+    font-weight: 700;
+    padding: .9em;
+}
+.describe-info-bar {
+    padding: .9em;
+}
+.describe-info-bar {
+    position: relative;
+    top: 50%;
+    margin: 0 auto;
+    font-size: 1em;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);
+}
+
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #ea2e49 }
+}
+.cardleft table {
+    font-size: 1.25em;
+
+}
+.logo-aitkermoune {
+    color: #fff;
+    position: absolute;
+    top: 35px;
+    right: .3em;
+}
+.logo-aitkermoune h1{
+    padding-bottom: .2em;
+    float: right;
+    font-size: 2.7em;
+    border-bottom: 2px solid;
+}
+
+.div-adsense-header {
+    width: 70%;
+    float: left;
+}
+.slogan-site {
+    font-size: .8em;
+    padding-top: .2em;
+    margin-top: .5em;
+    text-align: end;
+}
+.form-group {
+    text-align: right;
+    direction: rtl;
+}
+.card-filigrane {
+    color: #5f5f5fe6;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    opacity: 80%;
+    border-bottom: 2px solid #cecece;
+}
+.title-head-bloc {
+    background: #fff;
+    margin: 15px 0px 15px 0px;
+    padding: 5px;
+    direction: rtl;
+    text-align: right;
+    color: #fff;
+    font-size: 1.3em;
 }
