@@ -11,6 +11,8 @@ require('../css/affogato.css');
 require('../css/dropzone.css');
 require('../css/checkboxnradio.min.css');
 require('../css/comment.css');
+require('../css/animate-icon.css');
+require('../css/control.MiniMap.css');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 // const $ = require('jquery');
@@ -32,6 +34,7 @@ require('leaflet/dist/leaflet.css');
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
 require('./global');
+require('./osm-leaflet');
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 

@@ -12,9 +12,7 @@ $(function () {
     }
 
     function getRandomInt(max) {
-        var randVal = Math.floor(Math.random() * Math.floor(max));
-        console.log(randVal);
-        return randVal;
+        return Math.floor(Math.random() * Math.floor(max));
     }
     /**
      * Random pour afficher l'annonce publicitaire en haut de la page. 
@@ -36,25 +34,5 @@ $(function () {
     }).mouseleave(function () {
         $(this).find('.card-filigrane').slideUp(200);
     });
-    /**
-     * Display Map Aitkermoune in index page
-     */
-    var aitkermouneMap = L.map('map').setView([29.393176, -9.546011], 12);
-    var icon = L.icon({
-        iconUrl: '/uploads/images/marker-icon.png',
-        shadowUrl: '/uploads/images/marker-shadow.png',
-    });
-    var marker = L.marker([29.405176, -9.553011], {icon: icon}).addTo(aitkermouneMap);
-    marker.bindPopup("<center>Aitkermoune أيت كــــرمون</center>").openPopup();
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    }).addTo(aitkermouneMap);
-    L.polygon([
-        [29.422764, -9.559811],
-        [29.427986, -9.529214],
-        [29.398826, -9.529339],
-        [29.372337, -9.540111],
-        [29.365301, -9.547235],
-        [29.369251, -9.565196],
-        [29.420446, -9.564592]
-    ]).addTo(aitkermouneMap);
 });
+

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LocalityMap{% endblock %}
+
+{% block body %}
+    <h1>LocalityMap</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ locality_map.id }}</td>
+            </tr>
+            <tr>
+                <th>LocalityType</th>
+                <td>{{ locality_map.localityType }}</td>
+            </tr>
+            <tr>
+                <th>Picto</th>
+                <td>{{ locality_map.picto }}</td>
+            </tr>
+            <tr>
+                <th>Coordinated</th>
+                <td>{{ locality_map.coordinated ? locality_map.coordinated|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ locality_map.color }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('locality_map_index') }}">back to list</a>
+
+    <a href="{{ path('locality_map_edit', {'id': locality_map.id}) }}">edit</a>
+
+    {{ include('locality_map/_delete_form.html.twig') }}
+{% endblock %}

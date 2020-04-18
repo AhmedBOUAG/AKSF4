@@ -1,0 +1,133 @@
+{% set explodeRoute = app.request.attributes.get('_route')|split('_') %}
+{% set operation = explodeRoute|last %}
+{{ form_start(form) }}
+{#{{ dump(form_widget(form)) }} #}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ form_errors(form) }}
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {{ form_row(form.titre) }}
+    </div>
+    <div class="col-12" id="some-custom-id">
+        {{ form_row(form.description) }}
+    </div>
+
+    <div class="col-12" id="some-custom-id">
+        <div class="container-limites">
+            <button class="add_form_field">Ajoutez des limites &nbsp; 
+                <span style="font-size:16px; font-weight:bold;">+ </span>
+            </button>
+            {{ form_row(form.limites, { 'attr': {'class': 'hidden-row'} }) }}
+        </div>
+    </div>
+
+</div>
+<br/>
+<input type="button" id="previsualisationMap" class="btn btn-primary" value="Prévisulatiser sur la carte">
+<button class="btn" id="saveResume">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+<h4>Prévisualisation</h4>
+<hr>
+<div id="mapLimites" class="col-12" style="height:480px;"></div>
+<script>
+    var edit = false;
+    {% if operation == 'edit' %}
+        edit = true;
+    {% endif%}
+        let map = L.map('mapLimites')
+                .setView([29.393176, -9.546011], 12);
+
+        let IconMarkerMap = L.divIcon({
+            html: '<i class="fas fa-map-marker-alt fa-2x" style="color:#4b4f56;"></i>',
+            className: 'my-div-icon',
+            iconAnchor: [9, 24]
+        });
+        var max_fields = 100;
+        var wrapper = $(".container-limites");
+        var add_button = $(".add_form_field");
+        var inputs_coordinate = '<div class="coupleLimites input-group" style="border: 1px dashed #cecece;"><input type="text" placeholder="Altitude" value="VALEUR_ALT" name="alt"/> <input type="text" placeholder="Longitude" value="VALEUR_LON" name="lon"/><a href="#" class="delete"> <i class="fas fa-times fa-3x"></i> </a> <a href="#"> <i class="fas fa-street-view show-marker fa-3x" style="margin-left:1em;"></i></a></div>';
+        var input_lon = '';
+
+
+
+        var x = 1;
+        $(add_button).click(function (e) {
+            e.preventDefault();
+            if (x < max_fields) {
+                x++;
+                var input = inputs_coordinate.replace("VALEUR_ALT", "");
+                $(wrapper).append(input.replace("VALEUR_LON", ""));
+            } else {
+                alert('You Reached the limits');
+            }
+        });
+        if (edit) {
+            let coordinates = $('input#resume_limites').val();
+            !coordinates ? null : placeLimitesInMap(JSON.parse(coordinates));
+            for (var i = 0; i < JSON.parse(coordinates).length; i++) {
+                var input = inputs_coordinate.replace("VALEUR_ALT", JSON.parse(coordinates)[i][0]);
+                $(wrapper).append(input.replace("VALEUR_LON", JSON.parse(coordinates)[i][1]));
+            }
+
+        }
+        $(wrapper).on("click", ".delete", function (e) {
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        });
+        $('#previsualisationMap').click(function (e) {
+            e.preventDefault();
+            var tabLimites = new Array();
+            $('.coupleLimites').each(function (index) {
+                let alt = $(this).find('input[name="alt"]').val();
+                let lon = $(this).find('input[name="lon"]').val();
+                var xandy = new Array(alt, lon);
+                tabLimites[index] = xandy;
+            });
+            $('input#resume_limites').val(tabLimites);
+            let coordinates = $('input#resume_limites').val();
+            placeLimitesInMap(tabLimites);
+        });
+        function placeLimitesInMap(limites) {
+            $.when(limites).done(function () {
+                clearMap(map);
+                var osm = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+                var basemap = L.tileLayer(osm, {dragging: !L.Browser.mobile 
+                }).addTo(map);
+                L.polygon([
+                    limites
+                ]).addTo(map);
+                var osm2 = new L.TileLayer(osm, {minZoom: 0, maxZoom: 18});
+                var miniMap = new L.Control.MiniMap(osm2, {toggleDisplay: true, minZoom: 3, maxZoom: 8, zoomLevelFixed: 3}).addTo(map);
+                $('.leaflet-control-minimap').append('<div class="title-country-map">Morocco ⵍⵎⵖⵔⵉⴱ المغرب</div>');
+                $('.leaflet-control-minimap').append('<div class="position-overlay-pan"></div>');
+            });
+        }
+        function clearMap(map) {
+            for (i in map._layers) {
+                if (map._layers[i]._path != undefined) {
+                    try {
+                        map.removeLayer(map._layers[i]);
+                    } catch (e) {
+                        console.log("probleme avec " + e + map._layers[i]);
+                    }
+                }
+            }
+        }
+        var marker = L.marker([0, 0]);
+        $(wrapper).on("click", ".show-marker", function (e) {
+            e.preventDefault();
+            $('.coupleLimites').each(function () {
+                $(this).css('background', '');
+            });
+            
+            map.removeLayer(marker);
+            $($(this).closest('div')).css('background', 'gold');
+            var x = $($(this).closest('div').children('input')[0]).val();
+            var y = $($(this).closest('div').children('input')[1]).val();
+            marker = L.marker([x, y], {icon: IconMarkerMap}).addTo(map);
+        });
+        var itemMenu = null;
+</script>

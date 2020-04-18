@@ -31,6 +31,27 @@ label, .form-control{
 
 }
 @media (max-width: 768px) {
+    .info-bar {
+        background: #ff516a !important;
+        margin-bottom: 0em !important;
+        color: #fdfdfd;
+        height: 3.8em !important;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        font-weight: 700;
+        z-index: 10000;
+        left: 0;
+    }
+    span#typed a, span.typed-cursor{
+        color: #fff;
+    }
+    .title-info-bar{
+        padding: 1.1em !important;
+    }
+    i.fas.fa-bell.faa-ring.animated {
+        font-size: 1.7em;
+    }
     span.title-info-alert {
         display: none;
     }
@@ -707,4 +728,35 @@ td.text-muted {
 }
 .modal-view-result-poll {
     padding: 1.3em;
+}
+.leaflet-marker-icon {
+    background: transparent;
+    border: 0px;
+}
+.input-group input[type="text"] {
+    width: 7.2em;
+    margin: 3px;
+}
+div#mapLimites {
+    border: solid #9c9c9c .1em;
+    border-radius: 5px;
+}
+.title-country-map{
+    z-index: 1000;
+    position: absolute;
+    background: #000;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: .8em;
+    width:100%;
+    text-align: center;
+    opacity: 0.6;
+}
+.position-overlay-pan{
+    position: absolute;
+    border: 2px solid orange;
+    padding: 1em 2em;
+    z-index: 1000;
+    top: 40%;
+    left: 32%;
 }
