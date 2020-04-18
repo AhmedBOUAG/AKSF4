@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LocalityMap{% endblock %}
+
+{% block body %}
+    <h1>Create new LocalityMap</h1>
+
+    {{ include('locality_map/_form.html.twig') }}
+
+    <a href="{{ path('locality_map_index') }}">back to list</a>
+{% endblock %}

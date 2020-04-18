@@ -12,9 +12,7 @@ $(function () {
     }
 
     function getRandomInt(max) {
-        var randVal = Math.floor(Math.random() * Math.floor(max));
-        console.log(randVal);
-        return randVal;
+        return Math.floor(Math.random() * Math.floor(max));
     }
     /**
      * Random pour afficher l'annonce publicitaire en haut de la page. 
@@ -37,3 +35,4 @@ $(function () {
         $(this).find('.card-filigrane').slideUp(200);
     });
 });
+

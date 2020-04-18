@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resume index{% endblock %}
+
+{% block body %}
+    <h1>Resume index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Limites</th>
+                <th>DateAd</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for resume in resumes %}
+            <tr>
+                <td>{{ resume.id }}</td>
+                <td>{{ resume.titre }}</td>
+                <td>{{ resume.description }}</td>
+                <td>{{ resume.limites ? resume.limites|json_encode : '' }}</td>
+                <td>{{ resume.dateAd ? resume.dateAd|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('resume_show', {'id': resume.id}) }}">show</a>
+                    <a href="{{ path('resume_edit', {'id': resume.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('resume_new') }}">Create new</a>
+{% endblock %}
