@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://aitkermoune.net/build/1.197451c2.css">
+        <link rel="stylesheet" href="https://aitkermoune.net/build/1.197451c2.css">
+	<link rel="stylesheet" href="https://aitkermoune.net/build/app.css">
+        <title>{% block title %}PDF | aitkermoune.net {% endblock %}</title>
+		<style> 
+		*{ 
+			font-family: DejaVu Sans, sans-serif !important;
+			direction: rtl;
+			text-align: right;
+			margin:0;
+			padding:0
+		}
+		.table-striped.calendar td {
+		padding-top: 0px !important;
+		}
+		caption{
+			padding: 0px;
+			margin: 0px;
+		}
+		</style>
+    </head>
+    <body style="padding-top: 0px !important;">
+        {% block body %}{% endblock %}
+    </body>
+</html>

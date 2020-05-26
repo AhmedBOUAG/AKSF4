@@ -32,5 +32,24 @@ class AccueilController extends AbstractController {
         $aLastFiveInfos = $actualiteHelper->getPlainTextActualite($lastFiveArticles);
         return $aLastFiveInfos;
     }
+    
+    /**
+     * @param request 
+     * @Route("/developpement", name="page_taqafa")
+     * @return Response
+     */
+    public function pageTaqafa(Request $request)
+    {
+        return $this->render('accueil/page-taqafa.html.twig');
+    }
 
+    /**
+     * @param request 
+     * @Route("/services", name="page_services")
+     * @return Response
+     */
+    public function pageServices(Request $request)
+    {
+        return $this->render('accueil/page-services.html.twig');
+    }
 }

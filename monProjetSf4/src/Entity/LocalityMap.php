@@ -27,7 +27,7 @@ class LocalityMap
     private $picto;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json_array")
      */
     private $coordinated = [];
 

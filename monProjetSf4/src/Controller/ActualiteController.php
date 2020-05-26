@@ -111,7 +111,7 @@ class ActualiteController extends AbstractController {
         $em = $this->getDoctrine()->getManager();
         $actualite_id = $request->get('id');
         $actualite = $em->getRepository(Actualite::class)->find($actualite_id);
-        $old_statut = $actualite->getApproval();
+        $old_statut = $actualite->getApprobation();
         $new_statut = !$old_statut;
         $actualiteModified = $actualite->setApprobation($new_statut);
         $em->persist($actualiteModified);
@@ -122,9 +122,8 @@ class ActualiteController extends AbstractController {
     /**
      * @param request
      * @Route("/locale", name="actualite_locale")
-     * @return Response
      */
-    public function paginateBlocNews(Request $request, PaginatorInterface $paginator, ActualiteRepository $actualiteRepository, ActualiteHelper $actualiteHelper): Response
+    public function paginateBlocNews(Request $request, PaginatorInterface $paginator, ActualiteRepository $actualiteRepository, ActualiteHelper $actualiteHelper)
     { 
         $allNews = $actualiteRepository->getAllApprovedNews();
         $allNewsApproved = $actualiteHelper->getPlainTextActualite($allNews);
@@ -133,6 +132,8 @@ class ActualiteController extends AbstractController {
                 $request->query->getInt('page', 1),
                 10
         );
+        //dump($blocsNews);die;
+        //return $blocsNews;
         return $this->render('actualite/actualite_locale.html.twig', [
                     'blocs' => $blocsNews,
         ]);

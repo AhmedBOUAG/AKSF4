@@ -10,8 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Titre</th>
-                <th>Description</th>
-                <th>Limites</th>
+{#                <th>Description</th>
+                <th>Limites</th>#}
                 <th>DateAd</th>
                 <th>actions</th>
             </tr>
@@ -21,8 +21,8 @@
             <tr>
                 <td>{{ resume.id }}</td>
                 <td>{{ resume.titre }}</td>
-                <td>{{ resume.description }}</td>
-                <td>{{ resume.limites ? resume.limites|json_encode : '' }}</td>
+{#                <td>{{ resume.description }}</td>
+                <td>{{ resume.limites ? resume.limites|json_encode : '' }}</td>#}
                 <td>{{ resume.dateAd ? resume.dateAd|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('resume_show', {'id': resume.id}) }}">show</a>

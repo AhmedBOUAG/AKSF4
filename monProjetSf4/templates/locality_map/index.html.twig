@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>LocalityMap index</h1>
-
+<div class="row bloc-body-content col-12">
     <table class="table">
         <thead>
             <tr>
@@ -12,7 +12,6 @@
                 <th>LocalityType</th>
                 <th>Picto</th>
                 <th>Coordinated</th>
-                <th>Color</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,9 +20,8 @@
             <tr>
                 <td>{{ locality_map.id }}</td>
                 <td>{{ locality_map.localityType }}</td>
-                <td>{{ locality_map.picto }}</td>
+                <td><i class="{{ locality_map.picto }} fa-2x" style="color:{{ locality_map.color }};"></i></td>
                 <td>{{ locality_map.coordinated ? locality_map.coordinated|json_encode : '' }}</td>
-                <td>{{ locality_map.color }}</td>
                 <td>
                     <a href="{{ path('locality_map_show', {'id': locality_map.id}) }}">show</a>
                     <a href="{{ path('locality_map_edit', {'id': locality_map.id}) }}">edit</a>
@@ -36,6 +34,6 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
     <a href="{{ path('locality_map_new') }}">Create new</a>
 {% endblock %}

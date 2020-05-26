@@ -4,7 +4,10 @@ fos_comment:
         model:
             comment: App\Entity\Comment
             thread: App\Entity\Thread
-            vote: App\Entity\Vote
+            vote: App\Entity\Vote     
+    form:
+        comment:
+            type: App\Form\CommentType
 twig:
     date:
         format: d-m-Y H:i:s

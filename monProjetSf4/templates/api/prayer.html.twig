@@ -1,0 +1,55 @@
+{% extends 'pdf.html.twig' %}
+
+{% block body %}
+    {% set arabicGregorianMonths = ['يناير', 'فبراير', 'مارس', 'أبريل', 'ماي', 'يونيو', 'يوليوز', 'غشت', 'شتنبر', 'أكتوبر', 'نونبر', 'ذجنبر'] %}
+    {% set excludePrayers = ["Midnight", "Sunrise", "Maghrib", "Imsak"] %}
+    {% set mHijri, i, date = [], 0, data.0.date %}
+    {% set title, month, actualMonthHijri = "Heure priere pour le mois %mois%", arabicGregorianMonths[date.gregorian.month.number * 1 - 1], date.gregorian.year %}
+    <table class="table-striped calendar" style="margin-top:-10px !important;">
+        <tr>
+            <th style="border-right: 15px solid #f2f2f2; background:#c8f5ff;">{{arabicGregorianMonths[date.gregorian.month.number * 1 - 1]}}</th>
+                {% for prayerName in data.0.timings|keys %}
+                    {% if prayerName not in(excludePrayers) %}
+                    <th>
+                        {{ prayerName|trans({'%prayerName%': prayerName }) }}
+                    </th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% for day in data %}
+            {% if day.date.gregorian.day  ==  'now'|date('d')  %}
+                {% set trActif = 'tr-actual-day' %}
+            {% else %}
+                {% set trActif = '' %} 
+            {% endif %}
+            {% if day.date.hijri.month.ar not in(mHijri) %}
+                {% set i = i+1 %}
+                {% set mHijri = mHijri|merge([ day.date.hijri.month.ar ]) %}
+            {% endif %}
+            <tr {% if trActif is defined %}class="{{trActif}}"{% endif %} style="height:18px;">
+                <td class="calendar-m{{i}}">{{ day.date.gregorian.day }}</td>
+                {% for key, prayer in day.timings %}
+                    {% if key not in(excludePrayers) %}
+                        <td>{{ prayer |slice(0, 5) }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        <caption style="background: linear-gradient(180deg, #2697f0, #3cbfe0, transparent); position: relative; text-align: center;">
+            <img src="https://aitkermoune.net/uploads/images/header-calendar-aitkermoune-ramadan.jpeg" /><br />
+            <div style="color: #fff; font-weight:bold; position: absolute; padding-top: 146px; padding-right: 300px;">
+                {{ title|trans({'%mois%': month}) ~ actualMonthHijri}}
+            <div>
+
+        </caption>
+    </table>
+    <div style="float: left; font-size: 11px; direction:rtl;"><b>{% trans %}Aitkermoune.net{% endtrans %}</b> {% trans %}developpé et crée par{% endtrans %}: </div>
+    <table style="border:0px; margin:0px; width: 300px; float:right; margin-top: 3px;">
+        {% for key,m in mHijri %}
+            <tr>
+                <td class="calendar-m{{ key+1 }}">  <b>{{ m }}</b> </td>
+                <td style="text-align: right;">{{ date.hijri.year }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

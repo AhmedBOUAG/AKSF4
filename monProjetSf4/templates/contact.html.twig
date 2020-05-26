@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Nous contacter{% endtrans %}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {% trans %}Le message a été envoyé avec succès{% endtrans %}
+        </div>
+    {% endfor %}
+    <div class="bloc-rtl">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{% trans %}Envoyer{% endtrans %}</button>
+        {{ form_end(form) }}
+    </div>
+    <script>
+        var itemMenu = 5;
+    </script>
+{% endblock %}

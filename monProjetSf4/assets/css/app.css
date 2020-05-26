@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css?family=Almarai&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&family=Oswald:wght@500&display=swap');
 :root{
     --color-main : #53a7b5;
 }
@@ -31,6 +32,9 @@ label, .form-control{
 
 }
 @media (max-width: 768px) {
+    span.powered-by-aitkermoune {
+        margin: -100px -42px -42px -42px !important;
+    }
     .info-bar {
         background: #ff516a !important;
         margin-bottom: 0em !important;
@@ -38,6 +42,7 @@ label, .form-control{
         height: 3.8em !important;
         position: fixed;
         width: 100%;
+        border-radius: 0px !important;
         bottom: 0;
         font-weight: 700;
         z-index: 10000;
@@ -67,6 +72,13 @@ label, .form-control{
         flex: 0 0 100% !important; 
         max-width: 100%;
     }
+    .griser{
+        left: 10% !important;
+    }
+    .cardleft{
+        flex: none;
+        max-width: 100% !important;
+    }
 }
 .title-bloc{
     background: linear-gradient(270deg,#53a7b5,#82bf30 50%,#7ac11b 0);
@@ -74,7 +86,7 @@ label, .form-control{
     text-align: right;
     direction: rtl;
     width: 100%;
-    margin: 10px 0 5px 0;
+    margin: 0 0 5px 0;
     color: #FFF;
     font-size: 1em;
     font-weight: 500;
@@ -86,7 +98,7 @@ label, .form-control{
     border-top: 5px solid #8ace5f;
     border-radius: 5px;
     box-shadow: 0px 5px 8px 0px rgba(162, 162, 163, 0.27);
-    padding-bottom: 20px;
+    padding: 20px 0 20px 0;
     margin: 0px;
 }
 
@@ -100,7 +112,7 @@ footer.footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 60px;
+    height: 90px;
     line-height: 60px;
     color: #c9ddee;
     background-color: #304e62
@@ -173,15 +185,6 @@ main{
 @media(min-width:992px) and (max-width:1280px){
     .griser{
         left: 6%;
-    }
-}
-@media(min-width:768px) and (max-width:991px){
-    .griser{
-        left: 10% !important;
-    }
-    .cardleft{
-        flex: none;
-        max-width: 100% !important;
     }
 }
 
@@ -453,7 +456,7 @@ span.first > a, .previous > a, .page > a, .next > a, .last > a {
 /*-------------------------PAGINATION ------------------*/
 /*--------------------  BLOC NEW HOME ------------------*/
 .parent-bloc {
-    margin-top: 15px;
+    margin: 8px 0;
     background: #fafafa;
     border-radius: 2px;
     border: 1px solid #dbdbdb;
@@ -527,10 +530,13 @@ a.not-underline>.parent-bloc>.title-bloc-news:hover{
 }
 .logo {
     position: fixed;
-    z-index: 100000000000;
+    z-index: 100006;
     left: 30%;
     top: 8px;
-    display:none;
+    display: none;
+    color: #8a8a8a;
+    font-size: 1.3em;
+    font-weight: 900;
 }
 @media(min-width:600px) and (max-width:800px){
     .logo {
@@ -606,6 +612,7 @@ small{
     margin-bottom: .4em;
     color: #464646;
     font-size: .9em;
+    border-radius: 2px;
     border: 1px solid #ea2e49;
 }
 .title-info-bar {
@@ -673,13 +680,13 @@ small{
     direction: rtl;
 }
 .card-filigrane {
-    color: #5f5f5fe6;
+    color: rgba(95,95,95,.9);
     display: none;
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: linear-gradient(-37deg, black -51%, #FFF 33%);
     position: absolute;
-    opacity: 80%;
+    opacity: 0.8 !important;
     border-bottom: 2px solid #cecece;
 }
 .title-head-bloc {
@@ -752,11 +759,104 @@ div#mapLimites {
     text-align: center;
     opacity: 0.6;
 }
-.position-overlay-pan{
+.position-overlay-pan {
     position: absolute;
     border: 2px solid orange;
     padding: 1em 2em;
     z-index: 1000;
     top: 40%;
     left: 32%;
+}
+h1.libelle-bientot {
+    font-size: 4em;
+    margin-top: 8%;
+    margin-left: 35%;
+    position: absolute;
+    color: #d8d8d8;
+    transform: rotate3d(1, 1, 1, 45deg);
+}
+.bloc-rtl {
+    direction: rtl;
+    text-align: right;
+}
+#contact > div > ul{
+    color:red;
+    text-align: center;
+}
+.temp-bloc-meteo{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 3.8em;
+    margin-top: 15px;
+    position: absolute;
+    text-align: inherit;
+    color: #fff;
+    text-shadow: 1px 1px #777;
+}
+.bloc-meteo{
+    max-width: 100%;
+    background: linear-gradient(180deg,#53a7b5,#9f53d8 90%,#ae59ff 96%);
+    margin-bottom: 10px;
+}
+span.powered-by-aitkermoune {
+    transform: rotateZ(270deg);
+    position: absolute;
+    margin: -105px -52px -52px -52px;
+    color: #fff;
+    font-size: .8em;
+}
+.desc-meteo{
+    font-size: 2em;
+    text-align: center;
+    text-shadow: 1px 0 0px rgba(255, 255, 255, 0.5);
+    background: -webkit-linear-gradient(180deg, #ff006a, #cb55f1, #569aff, #63ffb7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 2em;
+    padding: 5px;
+
+}
+.table-striped.calendar td{
+    padding: 2px 5px;
+    text-align: center;
+}
+.table-striped.calendar th{
+    text-align: center;
+    border-bottom: 1px solid #cecece;
+    padding: 3px 5px;
+}
+.table-striped.calendar tbody tr:nth-child(odd) td {
+    background-color: #dcdcdc;
+}
+
+.table-striped.calendar tbody tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+.table-striped.calendar tbody tr.highlight td {
+    background-color: #f9f9f9;
+}
+
+.table-striped.calendar tbody tr:first-child td {
+    background-color: #FF0000;
+}
+.table-striped.calendar{
+    width: 100%;
+    direction: rtl;
+    text-align: right;
+}
+.table-striped.calendar > th, td {
+  border-bottom: 1px solid #ddd;
+}
+tr.tr-actual-day{
+    border: 2px solid #c19505;
+}
+caption{
+    caption-side: top !important;
+    text-align: center;
+}
+.calendar-m1{
+    border-right: 15px solid #ae59ff;
+}
+.calendar-m2{
+    border-right: 15px solid #99CF50;
 }
