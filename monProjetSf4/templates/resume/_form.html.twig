@@ -16,7 +16,7 @@
 
     <div class="col-12" id="some-custom-id">
         <div class="container-limites">
-            <button class="add_form_field">Ajoutez des limites &nbsp; 
+            <button class="add_form_field btn btn-warning" style="height:38px">Ajoutez des limites &nbsp; 
                 <span style="font-size:16px; font-weight:bold;">+ </span>
             </button>
             {{ form_row(form.limites, { 'attr': {'class': 'hidden-row'} }) }}
@@ -38,7 +38,6 @@
     {% endif%}
         let map = L.map('mapLimites')
                 .setView([29.393176, -9.546011], 12);
-
         let IconMarkerMap = L.divIcon({
             html: '<i class="fas fa-map-marker-alt fa-2x" style="color:#4b4f56;"></i>',
             className: 'my-div-icon',
@@ -66,11 +65,13 @@
         if (edit) {
             let coordinates = $('input#resume_limites').val();
             !coordinates ? null : placeLimitesInMap(JSON.parse(coordinates));
-            for (var i = 0; i < JSON.parse(coordinates).length; i++) {
-                var input = inputs_coordinate.replace("VALEUR_ALT", JSON.parse(coordinates)[i][0]);
-                $(wrapper).append(input.replace("VALEUR_LON", JSON.parse(coordinates)[i][1]));
+            console.log(typeof(coordinates), coordinates);
+            if (coordinates) {
+                for (var i = 0; i < JSON.parse(coordinates).length; i++) {
+                    var input = inputs_coordinate.replace("VALEUR_ALT", JSON.parse(coordinates)[i][0]);
+                    $(wrapper).append(input.replace("VALEUR_LON", JSON.parse(coordinates)[i][1]));
+                }
             }
-
         }
         $(wrapper).on("click", ".delete", function (e) {
             e.preventDefault();
@@ -94,7 +95,7 @@
             $.when(limites).done(function () {
                 clearMap(map);
                 var osm = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-                var basemap = L.tileLayer(osm, {dragging: !L.Browser.mobile 
+                var basemap = L.tileLayer(osm, {dragging: !L.Browser.mobile
                 }).addTo(map);
                 L.polygon([
                     limites
@@ -122,7 +123,7 @@
             $('.coupleLimites').each(function () {
                 $(this).css('background', '');
             });
-            
+
             map.removeLayer(marker);
             $($(this).closest('div')).css('background', 'gold');
             var x = $($(this).closest('div').children('input')[0]).val();

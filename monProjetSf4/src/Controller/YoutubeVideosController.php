@@ -6,6 +6,7 @@ use App\Entity\YoutubeVideos;
 use App\Form\YoutubeVideosType;
 use App\Repository\YoutubeVideosRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +18,7 @@ class YoutubeVideosController extends AbstractController {
 
     /**
      * @Route("/", name="youtube_videos_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(YoutubeVideosRepository $youtubeVideosRepository): Response {
         return $this->render('youtube_videos/index.html.twig', [
@@ -26,6 +28,7 @@ class YoutubeVideosController extends AbstractController {
 
     /**
      * @Route("/new", name="youtube_videos_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function new(Request $request): Response {
         $youtubeVideo = new YoutubeVideos();
@@ -50,6 +53,7 @@ class YoutubeVideosController extends AbstractController {
 
     /**
      * @Route("/{id}", name="youtube_videos_show", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function show(YoutubeVideos $youtubeVideo): Response {
         return $this->render('youtube_videos/show.html.twig', [
@@ -59,6 +63,7 @@ class YoutubeVideosController extends AbstractController {
 
     /**
      * @Route("/{id}/edit", name="youtube_videos_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, YoutubeVideos $youtubeVideo): Response {
         $form = $this->createForm(YoutubeVideosType::class, $youtubeVideo);
@@ -77,7 +82,8 @@ class YoutubeVideosController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="youtube_videos_delete", methods={"DELETE"})
+     * @Route("del/{id}", name="youtube_videos_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, YoutubeVideos $youtubeVideo): Response {
         if ($this->isCsrfTokenValid('delete' . $youtubeVideo->getId(), $request->request->get('_token'))) {
@@ -90,7 +96,6 @@ class YoutubeVideosController extends AbstractController {
     }
     
     /**
-     * 
      * @param Request $request
      * @Route("/watch/{id}", name="watch_video", methods={"GET"})
      */

@@ -15,7 +15,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Extensions,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -29,3 +29,21 @@ services:
         resource: '../src/Repository'
         autowire: true
         tags: ['doctrine.repository_service']
+
+    App\EventListener\LocaleListener:
+        tags:
+           - { name: kernel.event_listener, event: kernel.request, priority: 101}
+
+#    app.form.comment:
+#        class: App\Form\CommentType
+#        tags:
+#            - { name: form.type, alias: fos_comment_comment }
+    App\Controller\ContactController:
+        arguments:
+            $adminEmail: 'amaneuz93@gmail.com'
+            
+#    app.meteo_api:
+#        public: true
+#        class: App\Controller\ApiController
+        
+

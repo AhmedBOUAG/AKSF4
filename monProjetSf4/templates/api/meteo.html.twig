@@ -1,0 +1,15 @@
+{% set weather, main = data.weather.0, data.main %}
+<div class="bloc-meteo">
+    <div style="color: #fff; font-size:16px; text-align: center;">
+        التوقعات الحالية بأيت كـرمون
+
+    </div>
+    <div class="row">
+        <div class="col" style="text-align: right;"><img style="width:5em; margin-top: .9em;" src="{{asset('meteo/'~ weather.icon ~'.png')}}" ></div>
+        <div class="col"><span class="temp-bloc-meteo">{{ main.temp|round }}°<sup style="font-size: 0.5em;">C</sup></span></div> 
+    </div> 
+    <div class="desc-meteo">
+        {{ weather.description }}
+    </div>
+    <span class="powered-by-aitkermoune">crée par aitkermoune.net</span>
+</div>

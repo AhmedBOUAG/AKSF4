@@ -1,10 +1,4 @@
-{% set first = first|default(false) %}
-
-{% set url_parameters = {'id': id } %}
-{% if parent is not null %}
-    {% set url_parameters = url_parameters|merge({'parentId': parent.id}) %}
-{% endif %}
-
+{% extends "@!FOSComment/Thread/comment_new_content.html.twig" %}
 {% block fos_comment_comment_form_holder %}
     <div class="fos_comment_comment_form_holder">
         {% block fos_comment_form_title %}
