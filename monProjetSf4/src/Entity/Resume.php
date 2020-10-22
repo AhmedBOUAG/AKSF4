@@ -30,11 +30,6 @@ class Resume
      */
     private $limites = [];
 
-//    /**
-//     * @ORM\Column(type="json")
-//     */
-//    private $points = [];
-
     /**
      * @ORM\Column(type="datetime")
      */

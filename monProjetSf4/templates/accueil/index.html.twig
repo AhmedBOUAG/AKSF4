@@ -1,39 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bienvenue sur le portail de la région d'Aitkermoune{% endblock %}
+{% block title %}
+  {% trans %}Bienvenue sur le portail de la région d'Aitkermoune{% endtrans %}
+{% endblock %}
 
 {% block body %}
-    {% include '/carousel.html.twig' with images %}
-    <br />
-    <div class="section-poll">
-        {{ render(controller('App\\Controller\\ReponseSondageController::actualPoll')) }}
-    </div>
-    {% include 'accueil/resume.html.twig' %}
+  {% include '/carousel.html.twig' with images %}
+  <br />
+  <div class="section-poll">
+    {{
+      render(
+        controller('App\\Controller\\ReponseSondageController::actualPoll')
+      )
+    }}
+  </div>
+  {{
+    render(controller('App\\Controller\\ResumeController::aboutAitkermoune'))
+  }}
 
+  <div class="title-bloc">
+    <i class="fab fa-youtube"></i> {% trans %}vidéos ajoutées{% endtrans %}
+  </div>
+  <div class="card-deck">
+    {{
+      render(
+        controller('App\\Controller\\YoutubeVideosController::ThumbnailsVideos')
+      )
+    }}
+  </div>
+  <div class="d-inline-block d-block d-lg-none">
     <div class="title-bloc">
-        <i class="fab fa-youtube"></i> {% trans %}vidéos ajoutées{% endtrans %}
+      <i class="fas fa-cloud-sun"></i> {% trans %}Météo{% endtrans %}
     </div>
-    <div class="card-deck">
-        {{ render(controller('App\\Controller\\YoutubeVideosController::ThumbnailsVideos')) }}
+    {{ render(controller('App\\Controller\\ApiController::meteo')) }}
+    <div class="title-bloc">
+      <i class="fas fa-kaaba"></i> {% trans %}Heure prière{% endtrans %}
     </div>
-    <div class="d-inline-block d-block d-lg-none">
-        <div class="title-bloc">
-            <i class="fas fa-cloud-sun"></i> {% trans %}Météo{% endtrans %}
-        </div>
-        {{ render(controller('App\\Controller\\ApiController::meteo')) }}        
-        <div class="title-bloc">
-            <i class="fab fa-facebook"></i> {% trans %}Suivez-nous sur Facebook{% endtrans %}
-        </div>
-        <center>
-            <div class="fb-page w-100"
-                 data-href="https://www.facebook.com/aitkermoune.tk/" 
-                 data-hide-cover="false"
-                 data-show-facepile="false">
-            </div>
-        </center>    
+    {{ render(controller('App\\Controller\\ApiController::prayerDay')) }}
+    <div class="title-bloc">
+      <i class="fab fa-facebook"></i> {% trans %}Suivez-nous sur Facebook{% endtrans
+      %}
     </div>
-    <script>
-        var itemMenu = 1;
-    </script>
-    {% include '/accueil/js_accueil.html.twig' %}
+    <center>
+      <div class="fb-page w-100"
+        data-href="https://www.facebook.com/aitkermoune.net/"
+        data-hide-cover="false"
+        data-show-facepile="false"></div>
+    </center>
+  </div>
+  <script>
+    var itemMenu = 1;
+  </script>
 {% endblock %}

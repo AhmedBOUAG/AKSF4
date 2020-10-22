@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActualiteRepository")
  */
-class Actualite
-{
+class Actualite {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -27,6 +28,12 @@ class Actualite
     private $titre;
 
     /**
+     * @Gedmo\Slug(fields={"titre"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $message;
@@ -37,61 +44,64 @@ class Actualite
     private $approbation;
 
     public function __construct() {
-        
+
         $this->date = new \DateTime();
         $this->approbation = false;
-
     }
-    public function getId(): ?int
-    {
+
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
+    public function getDate(): ?\DateTimeInterface {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
-    {
+    public function setDate(?\DateTimeInterface $date): self {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getTitre(): ?string
-    {
+    public function getTitre(): ?string {
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
-    {
+    public function setTitre(string $titre): self {
         $this->titre = $titre;
+        $this->setSlug($titre);
 
         return $this;
     }
 
-    public function getMessage(): ?string
-    {
+    public function getMessage(): ?string {
         return $this->message;
     }
 
-    public function setMessage(string $message): self
-    {
+    public function setMessage(string $message): self {
         $this->message = $message;
 
         return $this;
     }
 
-    public function getApprobation(): ?bool
-    {
+    public function getSlug(): ?string {
+        return $this->slug;
+    }
+    
+    public function setSlug(string $slug): self {
+        $this->slug = $slug;
+        
+        return $this;
+    }
+
+    public function getApprobation(): ?bool {
         return $this->approbation;
     }
 
-    public function setApprobation(bool $approbation): self
-    {
+    public function setApprobation(bool $approbation): self {
         $this->approbation = $approbation;
 
         return $this;
     }
+
 }

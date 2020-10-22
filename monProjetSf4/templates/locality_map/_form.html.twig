@@ -112,7 +112,7 @@
 
         function clearMap(map) {
             for (i in map._layers) {
-                if (map._layers[i]._path != undefined) {
+                if (map._layers[i]._path !== undefined) {
                     try {
                         map.removeLayer(map._layers[i]);
                     } catch (e) {

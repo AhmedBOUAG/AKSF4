@@ -3,10 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name='robots' content='index, follow' />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="theme-color" content="#53a7b5">
-
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="description" content="{% block metaDescription %}{% endblock %}" />
+        <meta property="og:image" content="{% block imageShareFB %}{% endblock %}" />
         <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet">
         <script data-ad-client="ca-pub-1312795105950753" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         {% block stylesheets %}
@@ -50,9 +52,16 @@
 
                 {% endblock %}
             {% endif %}
-            <div class="ads-adsense">
-                {#<img src="/uploads/documents/1584720563470_pub_adsense.PNG" />#}    
-            </div>
+            <!-- Annonce Display Header -->
+            <ins class="adsbygoogle ads-adsense"
+                 style="display:block"
+                 data-ad-client="ca-pub-1312795105950753"
+                 data-ad-slot="5670750306"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>  
             <div class="row">
                 <div class="cardleft col-12 {% if not app.user %} col-md-9 {% endif %}">
                     <div class="info-bar">
@@ -85,5 +94,13 @@
         {% if not app.user %}
             {% include '/js_global.html.twig'%}
         {% endif %}
+        <script>
+            $(document).ready(function () {
+                $('ins.ads-adsense').slideDown(1000);
+                setTimeout(function () {
+                    $('.ads-adsense').show().slideToggle(500);
+                }, 8000);
+            });
+        </script>
     </body>
 </html>

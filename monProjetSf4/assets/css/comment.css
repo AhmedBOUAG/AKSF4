@@ -152,7 +152,7 @@ span.label.label-default {
     direction: rtl;
     float: right;
 }
-.fos_comment_comment_form_holder h3 {
+.fos_comment_comment_form_holder h3, h3.title-page {
     border-bottom: 4px solid #065ba0ee;
     color: #065ba0ee;
     margin-bottom: 1em;

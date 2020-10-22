@@ -1,0 +1,47 @@
+<div class="card-horizontal row">
+<div id="mapLimites" class="col-12 col-md-6">
+</div>
+<div class="card-stacked col-12 col-md-6">
+    <div class="card-content">
+        <h3>{{ resume.titre }}</h3>
+        {{ resume.description|nl2br }}
+        <button class="btn btn btn-outline-info">{% trans %}Plus{% endtrans %}</button>
+    </div>
+</div>
+</div>
+{% set limites = resume.limites.0 %}
+<input type="hidden" value="{{ limites }}" id="limites"> 
+<script>
+    var edit = false;
+    let map = L.map('mapLimites').setView([29.396176, -9.523911], 12);
+    var limites = '';
+    var coordinateds;
+    {% for item in locality %}
+        {% set coor = item.coordinated[0]|raw|replace({'"': ''}) %}
+        {% set points = coor|replace({'[[': ''})|replace({']]': ''})|split('],[') %}
+            var typeIcon = '{{ item.picto|replace({' ':''}) }}';
+            typeIcon = L.divIcon({
+                html: '<i class="fas {{ item.picto }}" style="color:{{ item.color }};"></i>'
+            });
+        {% for point in points %}
+            L.marker([{{ point|replace({'"': ''}) }}], {icon: typeIcon}).addTo(map).bindPopup('{{ item.localityType }}').closePopup();
+        {% endfor %}    
+    {% endfor %}
+    limites = $('#limites').val();
+    placeLimitesInMap(JSON.parse(limites));
+    function placeLimitesInMap(limites) {
+        $.when(limites).done(function () {
+            var osm = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+            var basemap = L.tileLayer(osm, {dragging: !L.Browser.mobile
+            }).addTo(map);
+            L.polygon([
+                limites
+            ]).addTo(map);
+            var osm2 = new L.TileLayer(osm, {minZoom: 0, maxZoom: 18});
+            var miniMap = new L.Control.MiniMap(osm2, {toggleDisplay: true, minZoom: 3, maxZoom: 8, zoomLevelFixed: 3}).addTo(map);
+            $('.leaflet-control-minimap').append('<div class="title-country-map">Morocco ⵍⵎⵖⵔⵉⴱ المغرب</div>');
+            $('.leaflet-control-minimap').append('<div class="position-overlay-pan"></div>');
+        });
+    }
+
+</script>

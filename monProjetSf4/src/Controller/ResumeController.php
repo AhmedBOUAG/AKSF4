@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\LocalityMapRepository;
 
 /**
  * @Route("/resume")
@@ -63,7 +64,7 @@ class ResumeController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}/edit", name="resume_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="resume_edit", requirements={"id":"\d+"}, methods={"GET","POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Resume $resume): Response {
@@ -86,7 +87,7 @@ class ResumeController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="resume_delete", methods={"DELETE"})
+     * @Route("/{id}", name="resume_delete",  requirements={"id":"\d+"}, methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Resume $resume): Response {
@@ -124,5 +125,16 @@ class ResumeController extends AbstractController {
         return $request->request->set($tabParent, $aRequest);
         
     }
-
+    
+    /**
+     * @Route("/about/aitkermoune", name="about_aitkermoune", methods={"GET"})
+     */
+    public function aboutAitkermoune(ResumeRepository $resumeRepository, LocalityMapRepository $lmr) : Response{
+        $pointsLimite =  $resumeRepository->findAll()[0];
+        $locality = $lmr->findAll();
+         return $this->render('resume/about.html.twig', [
+            'resume' => $pointsLimite,
+            'locality' => $locality,
+        ]);
+    }
 }

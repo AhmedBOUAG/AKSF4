@@ -3,12 +3,14 @@
 {% block title %}{% trans %}Nous contacter{% endtrans %}{% endblock %}
 
 {% block body %}
+    <br />
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
             {% trans %}Le message a été envoyé avec succès{% endtrans %}
         </div>
     {% endfor %}
     <div class="bloc-rtl">
+        <h3 class="title-page">{% trans %}Contacter l'administrateur du site{% endtrans %}:</h3>
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <button class="btn btn-primary">{% trans %}Envoyer{% endtrans %}</button>
