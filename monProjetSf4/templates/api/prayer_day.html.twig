@@ -1,0 +1,67 @@
+{% set excludePrayers = ['Midnight', 'Sunrise', 'Maghrib', 'Imsak'] %}
+<table class="table-striped calendar" style="margin-bottom:10px;">
+    <tr>
+        <th></th>
+            {% for prayerName in data.timings|keys %}
+                {% if prayerName not in excludePrayers %}
+                    <th>
+                        {{
+                            prayerName|trans({
+                            '%prayerName%': prayerName
+                            })
+                        }}
+                    </th>
+                {% endif %}
+            {% endfor %}
+    </tr>
+    <tr class="prayer-day">
+        <td></td>
+        {% for key, prayer in data.timings %}
+            {% if key not in excludePrayers %}
+                {% if (localHour|date('H:i')) < (prayer|slice(0, 5)) %}
+                    {% set class = 'time-sup' %}
+                {% else %}
+                    {% set class = '' %}
+                {% endif %}
+                <td class="{{ class }}">
+                    {{ prayer|slice(0, 5) }}
+                </td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    <caption style="background: linear-gradient(180deg, #2697f0, #3cbfe0, transparent); position: relative; text-align: center;">
+        <div style="color: #fff;">
+            {% trans %}L'heure actuelle à Aitkermoune{% endtrans %}:
+            <div style="font-weight:700; direction:ltr; font-size:1.6em;" class="current-time"></div>
+            <div>
+                <img src="{{ asset('uploads/images/islamic-mosquee.png')}}" style="max-width:150px;" alt="" />
+                </caption>
+                </table>
+                <span class="powered-by-aitkermoune" style="margin-top: -171px !important;">crée par aitkermoune.net</span>
+                <script>
+                    function currentTime() {
+                        var date = new Date(); /* creating object of Date class */
+                        var hour = {{ localHour|slice(0, 2)|number_format }};
+                        var min = date.getMinutes();
+                        var sec = date.getSeconds();
+                        hour = updateTime(hour);
+                        min = updateTime(min);
+                        sec = updateTime(sec);
+                        var hourGenerated = hour + " : " + min + " : " + sec;
+                        $('.current-time').html(hourGenerated);
+                        var t = setTimeout(function () {
+                            currentTime();
+                        }, 1000); 
+                    }
+
+                    function updateTime(k) {
+                        if (k < 10) {
+                            return "0" + k;
+                        } else {
+                            return k;
+                        }
+                    }
+
+                    currentTime(); 
+                </script>
+

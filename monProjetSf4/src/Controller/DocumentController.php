@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Service\ActualiteHelper;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Document;
+use App\Repository\DocumentRepository;
 use App\Entity\Actualite;
+
 class DocumentController extends AbstractController {
 
     private $absolutePathFolderDocuments = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'documents';
@@ -47,11 +49,11 @@ class DocumentController extends AbstractController {
      * @IsGranted("ROLE_ADMIN")
      * @return response
      */
-    public function ajaxSnippetImageDelete(Request $request, ActualiteHelper $actualiteHelper): Response {
+    public function ajaxSnippetImageDelete(Request $request, DocumentRepository $DocRepo): Response {
         $em = $this->getDoctrine()->getManager();
         $doc_name = str_replace(DocumentController::PATHDOCUMENTS, '', $request->get('name'));
         $filesystem = new Filesystem();
-        $document = $em->getRepository(Document::class)->findBy(['name' => $doc_name])[0];
+        $document = $DocRepo->findBy(['name' => $doc_name])[0];
         $file = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $document->getPath();
         if ($filesystem->exists($file)) {
             $filesystem->remove($file);

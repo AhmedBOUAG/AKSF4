@@ -1,43 +1,137 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ actualite.titre }}{% endblock %}
+{% block title %}
+  {{ actualite.titre }}
+{% endblock %}
 
+{% block metaDescription %}
+  {{ (description[0]['sub-title']|replace({
+    '\n': ''
+  }))
+    ~ '...' }}
+{% endblock %}
+{% block imageShareFB %}
+  {{ description[0]['src'] }}
+{% endblock %}
 {% block body %}
-    <h1 class="display-5 direction-rtl">{{ actualite.titre }}</h1>
-    <table class="table">
-        <tbody>
-            <tr>
-                <td class="text-muted"><i class="far fa-calendar-alt"></i> <small>{{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}</small></td>
-            </tr>
-            <tr>
-                <td>{{ actualite.message|raw }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <hr>
+  <h1 class="display-5 direction-rtl">
+    {{ actualite.titre }}
+  </h1>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td class="text-muted">
+          <i class="far fa-calendar-alt"></i>
+          <small>
+            {{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}
+          </small>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{ actualite.message|raw }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <hr />
 
-    <div id="shareIcons" class="jssocials">
-        <div class="jssocials-shares">
-            <span class="bloc-social-shares">
-                <div class="jssocials-share jssocials-share-twitter"><a class="jssocials-share-link" href="https://twitter.com/share?url=http%3A%2F%2Faitkermoune.net/actualite/{{ actualite.id }}" target="_blank"><i class="fab fa-twitter jssocials-share-logo"></i></a></div>
-                <div class="jssocials-share jssocials-share-facebook"><a class="jssocials-share-link" href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Faitkermoune.net/actualite/{{ actualite.id }}" target="_blank"><i class="fab fa-facebook jssocials-share-logo"></i></a></div>
-                <div class="jssocials-share jssocials-share-googleplus"><a class="jssocials-share-link" href="https://plus.google.com/share?url=http%3A%2F%2Faitkermoune.net/actualite/{{ actualite.id }}" target="_blank"><i class="fab fa-google-plus jssocials-share-logo"></i></a></div>
-                <div class="jssocials-share jssocials-share-linkedin"><a class="jssocials-share-link" href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Faitkermoune.net/actualite/{{ actualite.id }}" target="_blank"><i class="fab fa-linkedin jssocials-share-logo"></i></a></div>
-                <div class="jssocials-share jssocials-share-pinterest"><a class="jssocials-share-link" href="https://pinterest.com/pin/create/bookmarklet/?&amp;url=http%3A%2F%2Faitkermoune.net/actualite/{{ actualite.id }}" target="_blank"><i class="fab fa-pinterest jssocials-share-logo"></i></a></div>
-                <span class="label-share">{% trans %}Partager{% endtrans %} <i class="fas fa-share-alt"></i></span> <span class="right"></span>
-            </span>
+  <div id="shareIcons" class="jssocials">
+    <div class="jssocials-shares">
+      <span class="bloc-social-shares">
+        <div class="jssocials-share jssocials-share-twitter">
+          <a class="jssocials-share-link"
+            href="https://twitter.com/share?url=http%3A%2F%2Faitkermoune.net/actualite/{{
+            actualite.id
+            }}"
+            target="_blank">
+            <i class="fab fa-twitter jssocials-share-logo"></i>
+          </a>
         </div>
+        <div class="jssocials-share jssocials-share-facebook">
+          <a class="jssocials-share-link"
+            href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Faitkermoune.net/actualite/{{
+            actualite.id
+            }}"
+            target="_blank">
+            <i class="fab fa-facebook jssocials-share-logo"></i>
+          </a>
+        </div>
+        <div class="jssocials-share jssocials-share-googleplus">
+          <a class="jssocials-share-link"
+            href="https://plus.google.com/share?url=http%3A%2F%2Faitkermoune.net/actualite/{{
+            actualite.id
+            }}"
+            target="_blank">
+            <i class="fab fa-google-plus jssocials-share-logo"></i>
+          </a>
+        </div>
+        <div class="jssocials-share jssocials-share-linkedin">
+          <a class="jssocials-share-link"
+            href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Faitkermoune.net/actualite/{{
+            actualite.id
+            }}"
+            target="_blank">
+            <i class="fab fa-linkedin jssocials-share-logo"></i>
+          </a>
+        </div>
+        <div class="jssocials-share jssocials-share-pinterest">
+          <a class="jssocials-share-link"
+            href="https://pinterest.com/pin/create/bookmarklet/?&amp;url=http%3A%2F%2Faitkermoune.net/actualite/{{
+            actualite.id
+            }}"
+            target="_blank">
+            <i class="fab fa-pinterest jssocials-share-logo"></i>
+          </a>
+        </div>
+        <span class="label-share">
+          {% trans %}Partager{% endtrans %} <i class="fas fa-share-alt"></i>
+        </span> <span class="right"></span>
+      </span>
     </div>
-    <hr>
-    {% if app.user %}
-        <a style="margin-left:5px;" href="{{ path('actualite_index') }}">{{ include('button.html.twig', {'type_button': 'outline-dark', 'button_label': 'Retour à la liste', 'icon_label': 'fa-undo-alt'}) }} </a>
-        <a href="{{ path('actualite_edit', {'id': actualite.id}) }}">{{ include('button.html.twig', {'button_label': 'Mettre à jour', 'type_button': 'info', 'icon_label': 'fa-sync-alt'}) }} </a>
-        {{ include('actualite/_delete_form.html.twig') }}
-        <hr>
-    {% endif %}
-    <br />
-    {% include '/bundles/FOSCommentBundle/Thread/async.html.twig' with {'id': 'actu_'~actualite.id} %}
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+  </div>
+  <hr />
+  {% if app.user %}
+    <a style="margin-left:5px;" href="{{ path('actualite_index') }}">
+      {{
+        include(
+          'button.html.twig',
+          {
+            type_button: 'outline-dark',
+            button_label: 'Retour à la liste',
+            icon_label: 'fa-undo-alt'
+          }
+        )
+      }}
+    </a>
+    <a href="{{
+      path(
+        'actualite_edit',
+        {
+          id: actualite.id
+        }
+      )
+      }}">
+      {{
+        include(
+          'button.html.twig',
+          {
+            button_label: 'Mettre à jour',
+            type_button: 'info',
+            icon_label: 'fa-sync-alt'
+          }
+        )
+      }}
+    </a>
+    {{ include('actualite/_delete_form.html.twig') }}
+    <hr />
+  {% endif %}
+  <br />
+  {% include '/bundles/FOSCommentBundle/Thread/async.html.twig' with {
+    id: 'actu_' ~ actualite.id
+  } %}
+  <script type="text/javascript"
+    src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 
-    {{ include('actualite/js_actualite.html.twig') }}
+  {{ include('actualite/js_actualite.html.twig') }}
 {% endblock %}

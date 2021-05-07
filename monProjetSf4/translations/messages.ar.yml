@@ -24,7 +24,7 @@ Retour à la liste: الرجوع إلى الأئحة
 ID: رقم التعريف
 Date creation: تاريخ التدوين
 Approval: مصادقة
-ReponseSondage: إستطلاع > إجابة  
+ReponseSondage: إستطلاع > إجابة
 Actualite: أخبار و مقالات
 QuestionSondage: أسئلة/سؤال > إستطلاع
 Vous avez déjà participé à ce sondage.: لايسمح بالإشتراك إلا مرة واحدة. سبق وإن إشتركتم في هدا الإستطلاع
@@ -59,7 +59,11 @@ Maghrib: المغرب
 Isha: العشاء
 Imsak: الإمسآك
 Midnight: منتصف الليل
-"Heure priere pour le mois %mois%": "توقيت الصلاة لشهر %mois% "
+'Heure priere pour le mois %mois%': 'توقيت الصلاة لشهر %mois% '
 mois: شهر
 correspondant à: الموافق ل
 developpé et crée par: تصميم و إنتاج
+Plus: المزيد
+Bienvenue sur le portail de la région d'Aitkermoune: مرحبا بكم على بوابة قرية أيت كـرمون على الويب
+Contacter l'administrateur du site: الإتصال بإدارة الموقع
+L'heure actuelle à Aitkermoune: التوقيت الحالي بأيت كرمون

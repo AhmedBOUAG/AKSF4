@@ -1,46 +1,107 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Actualite index{% endblock %}
+{% block title %}
+  Liste des actualités
+{% endblock %}
 
 {% block body %}
-    <h1 class="float-left" style="line-height: 1 !important;">Liste des actualités</h1>
-    <a class="float-sm-right" href="{{ path('actualite_new') }}">{{ include('button.html.twig', {'button_label': 'Ajouter Actualité', 'type_button': 'success', 'icon_label': 'fa-plus'}) }}</a>
+  <h1 class="float-left" style="line-height: 1 !important;">
+    Liste des actualités
+  </h1>
+  <a class="float-sm-right" href="{{ path('actualite_new') }}">
+    {{
+      include(
+        'button.html.twig',
+        {
+          button_label: 'Ajouter Actualité',
+          type_button: 'success',
+          icon_label: 'fa-plus'
+        }
+      )
+    }}
+  </a>
+  <div style="width:100%; height:10px; clear:both;"></div>
+  <div class="row bloc-body-content">
     <table class="table overflow-auto">
-        <thead>
+      <thead>
+        <tr>
+          <th>
+            Date
+          </th>
+          <th>
+            Titre
+          </th>
+          <th>
+            Approbation
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for actualite in actualites %}
+          {% if (actualites|length) > 0 %}
             <tr>
-                <th>Date</th>
-                <th>Titre</th>
-                <th>Approbation</th>
-                <th>Actions</th>
+              <td>
+                {{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}
+              </td>
+              <td>
+                {{ actualite.titre }}
+              </td>
+              <td>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox"
+                    class="custom-control-input"
+                    value="{{ actualite.id }}"
+                    id="customSwitches_{{ actualite.id }}"
+                    {{ actualite.approbation ? 'checked' : '' }} />
+                  <label class="custom-control-label"
+                    for="customSwitches_{{ actualite.id }}">
+
+                  </label>
+                </div>
+              </td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Third group">
+                  <a role="button"
+                    class="btn btn-warning btn-sm"
+                    href="{{
+                    path(
+                      'actualite_show',
+                      {
+                        id: actualite.id
+                      }
+                    )
+                    }}">
+                    <i class="far fa-eye"></i>
+                  </a>
+                  <a role="button"
+                    class="btn btn-primary btn-sm"
+                    href="{{
+                    path(
+                      'actualite_edit',
+                      {
+                        id: actualite.id
+                      }
+                    )
+                    }}">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                </div>
+              </td>
             </tr>
-        </thead>
-        <tbody>
-            {% for actualite in actualites %}
-                {% if actualites|length > 0%}
-                    <tr>
-                        <td>{{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}</td>
-                        <td>{{ actualite.titre }}</td>
-                        <td>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" value="{{ actualite.id }}" id="customSwitches_{{ actualite.id }}" {{ actualite.approbation ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="customSwitches_{{ actualite.id }}"></label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Third group">
-                                <a role="button" class="btn btn-warning btn-sm" href="{{ path('actualite_show', {'id': actualite.id}) }}"><i class="far fa-eye"></i></a> 
-                                <a role="button" class="btn btn-primary btn-sm" href="{{ path('actualite_edit', {'id': actualite.id}) }}"><i class="fas fa-edit"></i></a>
-                            </div>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="6">no records found</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
+          {% else %}
+            <tr>
+              <td colspan="6">
+                no records found
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
     </table>
-    {{ knp_pagination_render(actualites) }}
-    {% include 'actualite/js_actualite.html.twig' %}
+  </div>
+  {{ knp_pagination_render(actualites) }}
+  {% include 'actualite/js_actualite.html.twig' %}
 {% endblock %}

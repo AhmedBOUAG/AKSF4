@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Service\ActualiteHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/actualite")
@@ -59,10 +60,14 @@ class ActualiteController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="actualite_show", requirements={"id":"\d+"}, methods={"GET"})
+     * @Route("/{id}", name="actualite_show", methods={"GET"})
+     * @ParamConverter("actualite", options={"mapping":{"id":"id"}})
      */
-    public function show(Actualite $actualite): Response {
+    public function show(Actualite $actualite, ActualiteHelper $actualiteHelper): Response {
+
+        $textWithoutHTML = $actualiteHelper->getPlainTextActualite(array($actualite));
         return $this->render('actualite/show.html.twig', [
+                    'description' => $textWithoutHTML,
                     'actualite' => $actualite,
         ]);
     }
@@ -121,7 +126,7 @@ class ActualiteController extends AbstractController {
 
     /**
      * @param request
-     * @Route("/locale", name="actualite_locale")
+     * @Route("_locale", name="actualite_locale")
      */
     public function paginateBlocNews(Request $request, PaginatorInterface $paginator, ActualiteRepository $actualiteRepository, ActualiteHelper $actualiteHelper)
     { 
@@ -132,8 +137,7 @@ class ActualiteController extends AbstractController {
                 $request->query->getInt('page', 1),
                 10
         );
-        //dump($blocsNews);die;
-        //return $blocsNews;
+
         return $this->render('actualite/actualite_locale.html.twig', [
                     'blocs' => $blocsNews,
         ]);

@@ -1,42 +1,79 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}YoutubeVideos{% endblock %}
+{% block title %}
+  YoutubeVideos
+{% endblock %}
 
 {% block body %}
-    <h1>YoutubeVideos</h1>
+  <h1>
+    YoutubeVideos
+  </h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ youtube_video.id }}</td>
-            </tr>
-            <tr>
-                <th>User</th>
-                <td>{{ youtube_video.user }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ youtube_video.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ youtube_video.description }}</td>
-            </tr>
-            <tr>
-                <th>LinkYoutube</th>
-                <td>{{ youtube_video.linkYoutube }}</td>
-            </tr>
-            <tr>
-                <th>DateAd</th>
-                <td>{{ youtube_video.dateAd ? youtube_video.dateAd|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>
+          Id
+        </th>
+        <td>
+          {{ youtube_video.id }}
+        </td>
+      </tr>
+      <tr>
+        <th>
+          User
+        </th>
+        <td>
+          {{ youtube_video.user }}
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Title
+        </th>
+        <td>
+          {{ youtube_video.title }}
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Description
+        </th>
+        <td>
+          {{ youtube_video.description }}
+        </td>
+      </tr>
+      <tr>
+        <th>
+          LinkYoutube
+        </th>
+        <td>
+          {{ youtube_video.linkYoutube }}
+        </td>
+      </tr>
+      <tr>
+        <th>
+          DateAd
+        </th>
+        <td>
+          {{ youtube_video.dateAd ? youtube_video.dateAd|date('Y-m-d') : '' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    <a href="{{ path('youtube_videos_index') }}">back to list</a>
+  <a href="{{ path('youtube_videos_index') }}">back to list</a>
 
-    <a href="{{ path('youtube_videos_edit', {'id': youtube_video.id}) }}">edit</a>
+  <a href="{{
+    path(
+      'youtube_videos_edit',
+      {
+        id: youtube_video.id
+      }
+    )
+    }}">
+    edit
+  </a>
 
-    {{ include('youtube_videos/_delete_form.html.twig') }}
+  {{ include('youtube_videos/_delete_form.html.twig') }}
 {% endblock %}

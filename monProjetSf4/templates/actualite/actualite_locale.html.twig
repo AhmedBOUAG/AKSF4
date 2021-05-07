@@ -1,33 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Actualité locale{% endblock %}
+{% block title %}
+  Actualité locale
+{% endblock %}
 
 {% block body %}
-    <div class="home-news-bloc">
-        {{ knp_pagination_render(blocs) }}
-        {% for bloc in blocs %}
-            {% if blocs.getTotalItemCount > 0%}
-                <a href="{{ path('actualite_show', { 'id': bloc['id-article'] }) }}" class="not-underline" >
-                    <div class="parent-bloc">
-                        <div class="title-bloc-news">{{ bloc['title'] }}</div>
-                        <div class="body-bloc">
-                            <img src="{{ bloc['src'] }}" class="thumbnail-news" /> <div class="text-news-bloc"> {{ bloc['sub-title']| striptags|slice(0, 198)|raw }}...</div>
-                        </div>
-                    </div>
-                </a>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        {{ knp_pagination_render(blocs) }}
-    </div>
-    {% include 'actualite/js_actualite.html.twig' %}
-    <br>
-    <script>
-        var itemMenu = 2;
-{#        $(function () {
+  <div class="home-news-bloc">
+    {{ knp_pagination_render(blocs) }}
+    {% for bloc in blocs %}
+      {% if blocs.getTotalItemCount > 0 %}
+        <a href="{{
+          path(
+            'actualite_show',
+            {
+              id: bloc['id-article']
+            }
+          )
+          }}"
+          class="not-underline">
+          <div class="parent-bloc">
+            <div class="title-bloc-news">
+              {{ bloc['title'] }}
+            </div>
+            <div class="body-bloc">
+              <img src="{{ bloc['src'] }}" class="thumbnail-news" /> <div class="text-news-bloc">
+                {{ bloc['sub-title']|striptags|slice(0, 198)|raw }}...
+              </div>
+            </div>
+          </div>
+        </a>
+      {% else %}
+        <tr>
+          <td colspan="6">
+            no records found
+          </td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+    {{ knp_pagination_render(blocs) }}
+  </div>
+  {% include 'actualite/js_actualite.html.twig' %}
+  <br />
+  <script>
+    var itemMenu = 2;
+    {#        $(function () {
             $(".page-item > a").on("click", function (e) {
                 var page = $(this).attr('href').split("=").pop();
                 $.ajax({
@@ -45,5 +61,5 @@
                 e.preventDefault();
             });
         });#}
-    </script>
+  </script>
 {% endblock %}
