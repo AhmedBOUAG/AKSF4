@@ -20,7 +20,7 @@ class Actualite {
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -28,8 +28,8 @@ class Actualite {
     private $titre;
 
     /**
-     * @Gedmo\Slug(fields={"titre"})
-     * @ORM\Column(length=128, unique=true)
+     * 
+     * 
      */
     private $slug;
 
@@ -45,7 +45,7 @@ class Actualite {
 
     public function __construct() {
 
-        $this->date = new \DateTime();
+        $this->createdAt = new \DateTime();
         $this->approbation = false;
     }
 
@@ -53,12 +53,12 @@ class Actualite {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface {
-        return $this->date;
+    public function getCreatedAt(): ?\DateTimeInterface {
+        return $this->createdAt;
     }
 
-    public function setDate(?\DateTimeInterface $date): self {
-        $this->date = $date;
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

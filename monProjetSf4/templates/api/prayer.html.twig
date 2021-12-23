@@ -5,7 +5,7 @@
     {% set excludePrayers = ["Midnight", "Sunrise", "Maghrib", "Imsak"] %}
     {% set mHijri, i, date = [], 0, data.0.date %}
     {% set title, month, actualMonthHijri = "Heure priere pour le mois %mois%", arabicGregorianMonths[date.gregorian.month.number * 1 - 1], date.gregorian.year %}
-    <table class="table-striped calendar" style="margin-top:-10px !important;">
+    <table class="table-striped calendar" style="margin-top:-10px !important; width:810px;">
         <tr>
             <th style="border-right: 15px solid #f2f2f2; background:#c8f5ff;">{{arabicGregorianMonths[date.gregorian.month.number * 1 - 1]}}</th>
                 {% for prayerName in data.0.timings|keys %}
@@ -36,7 +36,7 @@
             </tr>
         {% endfor %}
         <caption style="background: linear-gradient(180deg, #2697f0, #3cbfe0, transparent); position: relative; text-align: center;">
-            <img src="https://aitkermoune.net/uploads/images/header-calendar-aitkermoune-ramadan.jpeg" /><br />
+            <img src="https://aitkermoune.net/uploads/images/header-calendar-aitkermoune-default.jpeg" /><br />
             <div style="color: #fff; font-weight:bold; position: absolute; padding-top: 146px; padding-right: 300px;">
                 {{ title|trans({'%mois%': month}) ~ actualMonthHijri}}
             <div>

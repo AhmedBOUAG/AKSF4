@@ -41,22 +41,22 @@ class ActualiteController extends AbstractController {
      */
     public function new(Request $request): Response
     {
-    $actualite = new Actualite();
-    $form = $this->createForm(ActualiteType::class, $actualite);
-    $form->handleRequest($request);
+        $actualite = new Actualite();
+        $form = $this->createForm(ActualiteType::class, $actualite);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-    $entityManager = $this->getDoctrine()->getManager();
-    $entityManager->persist($actualite);
-    $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($actualite);
+        $entityManager->flush();
 
-    return $this->redirectToRoute('actualite_index');
-    }
+        return $this->redirectToRoute('actualite_index');
+        }
 
-    return $this->render('actualite/new.html.twig', [
-                'actualite' => $actualite,
-                'form' => $form->createView(),
-    ]);
+        return $this->render('actualite/new.html.twig', [
+                    'actualite' => $actualite,
+                    'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -112,16 +112,15 @@ class ActualiteController extends AbstractController {
      * @IsGranted("ROLE_ADMIN")
      * @return response 
      */
-    public function ajaxChangeStatutActualite(Request $request): Response {
-        $em = $this->getDoctrine()->getManager();
+    public function ajaxChangeStatutActualite(Request $request, ActualiteHelper $actualiteHelper): Response {
         $actualite_id = $request->get('id');
-        $actualite = $em->getRepository(Actualite::class)->find($actualite_id);
-        $old_statut = $actualite->getApprobation();
-        $new_statut = !$old_statut;
-        $actualiteModified = $actualite->setApprobation($new_statut);
-        $em->persist($actualiteModified);
-        $em->flush();
-        return new Response('OK');
+        try {
+            $actualiteHelper->processChangeStatusActualite($actualite_id);
+        } catch (\Exception $e) {
+            return new Response($e->getMessage());
+        }
+        
+        return new Response('success');
     }
 
     /**

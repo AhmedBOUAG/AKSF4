@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\QuestionSondage;
 use App\Form\QuestionSondageType;
 use App\Repository\QuestionSondageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class QuestionSondageController extends AbstractController
 {
+    /** @var EntityManagerInterface */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
     /**
      * @Route("/", name="question_sondage_index", methods={"GET"})
      */
     public function index(QuestionSondageRepository $questionSondageRepository): Response
     {
-        return $this->render('question_sondage/index.html.twig', [
+        return $this->render('sondage/question/index.html.twig', [
             'question_sondages' => $questionSondageRepository->findAll(),
         ]);
     }
@@ -37,14 +45,13 @@ class QuestionSondageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($questionSondage);
-            $entityManager->flush();
+            $this->em->persist($questionSondage);
+            $this->em->flush();
 
             return $this->redirectToRoute('question_sondage_index');
         }
 
-        return $this->render('question_sondage/new.html.twig', [
+        return $this->render('sondage/question/new.html.twig', [
             'question_sondage' => $questionSondage,
             'form' => $form->createView(),
         ]);
@@ -55,7 +62,7 @@ class QuestionSondageController extends AbstractController
      */
     public function show(QuestionSondage $questionSondage): Response
     {
-        return $this->render('question_sondage/show.html.twig', [
+        return $this->render('sondage/question/show.html.twig', [
             'question_sondage' => $questionSondage,
         ]);
     }
@@ -69,12 +76,12 @@ class QuestionSondageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('question_sondage_index');
         }
 
-        return $this->render('question_sondage/edit.html.twig', [
+        return $this->render('sondage/question/edit.html.twig', [
             'question_sondage' => $questionSondage,
             'form' => $form->createView(),
         ]);
@@ -86,9 +93,8 @@ class QuestionSondageController extends AbstractController
     public function delete(Request $request, QuestionSondage $questionSondage): Response
     {
         if ($this->isCsrfTokenValid('delete'.$questionSondage->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($questionSondage);
-            $entityManager->flush();
+            $this->em->remove($questionSondage);
+            $this->em->flush();
         }
 
         return $this->redirectToRoute('question_sondage_index');
@@ -100,14 +106,13 @@ class QuestionSondageController extends AbstractController
      * @return response 
      */
     public function ajaxChangeStatutQuestion(Request $request): Response {
-        $em = $this->getDoctrine()->getManager();
         $question_id = $request->get('id');
         $question = $em->getRepository(QuestionSondage::class)->find($question_id);
         $old_statut = $question->getApproval();
         $new_statut = !$old_statut;
         $questionModified = $question->setApproval($new_statut);
-        $em->persist($questionModified);
-        $em->flush();
+        $this->em->persist($questionModified);
+        $this->em->flush();
         return new Response('OK');
     }
 }

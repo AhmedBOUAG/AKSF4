@@ -1,0 +1,9 @@
+<script>
+    var edit = false; 
+    {% if operation == 'edit' %}
+        edit = true; 
+    {% endif %}
+    var input_coordinates = $('input#locality_map_coordinated');
+    var isPolygon = false;
+    var itemMenu = null;
+</script>

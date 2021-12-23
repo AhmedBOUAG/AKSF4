@@ -1,5 +1,4 @@
 <script>
-    // Le menu principal du Front-Office
     function toggleHamburgerMenu() {
         var x = document.getElementById("topMenu");
         if (x.className === "topnav" || x.className === "topnav sticky") {
@@ -12,11 +11,9 @@
         scrollingFix()
     };
 
-// Get the header
     var header = document.getElementById("topMenu");
     var logo = document.getElementById("logo");
 
-// Get the offset position of the navbar
     var sticky = header.offsetTop;
     function scrollingFix() {
         if (window.pageYOffset > sticky) {

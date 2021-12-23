@@ -44,7 +44,7 @@
           {% if (actualites|length) > 0 %}
             <tr>
               <td>
-                {{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}
+                {{ actualite.createdAt ? actualite.createdAt|date('d-m-Y H:i') : '' }}
               </td>
               <td>
                 {{ actualite.titre }}

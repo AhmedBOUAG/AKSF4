@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LocalityMapRepository")
@@ -17,16 +18,19 @@ class LocalityMap
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Cette valeur doit être specifiée")
      * @ORM\Column(type="string", length=255)
      */
     private $localityType;
 
     /**
+     * @Assert\NotBlank(message="Cette valeur doit être specifiée")
      * @ORM\Column(type="string", length=30)
      */
     private $picto;
 
     /**
+     * @Assert\NotBlank(message="Cette valeur doit être specifiée")
      * @ORM\Column(type="json_array")
      */
     private $coordinated = [];
@@ -48,6 +52,7 @@ class LocalityMap
 
     public function setLocalityType(string $localityType): self
     {
+        dump($localityType);
         $this->localityType = $localityType;
 
         return $this;

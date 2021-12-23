@@ -37,8 +37,8 @@ class YoutubeVideosController extends AbstractController {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $only_id_video = substr(stristr($youtubeVideo->getLinkYoutube(), '='), 1, 11);
-            $youtubeVideo->setLinkYoutube($only_id_video);
+            $youtube_id = substr(stristr($youtubeVideo->getLinkYoutube(), '='), 1, 11);
+            $youtubeVideo->setLinkYoutube($youtube_id);
             $entityManager->persist($youtubeVideo);
             $entityManager->flush();
 
@@ -99,14 +99,13 @@ class YoutubeVideosController extends AbstractController {
      * @param Request $request
      * @Route("/watch/{id}", name="watch_video", methods={"GET"})
      */
-    public function watch(Request $request, YoutubeVideos $youtubeVideo) {
+    public function watch(YoutubeVideos $youtubeVideo) {
         return $this->render('youtube_videos/watch.html.twig', [
             'video' => $youtubeVideo
         ]);
     }
-    public function ThumbnailsVideos(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $lastVideos = $em->getRepository(YoutubeVideos::class)->findLastThreeVideos();
+    public function ThumbnailsVideos(YoutubeVideosRepository $YVR){
+        $lastVideos = $YVR->findLastThreeVideos();
         
         return $this->render('youtube_videos/thumbnailsVideos.html.twig', [
             'youtubeVideos' => $lastVideos

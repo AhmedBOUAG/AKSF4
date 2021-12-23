@@ -33,9 +33,10 @@ require('leaflet/dist/leaflet.css');
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
+require('./locality-map');
 require('./global');
 require('./osm-leaflet');
-$(document).ready(function () {
+$(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
     var width = $(window).width();

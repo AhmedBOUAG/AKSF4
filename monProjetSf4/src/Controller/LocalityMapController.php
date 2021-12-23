@@ -3,22 +3,45 @@
 namespace App\Controller;
 
 use App\Entity\LocalityMap;
+use App\Event\LocalityMapEvent;
 use App\Form\LocalityMapType;
 use App\Repository\LocalityMapRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/locality/map")
  */
-class LocalityMapController extends AbstractController {
+class LocalityMapController extends AbstractController 
+{
+    /** @var EntityManagerInterface */
+    private $em;
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+    /** @var ValidatorInterface */
+    private $validator;
+
+    public function __construct(
+        EntityManagerInterface $em, 
+        EventDispatcherInterface $eventDispatcher, 
+        ValidatorInterface $validator)
+    {
+        $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->validator = $validator;
+    }
 
     /**
      * @Route("/", name="locality_map_index", methods={"GET"})
      */
-    public function index(LocalityMapRepository $localityMapRepository): Response {
+    public function index(LocalityMapRepository $localityMapRepository): Response
+    {
         return $this->render('locality_map/index.html.twig', [
                     'locality_maps' => $localityMapRepository->findAll(),
         ]);
@@ -27,18 +50,19 @@ class LocalityMapController extends AbstractController {
     /**
      * @Route("/new", name="locality_map_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response {
+    public function new(Request $request): Response 
+    {
         $localityMap = new LocalityMap();
+        $localityMapEvent = new LocalityMapEvent($localityMap);
         $form = $this->createForm(LocalityMapType::class, $localityMap);
 
         if ($request->isMethod('POST')) {
-            $this->constructJsonCoordinates($request);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($localityMap);
-                $entityManager->flush();
+                $this->eventDispatcher->dispatch($localityMapEvent);
+                $this->em->persist($localityMap);
+                $this->em->flush();
 
                 return $this->redirectToRoute('locality_map_index');
             }
@@ -50,25 +74,32 @@ class LocalityMapController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="locality_map_show", methods={"GET"})
+     * @Route("/{id<\d+>}", name="locality_map_show", methods={"GET"})
      */
-    public function show(LocalityMap $localityMap): Response {
+    public function show(LocalityMap $localityMap): Response 
+    {
         return $this->render('locality_map/show.html.twig', [
                     'locality_map' => $localityMap,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="locality_map_edit", methods={"GET","POST"})
+     * @Route("/{id<\d+>}/edit", name="locality_map_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, LocalityMap $localityMap): Response {
+    public function edit(Request $request, LocalityMap $localityMap): Response 
+    {
+        /** @var LocalityMapEvent $localityMapEvent */
+        $localityMapEvent = new LocalityMapEvent($localityMap);
+
+        //dd($localityMap,$errors);
         $form = $this->createForm(LocalityMapType::class, $localityMap);
-        $this->constructJsonCoordinates($request);
         $form->handleRequest($request);
-
+        //$errors = $this->validator->validate($localityMap);      
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            $this->eventDispatcher->dispatch($localityMapEvent);
+            $this->em->flush();
             return $this->redirectToRoute('locality_map_index');
         }
 
@@ -79,41 +110,16 @@ class LocalityMapController extends AbstractController {
     }
 
     /**
-     * @Route("/{id}", name="locality_map_delete", methods={"DELETE"})
+     * @Route("/{id<\d+>}", name="locality_map_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, LocalityMap $localityMap): Response {
+    public function delete(Request $request, LocalityMap $localityMap): Response 
+    {
         if ($this->isCsrfTokenValid('delete' . $localityMap->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($localityMap);
-            $entityManager->flush();
+            $this->em->remove($localityMap);
+            $this->em->flush();
         }
 
         return $this->redirectToRoute('locality_map_index');
-    }
-
-    private function constructJsonCoordinates($request) {
-        $tabParent = 'locality_map';
-        $subTab = 'coordinated';
-        $aRequest = $request->request->get($tabParent);
-        $data = $aRequest[$subTab];
-        unset($aRequest[$subTab]);
-        $json_limites = explode(",", $data);
-        $xandy = '';
-        $aNewData = array();
-
-        $i = 0;
-        foreach ($json_limites as $value) {
-            $i++;
-            if ($i === 2) {
-                $aNewData[] = array($xandy, $value);
-                $i = 0;
-            } else {
-                $xandy = $value;
-            }
-        }
-
-        $aRequest[$subTab] = json_encode($aNewData);
-        return $request->request->set($tabParent, $aRequest);
     }
 
 }

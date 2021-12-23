@@ -14,18 +14,18 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Document;
 use App\Repository\DocumentRepository;
 use App\Entity\Actualite;
+use App\Repository\ActualiteRepository;
+use App\Service\DocumentsHelper;
+use Doctrine\ORM\EntityManagerInterface;
 
 class DocumentController extends AbstractController {
 
-    private $absolutePathFolderDocuments = DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'documents';
-
-    const PATHDOCUMENTS = 'uploads/documents/';
-    const DEFAULTIMAGENEWS = 'slide_news_without_image';
-
     /**
      *
+     * @param Request $request
      * @Route("/ajax/snippet/image/send", name="ajax_snippet_image_send")
      * @IsGranted("ROLE_ADMIN")
+     * @return Response
      */
     public function ajaxSnippetImageSend(Request $request): Response {
         $em = $this->getDoctrine()->getManager();
@@ -45,23 +45,15 @@ class DocumentController extends AbstractController {
 
     /**
      * @param request
+     * @param DocumentHelper $docHelper
      * @Route("/ajax/snippet/image/delete", name="ajax_snippet_image_delete")
      * @IsGranted("ROLE_ADMIN")
      * @return response
      */
-    public function ajaxSnippetImageDelete(Request $request, DocumentRepository $DocRepo): Response {
-        $em = $this->getDoctrine()->getManager();
-        $doc_name = str_replace(DocumentController::PATHDOCUMENTS, '', $request->get('name'));
-        $filesystem = new Filesystem();
-        $document = $DocRepo->findBy(['name' => $doc_name])[0];
-        $file = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . $document->getPath();
-        if ($filesystem->exists($file)) {
-            $filesystem->remove($file);
-        }
-        $em->remove($document);
-        $em->flush();
+    public function ajaxSnippetImageDelete(Request $request, DocumentsHelper $docHelper): Response {
 
-        return $request->get('ListThumbnailsUploadeds') ? $this->redirectToRoute('get_images_uploaded', $request->query->all()) : new Response('Image Supprimées');
+        $docHelper->deleteOneImageByName($request->get('name'));
+        return $request->get('ListThumbnailsUploadeds') ? $this->redirectToRoute('get_images_uploaded', $request->query->all()) : new Response('Image Supprimée');
     }
 
     /**
@@ -70,40 +62,13 @@ class DocumentController extends AbstractController {
      * @IsGranted("ROLE_ADMIN")
      * @return response
      */
-    public function getImagesUploaded(ActualiteHelper $actualiteHelper): Response {
-        $aImages = $aImgActualite = array();
-        $finder = new Finder();
-        $status = 'OK';
-        $em = $this->getDoctrine()->getManager();
-        $allActualites = $em->getRepository(Actualite::class)->findAll();
-        $actualiteImages = $actualiteHelper->getPlainTextActualite($allActualites);
-        
-        foreach ($actualiteImages as $img) {
-            array_push($aImgActualite, substr($img['src'], 1));
-        }
-        $aExtensionImages = array('jpg', 'jpeg', 'gif', 'png');
-        $finder->files()->in(dirname(dirname(__DIR__)) . $this->absolutePathFolderDocuments);
-
-        // si aucun resultats n'est retourné
-        if (!$finder->hasResults()) {
-            $status = 'KO';
-        }
-        foreach ($finder as $file) {
-            $explodeFileName = explode('.', $file->getRelativePathname());
-            $extension = strtolower(end($explodeFileName));
-            if (in_array($extension, $aExtensionImages) &&
-                    reset($explodeFileName) !== self::DEFAULTIMAGENEWS) {
-                $absoluteFilePath = $file->getRealPath();
-                $fileNameWithExtension = $file->getRelativePathname();
-                $fileLink['src'] = DocumentController::PATHDOCUMENTS . $fileNameWithExtension;
-                $fileLink['isLocked'] = in_array($fileLink['src'], $aImgActualite) ? true : false;
-                array_push($aImages, $fileLink);
-            }
-        }
+    public function getImagesUploaded(DocumentsHelper $docHelper): Response {
+        $returnedValues = $docHelper->getAllUploadedImages();
         return $this->render('document/index.html.twig', [
-                    'images' => $aImages,
-                    'status' => $status
+                    'images' => $returnedValues['aImages'],
+                    'status' => $returnedValues['status']
         ]);
     }
 
 }
+        

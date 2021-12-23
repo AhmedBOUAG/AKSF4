@@ -2,15 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use App\Adapters\ApiRestInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/api")
@@ -18,12 +15,16 @@ use Dompdf\Options;
 class ApiController extends AbstractController
 {
 
-    private $knpSnappy;
-
     const uriMeteo = 'http://api.openweathermap.org/data/2.5/weather?lat=29.393176&lon=-9.546011&appid=56a1eb34577833c399ca0df6583a8efa&units=metric&lang=ar';
     const uriPrayer = 'http://api.aladhan.com/v1/calendar?latitude=30.427755&longitude=-9.598107';
     const uriLocalHour = 'http://worldtimeapi.org/api/timezone/Africa/Casablanca';
     const method = 'GET';
+    private $apiRest;
+
+    public function __construct(ApiRestInterface $apiRest)
+    {
+        $this->apiRest = $apiRest;
+    }
 
 
     /**
@@ -32,7 +33,7 @@ class ApiController extends AbstractController
     public function meteo()
     {
         //dump($this->get('app.meteo_api'));die;
-        $aData = $this->callApiRest($this::uriMeteo, []);
+        $aData = $this->apiRest->call($this::uriMeteo, ['method' => self::method]);
 
         return $this->render('api/meteo.html.twig', [
             'data' => $aData['content'],
@@ -57,7 +58,7 @@ class ApiController extends AbstractController
 
 
     /**
-     * @Route("/prayer/day", name="prayer_actual_day")
+     * @Route("/prayer/today", name="prayer_actual_day")
      */
     public function prayerDay()
     {
@@ -75,7 +76,7 @@ class ApiController extends AbstractController
 
     public function getLocalHour()
     {
-        $actualHour = $this->callApiRest($this::uriLocalHour, []);
+        $actualHour = $this->apiRest->call($this::uriLocalHour, ['method' => self::method]);
         return substr($actualHour['content']['datetime'], 11, 5);
     }
 
@@ -111,34 +112,19 @@ class ApiController extends AbstractController
         return new Response('OK');
     }
 
-    public function callApiRest(string $uri, array $options)
-    {
-
-        if (array_key_exists('params', $options)) {
-            foreach ($options['params'] as $key => $valeur) {
-                $uri .= '&' . $key . '=' . $valeur;
-            }
-        }
-        $client = HttpClient::create();
-        $response = $client->request($this::method, $uri);
-        $statusCode = $response->getStatusCode();
-        $contentType = $response->getHeaders()['content-type'][0];
-        // $content = $response->getContent(); // typejson
-        $content = $response->toArray();
-
-        return compact("statusCode", "contentType", "content");
-    }
-
     public function optionsPrayer()
     {
         $date = new \DateTime();
         $options = ['params' => array(
-            'method' => 3,
-            'month' => $date->format('m'),
-            'year' => $date->format('Y'),
-            'tune' => '0,-6,-4,5,1,0,5,0,0' //Imsak, fajr, shuruq, duhr, asr, sunset, maghrib?, isha, midnight
-        )];
+                'method' => 3,
+                'month' => $date->format('m'),
+                'year' => $date->format('Y'),
+                'tune' => '0,-6,-4,5,1,0,5,0,0' //Imsak, fajr, shuruq, duhr, asr, sunset, maghrib?, isha, midnight
+            ),
+            'method' => self::method
+        ];
 
-        return $this->callApiRest($this::uriPrayer, $options);
+        return $this->apiRest->call($this::uriPrayer, $options);
     }
+
 }
