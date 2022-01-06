@@ -3,13 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\CommentBundle\Entity\Comment as BaseComment;
-use FOS\CommentBundle\Model\VotableCommentInterface;
 
 /**
  * @ORM\Entity
  */
-class Comment extends BaseComment implements VotableCommentInterface
+class Comment
 {
     /**
      * @ORM\Id
@@ -22,7 +20,6 @@ class Comment extends BaseComment implements VotableCommentInterface
      * Thread of this comment
      *
      * @var Thread
-     * @ORM\ManyToOne(targetEntity="App\Entity\Thread")
      */
 
     protected $thread;

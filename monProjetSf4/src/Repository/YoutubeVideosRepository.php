@@ -26,8 +26,6 @@ class YoutubeVideosRepository extends ServiceEntityRepository
     public function findLastThreeVideos()
     {
         return $this->createQueryBuilder('y')
-            //->andWhere('y.exampleField = :val')
-            //->setParameter('val', $value)
             ->orderBy('y.id', 'DESC')
             ->setMaxResults(3)
             ->getQuery()
