@@ -12,11 +12,11 @@ logout:
 #article:
 #    path: /article/{id_article}
 #    controller: App\Controller\Article::readArticle
-fos_comment_api:
-    type: rest
-    resource: "@FOSCommentBundle/Resources/config/routing.yml"
-    prefix: /api
-    defaults: { _format: html }
+# fos_comment_api:
+#     type: rest
+#     resource: "@FOSCommentBundle/Resources/config/routing.yml"
+#     prefix: /api
+#     defaults: { _format: html }
 #dompdf:
 #    resource: App\Extensions\Text
 

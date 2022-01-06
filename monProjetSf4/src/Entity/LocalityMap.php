@@ -52,7 +52,6 @@ class LocalityMap
 
     public function setLocalityType(string $localityType): self
     {
-        dump($localityType);
         $this->localityType = $localityType;
 
         return $this;

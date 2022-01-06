@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\QuestionSondage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method QuestionSondage|null find($id, $lockMode = null, $lockVersion = null)
