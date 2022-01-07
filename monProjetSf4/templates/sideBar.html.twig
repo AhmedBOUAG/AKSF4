@@ -1,18 +1,36 @@
-{# Sidebar Right#}
+{# Sidebar Right #}
 <div class="sidebar col-6 col-md-3 d-none d-lg-block">
-    <div class="title-bloc"><i class="fas fa-cloud-sun"></i> {% trans %}Météo{% endtrans %}</div>
-    {{ render(controller('App\\Controller\\ApiController::meteo')) }}
-    {# BLOCK PRAYER #}
-    <div class="title-bloc"><i class="fas fa-kaaba"></i> {% trans %}Heure prière{% endtrans %}</div>
-    {{ render(controller('App\\Controller\\ApiController::prayerDay')) }}    {# BLOC FACEBOOK #}
-    <div class="title-bloc"><i class="fab fa-facebook"></i> {% trans %}Suivez-nous sur Facebook{% endtrans %}</div>
-    <!-- Facebook Badge START -->
-    <div class="fb-page w-100" data-href="https://www.facebook.com/aitkermoune.net/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-        <blockquote cite="https://www.facebook.com/aitkermoune.net/" class="fb-xfbml-parse-ignore">
-            <a href="https://www.facebook.com/aitkermoune.net/">Www⋅Aitkermoune⋅Net</a>
-        </blockquote>
-    </div>
-    <br />
-    <!-- Facebook Badge END -->
-    {# ENDBLOCK #}
+  <div class="title-bloc">
+    <i class="fas fa-cloud-sun"></i> {% trans %}Météo{% endtrans %}
+  </div>
+  {{ render(controller('App\\Controller\\ApiController::meteo')) }}
+  {# BLOCK PRAYER #}
+  <div class="title-bloc">
+    <i class="fas fa-kaaba"></i> {% trans %}Heure prière{% endtrans %}
+  </div>
+  {# {{ render(controller('App\\Controller\\ApiController::prayerDay')) }} #} {# BLOC FACEBOOK #}
+  <div class="title-bloc">
+    <i class="fab fa-facebook"></i> {% trans %}Suivez-nous sur Facebook{% endtrans
+    %}
+  </div>
+  <!-- Facebook Badge START -->
+  <div class="fb-page w-100"
+    data-href="https://www.facebook.com/aitkermoune.net/"
+    data-tabs="timeline"
+    data-width=""
+    data-height=""
+    data-small-header="false"
+    data-adapt-container-width="true"
+    data-hide-cover="false"
+    data-show-facepile="true">
+    <blockquote cite="https://www.facebook.com/aitkermoune.net/"
+      class="fb-xfbml-parse-ignore">
+      <a href="https://www.facebook.com/aitkermoune.net/">
+        Www⋅Aitkermoune⋅Net
+      </a>
+    </blockquote>
+  </div>
+  <br />
+  <!-- Facebook Badge END -->
+  {# ENDBLOCK #}
 </div>

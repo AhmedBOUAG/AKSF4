@@ -2,35 +2,53 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Actualite;
+use App\Repository\ActualiteRepository;
 use App\Service\ActualiteHelper;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\Routing\Annotation\Route;
 
-class AccueilController extends AbstractController {
+class AccueilController extends AbstractController 
+{
 
+    private ActualiteRepository $actualiteRepository;
+    private ActualiteHelper $actualiteHelper;
+
+    public function __construct(
+        ActualiteHelper $actualiteHelper, 
+        ActualiteRepository $actualiteRepository
+        )
+    {
+        $this->actualiteRepository = $actualiteRepository;
+        $this->actualiteHelper = $actualiteHelper;
+    }
     /**
      * @Route("/", name="accueil_home")
      */
-    public function index(Request $request) {
-        return $this->render('accueil/index.html.twig', [
-                    'images' => $this->lastFiveArticles()
-        ]);
+    public function index() {
+         
+        $response = new Response($this->render('accueil/index.html.twig', [
+                    'images' => $this->lastFiveArticles(),
+        ])->getContent());
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
 
     public function AlerteInfo() {
-        return $this->render('accueil/alerte-info.html.twig', [
+
+        $response =  new Response($this->render('accueil/_alerte-info.html.twig', [
                     'lastFiveInfos' => $this->lastFiveArticles()
-        ]);
+        ])->getContent());
+
+        $response->setSharedMaxAge(3600);
+
+        return $response;
     }
 
     public function lastFiveArticles() {
-        $actualiteHelper = new ActualiteHelper();
-        $em = $this->getDoctrine()->getManager();
-        $lastFiveArticles = $em->getRepository(Actualite::class)->getLastFiveArticles();
-        $aLastFiveInfos = $actualiteHelper->getPlainTextActualite($lastFiveArticles);
-        return $aLastFiveInfos;
+        $aLastFiveArticles = $this->actualiteHelper->getPlainTextActualite($this->actualiteRepository->getLastFiveArticles());
+
+        return $aLastFiveArticles;
     }
     
     /**

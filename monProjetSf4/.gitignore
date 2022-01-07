@@ -3,7 +3,13 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
+/public/training.php
 /config/packages/translation.yaml
+/src/Adapters
+/src/Patterns
+/src/Extensions
+/src/Controller/DemoController.php
+/data/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -37,3 +43,8 @@ yarn-error.log
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

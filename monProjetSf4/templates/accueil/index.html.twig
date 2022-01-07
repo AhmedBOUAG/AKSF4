@@ -1,54 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %} {% trans %}Bienvenue sur le portail de la région d'Aitkermoune{% endtrans %} {% endblock %} {% block body %} {% include '/carousel.html.twig' with images %}
+<br />
+<div class="section-poll">
+    {{ render( controller('App\\Controller\\ReponseSondageController::actualPoll') ) }}
+</div>
+{{ render(controller('App\\Controller\\ResumeController::aboutAitkermoune')) }}
 
-{% block title %}
-  {% trans %}Bienvenue sur le portail de la région d'Aitkermoune{% endtrans %}
-{% endblock %}
-
-{% block body %}
-  {% include '/carousel.html.twig' with images %}
-  <br />
-  <div class="section-poll">
-    {{
-      render(
-        controller('App\\Controller\\ReponseSondageController::actualPoll')
-      )
-    }}
-  </div>
-  {{
-    render(controller('App\\Controller\\ResumeController::aboutAitkermoune'))
-  }}
-
-  <div class="title-bloc">
+<div class="title-bloc">
     <i class="fab fa-youtube"></i> {% trans %}vidéos ajoutées{% endtrans %}
-  </div>
-  <div class="card-deck">
-    {{
-      render(
-        controller('App\\Controller\\YoutubeVideosController::ThumbnailsVideos')
-      )
-    }}
-  </div>
-  <div class="d-inline-block d-block d-lg-none">
+</div>
+<div class="card-deck">
+    {{ render( controller('App\\Controller\\YoutubeVideosController::ThumbnailsVideos') ) }}
+</div>
+<div class="d-inline-block d-block d-lg-none">
     <div class="title-bloc">
-      <i class="fas fa-cloud-sun"></i> {% trans %}Météo{% endtrans %}
+        <i class="fas fa-cloud-sun"></i> {% trans %}Météo{% endtrans %}
     </div>
     {{ render(controller('App\\Controller\\ApiController::meteo')) }}
     <div class="title-bloc">
-      <i class="fas fa-kaaba"></i> {% trans %}Heure prière{% endtrans %}
+        <i class="fas fa-kaaba"></i> {% trans %}Heure prière{% endtrans %}
     </div>
-    {{ render(controller('App\\Controller\\ApiController::prayerDay')) }}
+    {{ render(controller('App\\Controller\\ApiController::prayerDay')) }} 
     <div class="title-bloc">
-      <i class="fab fa-facebook"></i> {% trans %}Suivez-nous sur Facebook{% endtrans
-      %}
+        <i class="fab fa-facebook"></i> {% trans %}Suivez-nous sur Facebook{% endtrans %}
     </div>
     <center>
-      <div class="fb-page w-100"
-        data-href="https://www.facebook.com/aitkermoune.net/"
-        data-hide-cover="false"
-        data-show-facepile="false"></div>
+        <div class="fb-page w-100" data-href="https://www.facebook.com/aitkermoune.net/" data-hide-cover="false" data-show-facepile="false"></div>
     </center>
-  </div>
-  <script>
+</div>
+<script>
     var itemMenu = 1;
-  </script>
+</script>
 {% endblock %}

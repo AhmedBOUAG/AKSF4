@@ -8,7 +8,7 @@
                 url: '{{ path('ajax_change_statut_actualite') }}',
                 data: {id: actualite_id, request: 2},
                 sucess: function (data) {
-                    //console.log('success: ' + data);
+                    alert('retour: ' + data);
                 }
             });
         });

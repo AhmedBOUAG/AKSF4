@@ -1,106 +1,95 @@
 <!DOCTYPE html>
 <html ⚡>
-    <head>
-        <meta charset="UTF-8">
-        <meta name='robots' content='index, follow' />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="theme-color" content="#53a7b5">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <meta name="description" content="{% block metaDescription %}{% endblock %}" />
-        <meta property="og:image" content="{% block imageShareFB %}{% endblock %}" />
-        <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet">
-        <script data-ad-client="ca-pub-1312795105950753" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        <div class="logo" id="logo">{% trans %}Aitkermoune.net{% endtrans %}</div>
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0"></script>
-        {% if app.user %}
-            <header>
-                {{ include('menu.html.twig') }}
-            </header>
-        {% endif %}
-        <main role="main" class="container">
-            {% if not app.user %}
-                {% block header %}
-                    <div class="header-top">
-                        <div class="div-adsense-header">
 
-                        </div>
-                        <div class="logo-aitkermoune">
-                            <h1> {% trans %}Aitkermoune.net{% endtrans %} </h1>
-                            <div class="slogan-site">{% trans %}slogan_site{% endtrans %}</div>
-                        </div>
-                    </div>
-                    <div class="topnav" data-spy="affix" data-offset-top="200" id="topMenu">
-                        <a href="{{ path('accueil_home') }}"> <span class="libelle-home">{% trans %}Accueil{% endtrans %}  </span><i class="fas fa-home"></i></a>
-                        <a href="{{ path('actualite_locale') }}"> {% trans %}Actualité locale{% endtrans %}  <i class="fas fa-newspaper"></i></a>
-                        <a href="{{ path('page_services') }}">  {% trans %}Services{% endtrans %}  <i class="fab fa-bandcamp"></i></a>
-                        <a href="{{ path('page_taqafa') }}">{% trans %}Images et vidéos{% endtrans %}  <i class="fas fa-images"></i></a>
-                        <a href="{{ path('form_contact') }}">{% trans %}Nous contacter{% endtrans %}  <i class="fas fa-file-signature"></i></a>
-                        <a href="javascript:void(0);" class="icon" onclick="toggleHamburgerMenu()">
-                            <i class="fa fa-bars"></i>
-                        </a>
-                    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name='robots' content='index, follow' />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#53a7b5">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta name="description" content="{% block metaDescription %}{% endblock %}" />
+    <meta property="og:image" content="{% block imageShareFB %}{% endblock %}" />
+    <link href="https://fonts.googleapis.com/css?family=Cairo&display=swap" rel="stylesheet">
+    <script data-ad-client="ca-pub-1312795105950753" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    {% block stylesheets %} {{ encore_entry_link_tags('app') }} {% endblock %} {% block javascripts %} {{ encore_entry_script_tags('app') }} {% endblock %}
+</head>
 
-                {% endblock %}
-            {% endif %}
-            <!-- Annonce Display Header -->
-            <ins class="adsbygoogle ads-adsense"
-                 style="display:block"
-                 data-ad-client="ca-pub-1312795105950753"
-                 data-ad-slot="5670750306"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>  
-            <div class="row">
-                <div class="cardleft col-12 {% if not app.user %} col-md-9 {% endif %}">
-                    <div class="info-bar">
-                        {{ render(controller('App\\Controller\\AccueilController::AlerteInfo')) }}
-                    </div>
-                    {% block body %}{% endblock %}
-                </div>
-                {% if not app.user %}
-                    {{ include ('sideBar.html.twig') }}
-                    <style>
-                        body{padding-top: 10px !important;}
-                    </style>
-                {% endif %}
+<body>
+    <div class="logo" id="logo">{% trans %}Aitkermoune.net{% endtrans %}</div>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v6.0"></script>
+    {% if app.user %}
+    <header>
+        {{ include('menu.html.twig') }}
+    </header>
+    {% endif %}
+    <main role="main" class="container">
+        {% if not app.user %} {% block header %}
+        <div class="header-top">
+            <div class="div-adsense-header">
+
             </div>
+            <div class="logo-aitkermoune">
+                <h1> {% trans %}Aitkermoune.net{% endtrans %} </h1>
+                <div class="slogan-site">{% trans %}slogan_site{% endtrans %}</div>
+            </div>
+        </div>
+        <div class="topnav" data-spy="affix" data-offset-top="200" id="topMenu">
+            <a href="{{ path('accueil_home') }}"> <span class="libelle-home">{% trans %}Accueil{% endtrans %}  </span><i class="fas fa-home"></i></a>
+            <a href="{{ path('actualite_locale') }}"> {% trans %}Actualité locale{% endtrans %}  <i class="fas fa-newspaper"></i></a>
+            <a href="{{ path('page_services') }}">  {% trans %}Services{% endtrans %}  <i class="fab fa-bandcamp"></i></a>
+            <a href="{{ path('page_taqafa') }}">{% trans %}Images et vidéos{% endtrans %}  <i class="fas fa-images"></i></a>
+            <a href="{{ path('form_contact') }}">{% trans %}Nous contacter{% endtrans %}  <i class="fas fa-file-signature"></i></a>
+            <a href="javascript:void(0);" class="icon" onclick="toggleHamburgerMenu()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
 
-        </main>
-        <div class="both"></div>
-        {% block footer %}
-            <footer class="footer">
-                <div class="container">
-                    <!--Copyright-->
-                    <div>
-                        <div class="container-fluid text-center">
-                            &copy; Aitkermoune.net 2009 - 2020
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        {% endblock %}
-        {% if not app.user %}
-            {% include '/js_global.html.twig'%}
-        {% endif %}
+        {% endblock %} {% endif %}
+        <!-- Annonce Display Header -->
+        <ins class="adsbygoogle ads-adsense" style="display:block" data-ad-client="ca-pub-1312795105950753" data-ad-slot="5670750306" data-ad-format="auto" data-full-width-responsive="true"></ins>
         <script>
-            $(document).ready(function () {
-                $('ins.ads-adsense').slideDown(1000);
-                setTimeout(function () {
-                    $('.ads-adsense').show().slideToggle(500);
-                }, 8000);
-            });
+            (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-    </body>
+        <div class="row">
+            <div class="cardleft col-12 {% if not app.user %} col-md-9 {% endif %}">
+                <div class="info-bar">
+                    {{ render(controller('App\\Controller\\AccueilController::AlerteInfo')) }}
+                </div>
+                {% block body %}{% endblock %}
+            </div>
+            {% if not app.user %} {{ include ('sideBar.html.twig') }}
+            <style>
+                body {
+                    padding-top: 10px !important;
+                }
+            </style>
+            {% endif %}
+        </div>
+
+    </main>
+    <div class="both"></div>
+    {% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <!--Copyright-->
+            <div>
+                <div class="container-fluid text-center">
+                    &copy; Aitkermoune.net 2009 - {{ "now"|date("Y") }}
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% endblock %} {% if not app.user %} {% include '/js_global.html.twig'%} {% endif %}
+    <script>
+        $(document).ready(function() {
+            $('ins.ads-adsense').slideDown(1000);
+            setTimeout(function() {
+                $('.ads-adsense').show().slideToggle(500);
+            }, 8000);
+        });
+    </script>
+</body>
+
 </html>

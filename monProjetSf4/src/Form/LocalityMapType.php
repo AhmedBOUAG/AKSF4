@@ -30,14 +30,12 @@ class LocalityMapType extends AbstractType {
 
         $builder->get('coordinated')
                 ->addModelTransformer(new CallbackTransformer(
-                                function ($tagsAsArray) {
-                            // transform the array to a string
-                            return implode(', ', $tagsAsArray);
-                        },
-                                function ($tagsAsString) {
-                            // transform the string back to an array
-                            return explode(', ', $tagsAsString);
-                        }
+                    function ($tagsAsArray) {
+                        return implode(', ', $tagsAsArray);
+                    },
+                    function ($tagsAsString) {
+                        return explode(', ', $tagsAsString);
+                    }
                 ))
         ;
     }

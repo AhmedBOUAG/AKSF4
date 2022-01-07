@@ -2,7 +2,6 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 # config/routes.yaml
-
 # the "app_lucky_number" route name is not important yet
 app_lucky_number:
     path: /lucky/number
@@ -12,11 +11,11 @@ logout:
 #article:
 #    path: /article/{id_article}
 #    controller: App\Controller\Article::readArticle
-fos_comment_api:
-    type: rest
-    resource: "@FOSCommentBundle/Resources/config/routing.yml"
-    prefix: /api
-    defaults: { _format: html }
+# fos_comment_api:
+#     type: rest
+#     resource: "@FOSCommentBundle/Resources/config/routing.yml"
+#     prefix: /api
+#     defaults: { _format: html }
 #dompdf:
 #    resource: App\Extensions\Text
 

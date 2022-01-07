@@ -23,7 +23,7 @@
         <td class="text-muted">
           <i class="far fa-calendar-alt"></i>
           <small>
-            {{ actualite.date ? actualite.date|date('d-m-Y H:i') : '' }}
+            {{ actualite.createdAt ? actualite.createdAt|date('d-m-Y H:i') : '' }}
           </small>
         </td>
       </tr>
@@ -127,9 +127,6 @@
     <hr />
   {% endif %}
   <br />
-  {% include '/bundles/FOSCommentBundle/Thread/async.html.twig' with {
-    id: 'actu_' ~ actualite.id
-  } %}
   <script type="text/javascript"
     src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 

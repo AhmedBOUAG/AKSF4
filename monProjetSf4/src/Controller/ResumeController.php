@@ -3,20 +3,35 @@
 namespace App\Controller;
 
 use App\Entity\Resume;
+use App\Event\LocalityMapEvent;
 use App\Form\ResumeType;
+use App\Repository\LocalityMapRepository;
 use App\Repository\ResumeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\LocalityMapRepository;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/resume")
  */
 class ResumeController extends AbstractController {
 
+    /** @var EntityManagerInterface */
+    private $em;
+
+    private $eventDispatcher;
+    public function __construct(
+        EntityManagerInterface $em, 
+        EventDispatcherInterface $eventDispatcher
+    )
+    {
+        $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
+    }
     /**
      * @Route("/", name="resume_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
@@ -33,16 +48,15 @@ class ResumeController extends AbstractController {
      */
     public function new(Request $request): Response {
         $resume = new Resume();
+        $localityMapEvent = new LocalityMapEvent($resume);
         $form = $this->createForm(ResumeType::class, $resume);
 
         if ($request->isMethod('POST')) {
-
-            $this->constructJsonCoordinates($request);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($resume);
-                $entityManager->flush();
+                $this->eventDispatcher->dispatch($localityMapEvent);
+                $this->em->persist($resume);
+                $this->em->flush();
 
                 return $this->redirectToRoute('resume_index');
             }
@@ -68,15 +82,15 @@ class ResumeController extends AbstractController {
      * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Resume $resume): Response {
+        $localityMapEvent = new LocalityMapEvent($resume);
         $form = $this->createForm(ResumeType::class, $resume);
 
         if ($request->isMethod('POST')) {
-
-            $this->constructJsonCoordinates($request);
             $form->handleRequest($request);
+            
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
-
+                $this->eventDispatcher->dispatch($localityMapEvent);
+                $this->em->flush();
                 return $this->redirectToRoute('resume_index');
             }
         }
@@ -92,38 +106,11 @@ class ResumeController extends AbstractController {
      */
     public function delete(Request $request, Resume $resume): Response {
         if ($this->isCsrfTokenValid('delete' . $resume->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($resume);
-            $entityManager->flush();
+            $this->em->remove($resume);
+            $this->em->flush();
         }
 
         return $this->redirectToRoute('resume_index');
-    }
-
-    private function constructJsonCoordinates($request) {
-        $tabParent = 'resume';
-        $subTab = 'limites';
-        $aRequest = $request->request->get($tabParent);
-        $data = $aRequest[$subTab];
-        unset($aRequest[$subTab]);
-        $json_limites = explode(",", $data);
-        $xandy = '';
-        $aNewData = array();
-
-        $i = 0;
-        foreach ($json_limites as $value) {
-            $i++;
-            if ($i === 2) {
-                $aNewData[] = array($xandy, $value);
-                $i = 0;
-            } else {
-                $xandy = $value;
-            }
-        }
-
-        $aRequest[$subTab] = json_encode($aNewData);
-        return $request->request->set($tabParent, $aRequest);
-        
     }
     
     /**

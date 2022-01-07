@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\YoutubeVideos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method YoutubeVideos|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,8 +26,6 @@ class YoutubeVideosRepository extends ServiceEntityRepository
     public function findLastThreeVideos()
     {
         return $this->createQueryBuilder('y')
-            //->andWhere('y.exampleField = :val')
-            //->setParameter('val', $value)
             ->orderBy('y.id', 'DESC')
             ->setMaxResults(3)
             ->getQuery()

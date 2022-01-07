@@ -9,7 +9,6 @@ final class LocaleListener {
 
     public function onKernelRequest(RequestEvent $event) {
         $request = $event->getRequest();
-        // some logic to determine the $locale
         $request->setLocale("ar");
     }
 
